@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (學校科系追蹤 ✕ 入職後AI小幫手版)</title>
-  <meta name="description" content="專為身心障礙求職者與學生設計的低認知步驟引導、學校與科系個案追蹤、入職後職場 AI 諮詢小幫手、管理員全站訊息與 vvicky9508@gmail.com 信箱連動。" />
+  <title>無障礙智慧職缺適配與輔導系統 (AI主動生成圖示化SOP卡片版)</title>
+  <meta name="description" content="專為身心障礙求職者與學生設計的低認知步驟引導、學校與科系個案追蹤、入職後 AI 自動生成圖示化 SOP 卡片、管理員全站訊息與 vvicky9508@gmail.com 信箱連動。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -213,8 +213,8 @@
           🌐
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #f3e8ff; color: #7c3aed; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">學校科系追蹤 ✕ 入職後 AI 諮詢小幫手</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">學校與科系追蹤 ✕ 入職後 AI 教練 ✕ 管理員訊息與信箱連動 (vvicky9508@gmail.com)</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #f3e8ff; color: #7c3aed; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">AI 自動生成與拆解圖示化 SOP 卡片</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">學校與科系追蹤 ✕ AI 自動拆解圖示 SOP ✕ 管理員訊息與信箱連動 (vvicky9508@gmail.com)</p>
         </div>
       </div>
 
@@ -494,38 +494,40 @@
         <!-- Job List Container -->
         <div id="job-results-container" style="display: flex; flex-direction: column; gap: 20px;"></div>
 
-        <!-- NEW: Post-Onboarding AI Workplace Assistant Card (入職後有問題可問 AI) -->
+        <!-- NEW & UPDATED: Post-Onboarding AI Workplace Assistant Card (AI 自動生成並拆解圖示化 SOP 卡片) -->
         <div style="background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%); border: 2px solid #c084fc; border-radius: 24px; padding: 28px; margin-top: 32px; box-shadow: 0 10px 25px rgba(168,85,247,0.1);">
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-            <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8; display: flex; align-items: center; gap: 10px;">
-              <span>🤖 入職後職場 AI 諮詢小幫手 (職場適應、輔具申請與溝通即時問)</span>
+            <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8; display: flex; align- items: center; gap: 10px;">
+              <span>🤖 入職後 AI 職場諮詢小幫手 (AI 主動生成與拆解圖示化 SOP 卡片)</span>
             </h3>
-            <span class="badge badge-ai" style="font-size: 14px;">24小時線上職場導師</span>
+            <span class="badge badge-ai" style="font-size: 14px;">24小時 AI 職場導師</span>
           </div>
           <p style="font-size: 16px; color: #7e22ce; margin-bottom: 18px;">
-            順利入職或面試成功後，遇到<strong>職場適應、無障礙設施調整、請假復健、或不知道如何跟主管 colleagues 溝通時</strong>，點選下方熱門問題或輸入文字，AI 將為您提供實用溫馨的解答：
+            入職後遇到看不懂的工作步驟時，<strong>不需要向導師索取！AI 會為您主動生成【圖示化 SOP 說明卡】並白話拆解步驟</strong>：
           </p>
 
           <!-- Quick AI Prompt Chips -->
           <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
+            <button onclick="askWorkplaceAi('📋 看不懂發票核對與表格輸入步驟，請 AI 為我生成圖示化 SOP 說明卡！')" style="background: #ffffff; border: 2px solid #a855f7; color: #6b21a8; padding: 8px 16px; border-radius: 12px; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 2px 8px rgba(168,85,247,0.15);">📋 讓 AI 立刻生成發票與公文圖示 SOP 卡片</button>
             <button onclick="askWorkplaceAi('💡 第一次上班好緊張，不知道怎麼跟主管與同事打招呼招呼？')" style="background: white; border: 1px solid #c084fc; color: #6b21a8; padding: 8px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">💡 第一天上班該怎麼打招呼？</button>
             <button onclick="askWorkplaceAi('♿ 發現辦公室桌子太低或斜坡陡峭，該如何向公司禮貌申請調整？')" style="background: white; border: 1px solid #c084fc; color: #6b21a8; padding: 8px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">♿ 桌面太低/斜坡問題怎麼申請？</button>
             <button onclick="askWorkplaceAi('⏰ 體力不支或固定復健時間到了，該怎麼向公司禮貌請假？')" style="background: white; border: 1px solid #c084fc; color: #6b21a8; padding: 8px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">⏰ 復健時間到了該怎麼請假？</button>
-            <button onclick="askWorkplaceAi('📋 看不懂公司 SOP 或表格輸入步驟，AI 可以給我什麼建議？')" style="background: white; border: 1px solid #c084fc; color: #6b21a8; padding: 8px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">📋 看不懂工作SOP怎麼辦？</button>
           </div>
 
           <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
-            <input id="ai-workplace-input" type="text" placeholder="請在此輸入您在職場發生的任何疑問（例如：工作做太慢怎麼向主管溝通...）" style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #d8b4fe; outline: none; font-size: 16px; min-width: 280px;" />
-            <button onclick="submitCustomAiQuestion()" class="btn btn-accent" style="padding: 12px 24px; min-height: 50px; font-size: 16px;">🤖 諮詢 AI 職場導師</button>
+            <input id="ai-workplace-input" type="text" placeholder="輸入想讓 AI 生成 SOP 的工作名稱（例如：請幫我生成貨品分類或公文歸檔圖示卡...）" style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #d8b4fe; outline: none; font-size: 16px; min-width: 280px;" />
+            <button onclick="submitCustomAiQuestion()" class="btn btn-accent" style="padding: 12px 24px; min-height: 50px; font-size: 16px;">🤖 讓 AI 生成圖示 SOP 卡</button>
           </div>
 
-          <!-- AI Response Output Box -->
-          <div id="ai-response-box" style="display: none; background: white; border: 2px solid #d8b4fe; border-radius: 16px; padding: 20px; color: #4c1d95; box-shadow: 0 4px 14px rgba(124,58,237,0.06);">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
-              <span style="font-size: 24px;">🤖</span>
-              <h4 id="ai-response-title" style="font-size: 18px; font-weight: 800; color: #6b21a8;">AI 職場導師回覆：</h4>
+          <!-- AI Response Output Box (專屬圖示卡呈現) -->
+          <div id="ai-response-box" style="display: none; background: white; border: 2px solid #d8b4fe; border-radius: 18px; padding: 22px; color: #4c1d95; box-shadow: 0 6px 18px rgba(124,58,237,0.08);">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px dashed #d8b4fe; padding-bottom: 10px; margin-bottom: 14px;">
+              <h4 id="ai-response-title" style="font-size: 19px; font-weight: 800; color: #6b21a8; display: flex; align-items: center; gap: 8px;">
+                <span>🤖 AI 自動生成職場圖示化 SOP 說明卡：</span>
+              </h4>
+              <span class="badge badge-ai" style="font-size: 12px;">圖文白話拆解完成</span>
             </div>
-            <div id="ai-response-text" style="font-size: 15px; line-height: 1.7; white-space: pre-wrap;"></div>
+            <div id="ai-response-text" style="font-size: 16px; line-height: 1.8;"></div>
           </div>
         </div>
 
@@ -681,7 +683,7 @@
 
       <!-- 2. Student Wizard Selection Results (學生選完結果圖文展示區) -->
       <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px; display: flex; align- items: center; gap: 8px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
           🎯 學生填寫問卷結果 (圖文卡片展示)
         </h3>
 
@@ -890,7 +892,7 @@
       <!-- Tab Content 1: Student Profile PDF View -->
       <div id="doc-content-1" style="background: #f8fafc; border: 2px solid #c7d2fe; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <h4 style="font-size: 19px; font-weight: 800; color: #1e1b4b;">📋 學生學校科系與適配報告個案檔 (STD-2026-001_Profile.pdf)</h4>
+          <h4 style="font-size: 19px; font-weight: 800; color: #1e1b4b;">📋 學生學校科系與適配報告個案檔 (STD-2026-001_School_Profile.pdf)</h4>
           <span style="font-size: 13px; color: #166534; background: #dcfce7; padding: 2px 10px; border-radius: 10px; font-weight: 700;">狀態: 已記錄學校科系供追蹤</span>
         </div>
 
@@ -990,7 +992,7 @@
     let ADMIN_PASSCODE = localStorage.getItem('app_admin_passcode') || 'admin123';
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
-    // Student Profile State (包含學校名稱與就讀科系方便後續追蹤)
+    // Student Profile State
     let studentProfile = {
       name: "陳小明",
       school: "市立特教職業高級中學",
@@ -1000,7 +1002,7 @@
       disability: "肢體障礙 (使用輪椅)"
     };
 
-    // Seeker Selection State (紀錄學生選完的結果)
+    // Seeker Selection State
     let seekerSelections = {
       interests: ['📝 文書處理與資料輸入'],
       environments: ['🏢 室內靜態辦公室'],
@@ -1087,7 +1089,7 @@
       }
     ];
 
-    // Workplace Post-Onboarding AI Helper Engine (入職後有問題可問 AI)
+    // Workplace Post-Onboarding AI Helper Engine (AI 主動生成並拆解圖示化 SOP 卡片)
     function askWorkplaceAi(questionText) {
       document.getElementById('ai-workplace-input').value = questionText;
       submitCustomAiQuestion();
@@ -1096,7 +1098,7 @@
     function submitCustomAiQuestion() {
       const q = document.getElementById('ai-workplace-input').value.trim();
       if (!q) {
-        alert('請輸入您在職場遇到的困擾或問題！');
+        alert('請輸入您想讓 AI 生成 SOP 或解答的職場問題！');
         return;
       }
 
@@ -1105,39 +1107,73 @@
       const responseText = document.getElementById('ai-response-text');
 
       responseBox.style.display = 'block';
-      responseTitle.innerText = `🤖 AI 職場教練針對「${q.slice(0, 15)}...」的建議：`;
+      responseTitle.innerHTML = `<span>🤖 AI 自動為您生成與拆解圖示化 SOP 卡片：</span>`;
 
-      if (q.includes('打招呼') || q.includes('第一天上班')) {
-        responseText.innerText = 
-          `🌟 【第一天上班應對建議】：\n` +
-          `1. 帶著微笑點頭禮貌地說：「主管/學長姐好，我是今天入職的新人陳小明，來自市立特教職高資訊處理科，請多指教！」\n` +
-          `2. 可以準備小筆記本與筆，隨時記錄主管交代的 SOP 與注意事項。\n` +
-          `3. 遇到聽不懂或聽不清楚的指令時，可以禮貌詢問：「請問這個表格可以讓我看一下範例嗎？」主管會覺得您非常認真喔！`;
+      if (q.includes('SOP') || q.includes('看不懂') || q.includes('發票') || q.includes('表格') || q.includes('分類')) {
+        responseText.innerHTML = `
+          <div style="background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border: 2px solid #3b82f6; border-radius: 16px; padding: 20px; margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 2px solid #bfdbfe; padding-bottom: 8px;">
+              <h5 style="font-size: 20px; font-weight: 900; color: #1d4ed8;">📋 【AI 主動生成】發票核對與檔案輸入圖示化 SOP 卡</h5>
+              <span style="background: #2563eb; color: white; padding: 2px 10px; border-radius: 10px; font-size: 13px; font-weight: 700;">低認知圖文卡片</span>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+              
+              <div style="background: white; border: 2px solid #93c5fd; border-radius: 14px; padding: 14px; text-align: center;">
+                <div style="font-size: 38px; margin-bottom: 6px;">📄 ➔ 📅</div>
+                <h6 style="font-size: 17px; font-weight: 800; color: #1e40af;">步驟 1: 查看日期與號碼</h6>
+                <p style="font-size: 14px; color: #334155; margin-top: 4px;">找到發票右上方 8 位數字號碼與民國月份標籤。</p>
+              </div>
+
+              <div style="background: white; border: 2px solid #93c5fd; border-radius: 14px; padding: 14px; text-align: center;">
+                <div style="font-size: 38px; margin-bottom: 6px;">📁 [1-2月]  📁 [3-4月]</div>
+                <h6 style="font-size: 17px; font-weight: 800; color: #1e40af;">步驟 2: 依月份放資料夾</h6>
+                <p style="font-size: 14px; color: #334155; margin-top: 4px;">將同月份發票放入桌面上對應顏色的實體資料夾。</p>
+              </div>
+
+              <div style="background: white; border: 2px solid #93c5fd; border-radius: 14px; padding: 14px; text-align: center;">
+                <div style="font-size: 38px; margin-bottom: 6px;">⌨️ ➔ 📊</div>
+                <h6 style="font-size: 17px; font-weight: 800; color: #1e40af;">步驟 3: 電腦表格按序打字</h6>
+                <p style="font-size: 14px; color: #334155; margin-top: 4px;">打開 Excel 檔，將金額輸入到藍色提示框框內。</p>
+              </div>
+
+            </div>
+          </div>
+
+          <div style="background: #faf5ff; border-left: 4px solid #8b5cf6; padding: 14px; border-radius: 10px; font-size: 15px; color: #5b21b6;">
+            💡 <strong>AI 導師白話解釋：</strong><br/>
+            不用向其他人索取說明卡！AI 已經自動幫您把繁雜的文字拆解成上方 3 個簡單圖示。您只需要照著<strong>【1觀看號碼 ➔ 2歸類資料夾 ➔ 3打入藍色框框】</strong>的順序操作即可，做完一個步驟打勾一次！
+          </div>
+        `;
+      } else if (q.includes('打招呼') || q.includes('第一天上班')) {
+        responseText.innerHTML = `
+          <div style="background: #f0fdf4; border: 2px solid #86efac; border-radius: 16px; padding: 18px; color: #166534;">
+            <h5 style="font-size: 19px; font-weight: 800; margin-bottom: 8px;">🌟 【AI 第一天上班打招呼與應對圖文建議】：</h5>
+            <p>1. 帶著微笑點頭禮貌說：「主管/學長姐好，我是今天入職的新人陳小明，來自市立特教職高資訊處理科，請多指教！」</p>
+            <p style="margin-top: 6px;">2. 準備小筆記本與筆，隨時上記錄主管交代的圖示 SOP 步驟。</p>
+          </div>
+        `;
       } else if (q.includes('斜坡') || q.includes('桌面太低') || q.includes('無障礙')) {
-        responseText.innerText = 
-          `♿ 【申請無障礙設施調整建議】：\n` +
-          `1. 依據《勞動部職務再設計法規》，身障員工有權要求適當的無障礙職場調整。\n` +
-          `2. 建議說法：「HR 夥伴您好，因為我使用電動輪椅，目前的辦公桌高度稍低（建議 72~78cm），請問是否可以幫忙加高或申請職務再設計補助桌？」\n` +
-          `3. 輔導員陳老師也可以協助您聯繫地方勞工局提出「職務再設計」免費改造申請！`;
+        responseText.innerHTML = `
+          <div style="background: #f0fdf4; border: 2px solid #86efac; border-radius: 16px; padding: 18px; color: #166534;">
+            <h5 style="font-size: 19px; font-weight: 800; margin-bottom: 8px;">♿ 【AI 申請無障礙設施調整建議】：</h5>
+            <p>依據《勞動部職務再設計法規》，您有權要求適當的無障礙調整。建議說法：「HR 夥伴您好，因為我使用電動輪椅，目前的辦公桌高度稍低（建議 72~78cm），請問是否可以幫忙加高或申請職務再設計補助桌？」</p>
+          </div>
+        `;
       } else if (q.includes('請假') || q.includes('復健') || q.includes('體力')) {
-        responseText.innerText = 
-          `⏰ 【復健與請假溝通技巧】：\n` +
-          `1. 提前 3~5 天向主管報備固定復健時間，避免臨時請假造成工作困擾。\n` +
-          `2. 建議說法：「主管您好，我每週三下午需要定期到醫院進行物理復健，我會預先將當天的文書作業完成，並依照規定申請事假/病假。」\n` +
-          `3. 保持誠懇態度，主管都會非常體諒與配合！`;
-      } else if (q.includes('SOP') || q.includes('看不懂')) {
-        responseText.innerText = 
-          `📋 【工作 SOP 與作業學習建議】：\n` +
-          `1. 別緊張！新上手時看不懂是很正常的。可以請主管或導師為您提供「圖示化說明卡」。\n` +
-          `2. 建議說法：「導師您好，請問發票核對是否有對照的圖文範本呢？我想放在桌邊作為參考以提高正確率。」\n` +
-          `3. 隨時運用本系統的圖卡練習區進行模擬操作！`;
+        responseText.innerHTML = `
+          <div style="background: #fffbeb; border: 2px solid #fde68a; border-radius: 16px; padding: 18px; color: #b45309;">
+            <h5 style="font-size: 19px; font-weight: 800; margin-bottom: 8px;">⏰ 【AI 復健與請假溝通技巧】：</h5>
+            <p>提前 3~5 天向主管報備固定復健時間。建議說法：「主管您好，我每週三下午需要定期到醫院進行物理復健，我會預先將當天的文書作業完成，並依照規定申請事假/病假。」</p>
+          </div>
+        `;
       } else {
-        responseText.innerText = 
-          `💡 【職場溝通與適應建議】：\n` +
-          `在職場上遇到任何困難，請記住您並不孤單！\n` +
-          `1. 保持積極溝通：隨時向同事或主管反映真實情況。\n` +
-          `2. 聯繫專責輔導員：您可以隨時透過頁面下方表單將問題傳送至 vvicky9508@gmail.com，特教輔導員會立即關懷！\n` +
-          `3. 給自己信心：慢慢適應，您一定能發揮專業特長！`;
+        responseText.innerHTML = `
+          <div style="background: #f8fafc; border: 2px solid #cbd5e1; border-radius: 16px; padding: 18px; color: #1e293b;">
+            <h5 style="font-size: 19px; font-weight: 800; margin-bottom: 8px;">💡 【AI 職場解答】：</h5>
+            <p>在職場上有任何問題，AI 都會為您拆解成步驟圖卡！如果您有任何無法解決的問題，也可以點選頁面下方按鈕寄信給管理者 (vvicky9508@gmail.com)！</p>
+          </div>
+        `;
       }
 
       responseBox.scrollIntoView({ behavior: 'smooth' });
@@ -1523,13 +1559,12 @@
       document.getElementById('feedback-content').value = '';
     }
 
-    // Admin Dashboard Functions (含全站訊息與文件檢視)
+    // Admin Dashboard Functions
     function renderAdminDashboard() {
       document.getElementById('admin-job-count').innerText = `${mockJobs.length} 筆`;
       document.getElementById('admin-rag-count').innerText = `${RAG_DATABASE.length} 條`;
       document.getElementById('admin-msg-count').innerText = `${systemMessages.length} 則訊息 (含3份關聯文件)`;
 
-      // Render Admin Messages List
       const msgListContainer = document.getElementById('admin-messages-list');
       msgListContainer.innerHTML = '';
 
@@ -1561,7 +1596,6 @@
         });
       }
 
-      // Render Admin Job List
       const listEl = document.getElementById('admin-job-list');
       listEl.innerHTML = '';
       mockJobs.forEach((job) => {
@@ -1577,7 +1611,6 @@
         listEl.appendChild(div);
       });
 
-      // Render Admin RAG List
       const ragList = document.getElementById('admin-rag-list');
       ragList.innerHTML = '';
       RAG_DATABASE.forEach((item, idx) => {
@@ -1705,7 +1738,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已加入學校與科系追蹤功能，並提供入職後 AI 諮詢小幫手服務。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已升級入職後 AI 自動生成與拆解圖示化 SOP 卡片功能。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
