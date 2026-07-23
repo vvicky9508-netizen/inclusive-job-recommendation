@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (圖文輔導員儀表板與信箱整合)</title>
-  <meta name="description" content="專為身心障礙求職者設計的低認知步驟引導、關鍵字搜尋、輔導員/教師圖文個案結果展示、個資檢視、RAG 知識庫與 vvicky9508@gmail.com 信箱訊息回報機制。" />
+  <title>無障礙智慧職缺適配與輔導系統 (學生與輔導員雙向信箱整合)</title>
+  <meta name="description" content="專為身心障礙求職者與學生設計的低認知步驟引導、關鍵字搜尋、學生/輔導員雙向修改需求與 vvicky9508@gmail.com 信箱連動。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -210,8 +210,8 @@
           🌐
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #dbeafe; color: #1d4ed8; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">圖文輔導員儀表板 ✕ 信箱連動</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ 學生選完圖文呈現 ✕ 教師/輔導員個資檢視 ✕ 郵件訊息傳送</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #dbeafe; color: #1d4ed8; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">學生與輔導員雙向信箱連動</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ 學生修改需求回報 ✕ 教師/輔導員圖文報告 ✕ 郵件連動</p>
         </div>
       </div>
 
@@ -545,6 +545,34 @@
 
         </div>
 
+        <!-- Student Feedback / Adjustment Request Box (學生修改與需求回報卡) -->
+        <div style="background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%); border: 2px dashed #2563eb; border-radius: 24px; padding: 26px; margin-top: 28px; box-shadow: 0 8px 24px rgba(37,99,235,0.06);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-size: 21px; font-weight: 800; color: #1e40af; display: flex; align-items: center; gap: 8px;">
+              ✉️ 學生 / 求職者需要協助修改或提出建議？ (點擊直接傳送給管理者)
+            </h3>
+            <span class="badge" style="background: #dbeafe; color: #1d4ed8; font-size: 13px;">管理者接收信箱：vvicky9508@gmail.com</span>
+          </div>
+          <p style="font-size: 15px; color: #1e3a8a; margin-bottom: 16px;">
+            如果您在找工作或填寫問卷時，有想修改的條件或任何想法，可以點選下方快捷按鈕或輸入文字傳送給管理者：
+          </p>
+
+          <!-- Quick Selection Chips for Low Cognitive Student Feedback -->
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px;">
+            <button onclick="setStudentFeedbackPrompt('🙋 我想尋找更多適合我的【居家遠端】免通勤職缺')" style="background: white; border: 1px solid #93c5fd; color: #1d4ed8; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🙋 想要更多居家遠端職缺</button>
+            <button onclick="setStudentFeedbackPrompt('♿ 我希望職場能提供特定的【無障礙輔助設施】')" style="background: white; border: 1px solid #93c5fd; color: #1d4ed8; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">♿ 希望增加特定無障礙輔具</button>
+            <button onclick="setStudentFeedbackPrompt('📝 請管理者協助我手動修正剛才選填的問卷條件')" style="background: white; border: 1px solid #93c5fd; color: #1d4ed8; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">📝 請協助修正問卷條件</button>
+          </div>
+
+          <textarea id="student-feedback-content" rows="3" placeholder="請在此輸入您想告訴管理者的話（例如：我想多看台北市捷運附近的行政工作...）" style="width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #93c5fd; outline: none; font-size: 16px; margin-bottom: 14px;"></textarea>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button onclick="sendStudentFeedbackToEmail()" class="btn btn-primary" style="padding: 12px 24px;">
+              📧 傳送需求給管理者 (vvicky9508@gmail.com)
+            </button>
+          </div>
+        </div>
+
         <div style="display: flex; justify-content: space-between; margin-top: 28px;">
           <button onclick="goToStep(4)" class="btn btn-secondary">⬅️ 修改問卷條件</button>
         </div>
@@ -552,7 +580,7 @@
 
     </div>
 
-    <!-- Counselor / Teacher Rich Visual Dashboard (學生選完結果圖文展示 + 個資檢視 + 郵件發送) -->
+    <!-- Counselor / Teacher Rich Visual Dashboard -->
     <div id="counselor-dashboard" style="display: none; background: white; border-radius: 24px; padding: 32px; border: 2px solid #f59e0b; box-shadow: 0 10px 30px rgba(245,158,11,0.08);">
       
       <!-- Top Title & Badge -->
@@ -667,7 +695,7 @@
         </div>
       </div>
 
-      <!-- 5. Toggleable Raw RESTful JSON Accordion (保留給 API 需求者) -->
+      <!-- 5. Toggleable Raw RESTful JSON Accordion -->
       <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 16px; padding: 16px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span style="font-size: 15px; font-weight: 700; color: #475569;">🔌 RESTful JSON 結構資料 (供系統API導出)</span>
@@ -924,6 +952,41 @@
       }
     }
 
+    // Student Quick Feedback Chip Filler
+    function setStudentFeedbackPrompt(promptText) {
+      document.getElementById('student-feedback-content').value = promptText;
+    }
+
+    // Send Student Feedback Direct to vvicky9508@gmail.com
+    function sendStudentFeedbackToEmail() {
+      const content = document.getElementById('student-feedback-content').value.trim();
+      if (!content) {
+        alert('請輸入您想告訴管理者的需求或建議內容！');
+        return;
+      }
+
+      const recipientEmail = 'vvicky9508@gmail.com';
+      const subject = encodeURIComponent(`【易捷職缺系統】學生/求職者修改需求與建議`);
+      const body = encodeURIComponent(
+        `親愛的系統管理者：\n\n` +
+        `有學生/求職者在系統中提出了以下【修改需求或建議】：\n\n` +
+        `📝 學生需求內容：\n${content}\n\n` +
+        `----------------------------------------\n` +
+        `學生選擇狀況：\n` +
+        `• 興趣：${(seekerSelections.interests || []).join(', ')}\n` +
+        `• 環境：${(seekerSelections.environments || []).join(', ')}\n` +
+        `• 需求：${(seekerSelections.accommodations || []).join(', ')}\n` +
+        `• 時間：${(seekerSelections.schedule || []).join(', ')}\n\n` +
+        `發送時間：${new Date().toLocaleString('zh-TW')}\n` +
+        `此郵件由易捷職缺適配系統【學生/求職者視角】自動連動發送`
+      );
+
+      window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+      alert(`📧 需求訊息連動傳送成功！已開啟郵件將您的想法傳送至【${recipientEmail}】。管理者將盡快為您協助處理！`);
+      document.getElementById('student-feedback-content').value = '';
+    }
+
     // Load External Job Portal DIRECTLY INSIDE STEP 5 on the SAME PAGE!
     function loadPortalInStep5(platform) {
       const keyword = document.getElementById('global-search-input').value.trim() || '身心障礙';
@@ -1073,7 +1136,6 @@
       const isSelected = el.classList.contains('selected');
       circle.innerText = isSelected ? '✓' : '';
 
-      // Update student Seeker Selection State
       if (!seekerSelections[category]) seekerSelections[category] = [];
       if (isSelected) {
         if (!seekerSelections[category].includes(value)) seekerSelections[category].push(value);
@@ -1179,7 +1241,6 @@
         visualContainer.appendChild(card);
       });
 
-      // Update JSON Code snippet preview
       const data = {
         studentId: "STD-2026-001",
         studentName: "陳小明",
@@ -1224,7 +1285,6 @@
         `此郵件由易捷職缺適配系統【輔導員/教師控制台】自動連動發送`
       );
 
-      // Trigger native email client with pre-filled content to vvicky9508@gmail.com
       window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
 
       alert(`📧 訊息連動成功！系統已開啟郵件軟體將此修改需求傳送至【${recipientEmail}】。管理者將盡快為您進行修正！`);
@@ -1329,7 +1389,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為輔導員與教師載入學生圖文評估報告與個資檢視。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已新增學生專用需求回報區塊，可直接傳送訊息至管理者信箱。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
