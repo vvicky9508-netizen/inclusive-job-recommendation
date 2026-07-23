@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>教師與輔導員專屬網頁 - 學校科系追蹤與圖文個案報告</title>
+  <meta name="description" content="專為特教教師與職業輔導員打造的獨立網頁，載入學生學校與科系追蹤個案、問卷選填圖文報告與管理員信箱連動。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #d97706;
+      --primary-light: #fffbeb;
+      --border: #fcd34d;
+      --text: #0f172a;
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 40%, #f8fafc 100%);
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 26px;
+      font-size: 19px;
+      font-weight: 700;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      min-height: 56px;
+      text-decoration: none;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+    .btn-primary { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; box-shadow: 0 6px 20px rgba(217,119,6,0.3); }
+    .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid #cbd5e1; }
+    .btn-portal { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; box-shadow: 0 6px 20px rgba(234,88,12,0.3); }
+
+    header {
+      background: #ffffff;
+      border-bottom: 2px solid #fde68a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+    }
+    .header-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 800;
+      background: #fef3c7;
+      color: #b45309;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; border-radius: 16px; box-shadow: 0 6px 16px rgba(245,158,11,0.25);">
+          👨‍🏫
+        </div>
+        <div>
+          <h1 style="font-size: 23px; font-weight: 900; color: #78350f; display: flex; align-items: center; gap: 8px;">
+            教師 / 輔導員專屬網頁 
+            <span style="font-size: 14px; background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
+              ✨ 獨立輔導視角
+            </span>
+          </h1>
+          <p style="font-size: 14px; color: #92400e; font-weight: 600;">學校科系個案追蹤 ✕ 學生選填圖文結果 ✕ RAG評估 ✕ vvicky9508@gmail.com 信箱連動</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <a href="student.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
+          ♿ 前往學生/求職者網頁 ➔
+        </a>
+        <a href="index.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">
+          🏠 回系統入口 Hub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <div style="background: white; border-radius: 28px; padding: 36px; border: 2px solid #f59e0b; box-shadow: 0 10px 32px rgba(245,158,11,0.08);">
+      
+      <!-- Top Title & Badge -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #fef3c7; padding-bottom: 16px;">
+        <div>
+          <h2 style="font-size: 26px; font-weight: 900; color: #78350f; display: flex; align-items: center; gap: 10px;">
+            <span>👨‍🏫 特教輔導員與教師個案評估報告</span>
+          </h2>
+          <p style="font-size: 15px; color: #92400e;">即時同步學生填寫之學校科系、問卷結果、無障礙設施需求與基本個人資料。</p>
+        </div>
+        <span class="badge" style="font-size: 15px; font-weight: 800; padding: 6px 14px; border-radius: 14px;">
+          🟢 學校科系資料已載入
+        </span>
+      </div>
+
+      <!-- 1. Student Personal Info & Disability Profile -->
+      <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 2px solid #fcd34d; border-radius: 20px; padding: 24px; margin-bottom: 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #f59e0b; color: white; font-size: 30px; display: flex; align-items: center; justify-content: center; font-weight: 900;">
+              🎓
+            </div>
+            <div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #78350f;">陳小明 (學生 / 求職者追蹤檔案)</h3>
+              <p style="font-size: 15px; color: #b45309;">個案追蹤編號：STD-2026-001 | 填寫日期：2026-07-23</p>
+            </div>
+          </div>
+          <span style="background: #ffffff; color: #92400e; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 800; border: 1px solid #fcd34d;">
+            就業追蹤狀態：輔導進行中
+          </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; background: white; padding: 18px; border-radius: 14px; border: 1px solid #fde68a;">
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">🏫 畢業 / 就讀學校</span>
+            <p style="font-size: 17px; font-weight: 800; color: #2563eb;">市立特教職業高級中學</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">📚 主修 / 就讀科系</span>
+            <p style="font-size: 17px; font-weight: 800; color: #7c3aed;">資訊處理與商業服務科</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">📱 聯絡電話</span>
+            <p style="font-size: 17px; font-weight: 800; color: #0f172a;">0912-345-678</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">✉️ 電子郵件</span>
+            <p style="font-size: 17px; font-weight: 800; color: #0f172a;">student01@example.com</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">♿ 障礙類別/輔具說明</span>
+            <p style="font-size: 17px; font-weight: 800; color: #2563eb;">肢體障礙 (使用輪椅) / 聽力優良</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">🏢 後續追蹤狀態</span>
+            <p style="font-size: 17px; font-weight: 800; color: #059669;">已成功介接職重輔導員</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Student Selection Visual Cards -->
+      <div style="margin-bottom: 32px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          🎯 學生填寫問卷結果 (圖文卡片展示)
+        </h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;" id="counselor-visual-selections">
+          <div style="background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 16px; padding: 18px;">
+            <h4 style="font-size: 18px; font-weight: 800; color: #1d4ed8; margin-bottom: 10px;">📝 1. 工作興趣領域</h4>
+            <div style="background: white; border: 1px solid #bfdbfe; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 文書處理與資料輸入</div>
+          </div>
+          <div style="background: #f3e8ff; border: 2px solid #ddd6fe; border-radius: 16px; padding: 18px;">
+            <h4 style="font-size: 18px; font-weight: 800; color: #6b21a8; margin-bottom: 10px;">🏢 2. 理想工作環境</h4>
+            <div style="background: white; border: 1px solid #ddd6fe; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 室內靜態辦公室</div>
+          </div>
+          <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 16px; padding: 18px;">
+            <h4 style="font-size: 18px; font-weight: 800; color: #166534; margin-bottom: 10px;">♿ 3. 無障礙輔具需求</h4>
+            <div style="background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700; margin-bottom: 4px;">✓ 無障礙坡道與輪椅設施</div>
+            <div style="background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 1對1輔導員導師陪伴</div>
+          </div>
+          <div style="background: #fff7ed; border: 2px solid #ffedd5; border-radius: 16px; padding: 18px;">
+            <h4 style="font-size: 18px; font-weight: 800; color: #c2410c; margin-bottom: 10px;">☀️ 4. 期待工作時間</h4>
+            <div style="background: white; border: 1px solid #ffedd5; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 日間全職 (09:00 ~ 17:00)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. RAG Legal References -->
+      <div style="margin-bottom: 32px; background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 20px; padding: 24px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #166534; margin-bottom: 12px;">
+          📚 RAG 知識庫法規檢索依據 & 適配推薦評估
+        </h3>
+        <ul style="padding-left: 20px; font-size: 15px; color: #166534; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+          <li>📌 <strong>《職務再設計服務手冊 條文 4.2》</strong>：輪椅使用者桌面高度應維持 72~78cm，淨寬小於 90cm。</li>
+          <li>📌 <strong>《庇護性就業身心障礙者輔導計畫 第 12 條》</strong>：入職首月指派專職就業服務員進行 1對1 陪伴教學。</li>
+        </ul>
+
+        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 14px; padding: 18px; color: #065f46;">
+          <h4 style="font-size: 18px; font-weight: 800; color: #047857; margin-bottom: 6px;">🤖 輔導員綜合評估意見：</h4>
+          <p style="font-size: 15px;">
+            學生【陳小明】（畢業於市立特教職高資訊處理科）極適合文書處理與靜態室內辦公場所。配備無障礙坡道與 1對1 導師陪伴可提升適應性 95%。
+          </p>
+        </div>
+      </div>
+
+      <!-- 4. Email Direct Contact Form -->
+      <div style="background: #ffffff; border: 2px dashed #ea580c; border-radius: 22px; padding: 26px; margin-bottom: 28px; box-shadow: 0 6px 20px rgba(234,88,12,0.06);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+          <h3 style="font-size: 21px; font-weight: 800; color: #9a3412; display: flex; align-items: center; gap: 8px;">
+            ✉️ 系統建議與無法修改事項回報 (直接連線傳送至 vvicky9508@gmail.com)
+          </h3>
+          <span class="badge badge-portal" style="background: #ffedd5; color: #ea580c;">管理者專用接收信箱</span>
+        </div>
+        <p style="font-size: 15px; color: #c2410c; margin-bottom: 18px;">
+          若輔導員或教師在操作、個案資料或職缺審核中有<strong>無法在線上直接修改的地方</strong>，請在此輸入訊息，系統將自動開啟郵件傳遞至 <strong>vvicky9508@gmail.com</strong>，方便管理者立刻為您修改：
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
+            <input id="feedback-sender-name" type="text" value="陳輔導員 (市立特教)" placeholder="您的姓名與職稱" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74;" />
+            <select id="feedback-type" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74; font-weight: 700; color: #9a3412;">
+              <option value="個案資料手動修正">類型：學生個資/學校科系修正</option>
+              <option value="職缺資料庫欄位修改">類型：職缺資料庫欄位調整</option>
+              <option value="RAG法規條文更新">類型：RAG 法規條文新增/修改</option>
+              <option value="其他無法修改事項">類型：其他系統無法修改事項</option>
+            </select>
+          </div>
+
+          <textarea id="feedback-content" rows="4" placeholder="請詳細說明需要管理者協助修改的地方（例如：學生陳小明希望修正畢業科系為商業服務科...）" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #fdba74; outline: none; font-size: 15px;"></textarea>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+            <button onclick="sendFeedbackToEmail()" class="btn btn-portal" style="padding: 12px 26px;">
+              📧 傳送訊息至 vvicky9508@gmail.com
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Toggleable Raw RESTful JSON Accordion -->
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 16px; padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 15px; font-weight: 700; color: #475569;">🔌 RESTful JSON 結構資料 (包含學校與科系)</span>
+          <button onclick="toggleJsonAccordion()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 38px; font-size: 13px;">
+            [顯示/隱藏 JSON 原始碼]
+          </button>
+        </div>
+        <div id="json-accordion-box" style="display: none; margin-top: 14px;">
+          <div style="background: #0f172a; color: #38bdf8; padding: 18px; border-radius: 12px; font-family: monospace; font-size: 14px; overflow-x: auto;">
+            <pre id="counselor-json-preview"></pre>
+          </div>
+          <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製包含學校科系之 RESTful JSON 數據');" class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; min-height: 42px; font-size: 14px;">
+            📋 複製 RESTful JSON 數據
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    let studentProfile = {
+      name: "陳小明",
+      school: "市立特教職業高級中學",
+      department: "資訊處理與商業服務科",
+      phone: "0912-345-678",
+      email: "student01@example.com",
+      disability: "肢體障礙 (使用輪椅)"
+    };
+
+    window.onload = function() {
+      const data = {
+        studentId: "STD-2026-001",
+        studentName: studentProfile.name,
+        schoolName: studentProfile.school,
+        departmentName: studentProfile.department,
+        contactPhone: studentProfile.phone,
+        contactEmail: studentProfile.email,
+        disabilityCategory: studentProfile.disability,
+        counselorRecipientEmail: "vvicky9508@gmail.com",
+        selections: {
+          interests: ['📝 文書處理與資料輸入'],
+          environments: ['🏢 室內靜態辦公室'],
+          accommodations: ['♿ 無障礙坡道與輪椅設施', '🤝 1對1輔導員導師陪伴'],
+          schedule: ['☀️ 日間全職 (09:00 ~ 17:00)']
+        },
+        matchedJobsCount: 3,
+        llmAssessmentSummary: "極度適合靜態文書處理與輪椅斜坡無障礙職場環境。"
+      };
+      document.getElementById('counselor-json-preview').innerText = JSON.stringify(data, null, 2);
+    };
+
+    function toggleJsonAccordion() {
+      const box = document.getElementById('json-accordion-box');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function sendFeedbackToEmail() {
+      const sender = document.getElementById('feedback-sender-name').value.trim() || '特教輔導員';
+      const type = document.getElementById('feedback-type').value;
+      const content = document.getElementById('feedback-content').value.trim();
+
+      if (!content) {
+        alert('請填寫需要管理者協助修改或建議的詳細說明！');
+        return;
+      }
+
+      let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
+      const newMsg = {
+        id: `msg-${Date.now()}`,
+        sender: `👨‍🏫 輔導員/教師【${sender}】`,
+        time: new Date().toLocaleString('zh-TW'),
+        type: type,
+        content: content,
+        selections: `個案學校：${studentProfile.school} | 科系：${studentProfile.department}`
+      };
+      systemMessages.unshift(newMsg);
+      localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
+
+      const recipientEmail = 'vvicky9508@gmail.com';
+      const subject = encodeURIComponent(`【易捷職缺系統】輔導員/教師修改請求 - ${type} (${sender})`);
+      const body = encodeURIComponent(
+        `親愛的系統管理者：\n\n` +
+        `我是 ${sender}。\n` +
+        `在輔導學生與審核職缺過程中，發現以下【無法在線上直接修改事項/系統調整建議】：\n\n` +
+        `📌 問題與修改類型：${type}\n` +
+        `🏫 學生學校與科系：${studentProfile.school} - ${studentProfile.department}\n` +
+        `📝 詳細說明與建議需求：\n${content}\n\n` +
+        `----------------------------------------\n` +
+        `發送時間：${new Date().toLocaleString('zh-TW')}\n` +
+        `此郵件由易捷職缺適配系統【教師獨立頁】自動連動發送`
+      );
+
+      window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+      alert(`📧 訊息連動成功！已同步記錄於【管理員全站控制台】，並開啟郵件傳送至【${recipientEmail}】。`);
+      document.getElementById('feedback-content').value = '';
+    }
+  </script>
+</body>
+</html>
