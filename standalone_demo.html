@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (RAG + 自訂密碼管理員)</title>
-  <meta name="description" content="專為身心障礙求職者、職業輔導員與系統管理員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、管理員密碼自訂鑑權與 LLM 智慧匹配系統。" />
+  <title>無障礙智慧職缺適配與輔導系統 (關鍵字搜尋 + 外部就業平台直連)</title>
+  <meta name="description" content="專為身心障礙求職者設計的低認知步驟引導、關鍵字搜尋、外部就業平台（台灣就業通、104身障專區）直連、RAG 知識庫與 LLM 職缺推薦系統。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -23,6 +23,8 @@
       --admin-light: #eef2ff;
       --rag-color: #0d9488;
       --rag-light: #ccfbf1;
+      --portal-color: #ea580c;
+      --portal-light: #ffedd5;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
@@ -55,6 +57,7 @@
       user-select: none;
       transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       min-height: 56px;
+      text-decoration: none;
     }
 
     .btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); }
@@ -64,6 +67,7 @@
     .btn-secondary:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
     .btn-accent { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; box-shadow: 0 6px 18px rgba(124,58,237,0.3); }
     .btn-rag { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; box-shadow: 0 6px 18px rgba(13,148,136,0.3); }
+    .btn-portal { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; box-shadow: 0 6px 18px rgba(234,88,12,0.3); }
     .btn-admin { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; box-shadow: 0 6px 18px rgba(99,102,241,0.3); }
     .btn-danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
 
@@ -172,6 +176,7 @@
       color: var(--primary);
     }
     .badge-rag { background: var(--rag-light); color: var(--rag-color); }
+    .badge-portal { background: var(--portal-light); color: var(--portal-color); }
     .badge-admin { background: var(--admin-light); color: var(--admin-color); }
 
     .rag-box {
@@ -180,6 +185,13 @@
       border-radius: 16px;
       padding: 18px 22px;
       margin-bottom: 20px;
+    }
+    .portal-box {
+      background: #fff7ed;
+      border: 2px solid #fdba74;
+      border-radius: 20px;
+      padding: 24px;
+      margin-top: 32px;
     }
 
     input, select, textarea {
@@ -193,12 +205,12 @@
   <header>
     <div class="header-inner">
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="background: linear-gradient(135deg, #6366f1 0%, #0d9488 100%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
-          ♿
+        <div style="background: linear-gradient(135deg, #ea580c 0%, #3b82f6 100%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
+          🌐
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ccfbf1; color: #0f766e; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">RAG + 自訂管理密碼</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 檢索增強 ✕ 管理員自訂密碼 ✕ 輔導員權限管理</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ffedd5; color: #c2410c; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">全網平台檢索版</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ 關鍵字即時搜尋 ✕ 台灣就業通/104就業平台直連 ✕ RAG+LLM</p>
         </div>
       </div>
 
@@ -237,6 +249,35 @@
 
   <!-- Main Container -->
   <div class="container">
+
+    <!-- Global Keyword Search & External Platform Launcher Bar -->
+    <div style="background: #ffffff; border-radius: 24px; padding: 24px; margin-bottom: 28px; border: 2px solid #fdba74; boxShadow: 0 8px 24px rgba(234,88,12,0.08);">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+        <h3 style="font-size: 20px; font-weight: 800; color: #9a3412; display: flex; align-items: center; gap: 8px;">
+          <span>🔍 全網關鍵字搜尋與外部就業平台直連引擎</span>
+        </h3>
+        <span class="badge badge-portal">跨平台同步</span>
+      </div>
+
+      <div style="display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
+        <input id="global-search-input" type="text" placeholder="輸入關鍵字 (如: 文書、輪椅、台北、遠端、資料處理...)" oninput="handleKeywordSearch(this.value)" style="flex: 1; padding: 14px 18px; font-size: 17px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; min-width: 260px;" />
+        <button onclick="searchExternalJobPortal('taiwan')" class="btn btn-portal" style="padding: 10px 20px; min-height: 50px; font-size: 16px;">
+          🇹🇼 搜尋台灣就業通 ➔
+        </button>
+        <button onclick="searchExternalJobPortal('104')" class="btn btn-primary" style="padding: 10px 20px; min-height: 50px; font-size: 16px; background: #ea580c;">
+          💼 搜尋 104 身障專區 ➔
+        </button>
+      </div>
+
+      <!-- Quick Keyword Chips -->
+      <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+        <span style="font-size: 14px; font-weight: 700; color: #64748b;">熱門搜尋標籤：</span>
+        <button onclick="setKeywordSearch('文書處理')" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">📝 文書處理</button>
+        <button onclick="setKeywordSearch('居家遠端')" style="background: #f3e8ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🏠 居家遠端</button>
+        <button onclick="setKeywordSearch('輪椅無障礙')" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">♿ 輪椅無障礙</button>
+        <button onclick="setKeywordSearch('一對一導師')" style="background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🤝 1對1導師陪伴</button>
+      </div>
+    </div>
 
     <!-- Progress Bar Card -->
     <div id="progress-card" style="background: #ffffff; border-radius: 24px; padding: 28px; margin-bottom: 32px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
@@ -449,6 +490,31 @@
         <!-- Job List Container -->
         <div id="job-results-container" style="display: flex; flex-direction: column; gap: 20px;"></div>
 
+        <!-- External Job Portals Section -->
+        <div class="portal-box">
+          <h3 style="font-size: 22px; font-weight: 800; color: #9a3412; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            🌐 探索其他外部就業平台職缺 (Beyond LLM Recommendations)
+          </h3>
+          <p style="font-size: 16px; color: #ea580c; margin-bottom: 18px;">
+            除了 LLM 演算法為您推薦的職缺外，您也可以直接點選以下官方與大型求職平台，探索更多身心障礙友善職缺選項：
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            <a href="https://job.taiwanjobs.gov.tw/Internet/index/index.aspx" target="_blank" class="btn btn-portal" style="font-size: 16px; flex-direction: column; padding: 16px; align-items: flex-start;">
+              <span style="font-weight: 900; font-size: 18px;">🇹🇼 台灣就業通 - 身障專區</span>
+              <span style="font-size: 13px; opacity: 0.9;">勞動部官方身心障礙者就業服務網</span>
+            </a>
+            <a href="https://www.104.com.tw/jobs/main/" target="_blank" class="btn btn-secondary" style="font-size: 16px; flex-direction: column; padding: 16px; align-items: flex-start; border-color: #ea580c; color: #9a3412;">
+              <span style="font-weight: 900; font-size: 18px;">💼 104 人力銀行 - 身障專區</span>
+              <span style="font-size: 13px; color: #ea580c;">全台最大友善企業職缺資料庫</span>
+            </a>
+            <a href="https://www.1111.com.tw/" target="_blank" class="btn btn-secondary" style="font-size: 16px; flex-direction: column; padding: 16px; align-items: flex-start; border-color: #f97316; color: #c2410c;">
+              <span style="font-weight: 900; font-size: 18px;">🏢 1111 人力銀行 - 友善求職</span>
+              <span style="font-size: 13px; color: #ea580c;">多元友善企業職缺一覽</span>
+            </a>
+          </div>
+        </div>
+
         <div style="display: flex; justify-content: space-between; margin-top: 28px;">
           <button onclick="goToStep(4)" class="btn btn-secondary">⬅️ 修改問卷條件</button>
         </div>
@@ -481,7 +547,7 @@
         <button onclick="adminLogout()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 40px; font-size: 14px; color: #ef4444; border-color: #fca5a5;">登出管理員身分</button>
       </div>
 
-      <!-- Change Admin Password Form (NEW) -->
+      <!-- Change Admin Password Form -->
       <div style="background: #eef2ff; border: 2px solid #c7d2fe; border-radius: 18px; padding: 20px; margin-bottom: 28px;">
         <h3 style="font-size: 19px; font-weight: 800; color: #3730a3; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
           🔑 變更管理員通行密碼 (Change Admin Passcode)
@@ -587,10 +653,9 @@
     let currentRole = 'seeker';
     let currentStepNum = 1;
     let isAdminAuthenticated = false;
+    let searchFilterKeyword = '';
 
-    // 動態密碼：優先讀取 LocalStorage 自訂密碼，預設為 admin123
     let ADMIN_PASSCODE = localStorage.getItem('app_admin_passcode') || 'admin123';
-
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
     // RAG Knowledge Base Documents
@@ -649,6 +714,33 @@
         ragRef: '符合《庇護就業輔導計畫 第 12 條》陪伴規範'
       }
     ];
+
+    function handleKeywordSearch(keyword) {
+      searchFilterKeyword = keyword.trim().toLowerCase();
+      if (currentStepNum === 5 && currentRole === 'seeker') {
+        renderLLMResults();
+      }
+    }
+
+    function setKeywordSearch(keyword) {
+      document.getElementById('global-search-input').value = keyword;
+      handleKeywordSearch(keyword);
+      if (currentRole === 'seeker') {
+        renderLLMResults();
+        goToStep(5);
+      }
+    }
+
+    function searchExternalJobPortal(platform) {
+      const keyword = document.getElementById('global-search-input').value.trim() || '身心障礙';
+      let url = '';
+      if (platform === 'taiwan') {
+        url = `https://job.taiwanjobs.gov.tw/Internet/index/job_search_list.aspx?keyword=${encodeURIComponent(keyword)}`;
+      } else if (platform === '104') {
+        url = `https://www.104.com.tw/jobs/search/?keyword=${encodeURIComponent(keyword)}&jobsource=disabled`;
+      }
+      window.open(url, '_blank');
+    }
 
     function requestAdminRole() {
       if (isAdminAuthenticated) {
@@ -759,11 +851,30 @@
         ragList.appendChild(li);
       });
 
-      // 2. Render Job Cards
+      // 2. Render Job Cards with Filter Logic
       const container = document.getElementById('job-results-container');
       container.innerHTML = '';
       
-      mockJobs.forEach((job) => {
+      const filteredJobs = mockJobs.filter(j => {
+        if (!searchFilterKeyword) return true;
+        return j.title.toLowerCase().includes(searchFilterKeyword) ||
+               j.company.toLowerCase().includes(searchFilterKeyword) ||
+               j.type.toLowerCase().includes(searchFilterKeyword) ||
+               j.fitReason.toLowerCase().includes(searchFilterKeyword);
+      });
+
+      if (filteredJobs.length === 0) {
+        container.innerHTML = `
+          <div style="background: white; border: 2px dashed #cbd5e1; border-radius: 20px; padding: 28px; text-align: center; color: #64748b;">
+            <p style="font-size: 18px; font-weight: 700; margin-bottom: 8px;">🔍 本系統無符合關鍵字【${searchFilterKeyword}】之站內職缺</p>
+            <p style="font-size: 15px; margin-bottom: 16px;">別擔心！您可以點選下方按鈕直接連線至【台灣就業通】或【104身障專區】搜尋該關鍵字之其他機會：</p>
+            <button onclick="searchExternalJobPortal('taiwan')" class="btn btn-portal" style="font-size: 15px; padding: 8px 16px; min-height: 42px;">在 台灣就業通 搜尋【${searchFilterKeyword}】 ➔</button>
+          </div>
+        `;
+        return;
+      }
+
+      filteredJobs.forEach((job) => {
         let score = job.score;
         if (modifiers.reducePhysical && job.type.includes('遠端')) score = 98;
 
@@ -904,7 +1015,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。您可在管理員面板中動態變更密碼。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為您啟動關鍵字搜尋與外部就業平台直連。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
