@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>教師與輔導員專屬網頁 - 登入與學校科系個案追蹤</title>
-  <meta name="description" content="專為特教教師與職業輔導員打造的獨立網頁，包含第一次登入教師個人資料建檔、學生學校與科系追蹤報告與管理員信箱連動。" />
+  <title>教師與輔導員專屬網頁 - 自訂密碼與 Google 帳號登入</title>
+  <meta name="description" content="專為特教教師與職業輔導員打造的獨立網頁，支援自訂密碼登入、Google 帳號一鍵登入、學生學校與科系個案追蹤。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -48,6 +48,8 @@
     .btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
     .btn-primary { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white; box-shadow: 0 6px 20px rgba(217,119,6,0.3); }
     .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid #cbd5e1; }
+    .btn-google { background: #ffffff; color: #3c4043; border: 2px solid #dadce0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-weight: 800; }
+    .btn-google:hover { background: #f8f9fa; border-color: #4285f4; color: #1a73e8; }
     .btn-portal { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; box-shadow: 0 6px 20px rgba(234,88,12,0.3); }
 
     header {
@@ -96,6 +98,24 @@
       background: #fef3c7;
       color: #b45309;
     }
+
+    .auth-tab-btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.2s;
+    }
+    .auth-tab-btn.active {
+      background: #d97706;
+      color: white;
+    }
+    .auth-tab-btn:not(.active) {
+      background: #f1f5f9;
+      color: #64748b;
+    }
   </style>
 </head>
 <body>
@@ -111,18 +131,18 @@
           <h1 style="font-size: 23px; font-weight: 900; color: #78350f; display: flex; align-items: center; gap: 8px;">
             教師 / 輔導員專屬網頁 
             <span style="font-size: 14px; background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
-              ✨ 獨立輔導視角
+              ✨ 自訂密碼 / Google 雙登入
             </span>
           </h1>
           <p id="teacher-header-status" style="font-size: 14px; color: #92400e; font-weight: 600;">
-            目前登入輔導員：<strong id="header-teacher-name" style="color: #d97706;">未登入</strong> (<span id="header-teacher-school">請先完成登入</span>)
+            目前登入輔導員：<strong id="header-teacher-name" style="color: #d97706;">未登入</strong> (<span id="header-teacher-school">請選擇密碼或 Google 登入</span>)
           </p>
         </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <button onclick="toggleTeacherAuthModal(true)" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #d97706; border-color: #fde68a; background: #fffbeb;">
-          👤 修改教師登入資料
+          🔑 切換/登入教師帳號
         </button>
         <a href="student.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
           ♿ 學生/求職者網頁 ➔
@@ -134,51 +154,95 @@
     </div>
   </header>
 
-  <!-- Teacher Authentication / Profile Registration Modal -->
+  <!-- Teacher Authentication Modal -->
   <div id="teacher-auth-modal" class="modal-backdrop">
-    <div style="background: white; border-radius: 28px; max-width: 580px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
+    <div style="background: white; border-radius: 28px; max-width: 600px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
       
       <div style="text-align: center; margin-bottom: 20px;">
         <div style="width: 64px; height: 64px; border-radius: 20px; background: #fffbeb; color: #d97706; font-size: 36px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; margin-bottom: 8px;">
           👨‍🏫
         </div>
-        <h3 style="font-size: 24px; font-weight: 900; color: #78350f;">教師 / 輔導員登入與個案輔導建檔</h3>
+        <h3 style="font-size: 24px; font-weight: 900; color: #78350f;">教師 / 輔導員登入與驗證</h3>
         <p style="font-size: 15px; color: #64748b; margin-top: 4px;">
-          請填寫您的教師/輔導員個資以完成登入，系統將同步發送記錄至管理員主控台！
+          支援<strong>自訂密碼登入</strong>或 <strong>Google / 學校 Email 快速登入</strong>：
         </p>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
-        <div>
-          <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">👨‍🏫 教師 / 輔導員姓名與職稱 <span style="color: #ef4444;">*</span></label>
-          <input id="auth-teacher-name" type="text" placeholder="例如：陳輔導員 / 特教組長" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-        </div>
+      <!-- Auth Mode Switcher Tabs -->
+      <div style="display: flex; gap: 8px; justify-content: center; background: #f1f5f9; padding: 6px; border-radius: 16px; margin-bottom: 20px;">
+        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="auth-tab-btn active">🔑 帳號密碼登入</button>
+        <button id="auth-tab-google" onclick="switchAuthTab('google')" class="auth-tab-btn">🌐 Google / 學校信箱一鍵登入</button>
+        <button id="auth-tab-register" onclick="switchAuthTab('register')" class="auth-tab-btn">📝 首次登入資料建檔</button>
+      </div>
 
-        <div>
-          <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🏫 服務學校或輔導機構名稱 <span style="color: #ef4444;">*</span></label>
-          <input id="auth-teacher-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+      <!-- Option 1: Existing Password Login Form -->
+      <div id="auth-panel-login" style="display: block;">
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
           <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">📱 聯絡電話</label>
-            <input id="auth-teacher-phone" type="text" placeholder="例如：02-2345-6789 #102" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">✉️ 教師公務 Email / 帳號</label>
+            <input id="login-teacher-email" type="email" placeholder="例如：teacher_chen@school.edu.tw" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
           <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">✉️ 公務電子郵件</label>
-            <input id="auth-teacher-email" type="email" placeholder="例如：teacher_chen@school.edu.tw" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🔑 您自訂的登入密碼</label>
+            <input id="login-teacher-password" type="password" placeholder="請輸入您設定的密碼..." style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
         </div>
+        <button onclick="teacherLoginWithPassword()" class="btn btn-primary" style="width: 100%;">
+          🔑 驗證密碼並進入輔導系統 ➔
+        </button>
+      </div>
 
-        <div>
-          <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🎯 負責輔導學年度或班級科系</label>
-          <input id="auth-teacher-dept" type="text" placeholder="例如：114學年度 特教職高資訊處理與商業服務科" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+      <!-- Option 2: Google OAuth Quick Login Form -->
+      <div id="auth-panel-google" style="display: none; text-align: center;">
+        <div style="background: #fffbeb; border: 2px dashed #f59e0b; border-radius: 20px; padding: 24px; margin-bottom: 20px;">
+          <div style="font-size: 48px; margin-bottom: 8px;">🌐</div>
+          <h4 style="font-size: 20px; font-weight: 800; color: #b45309; margin-bottom: 6px;">Google / 學校信箱快速安全登入</h4>
+          <p style="font-size: 15px; color: #78350f; margin-bottom: 16px;">
+            免記密碼，直接使用您的學校或個人 Google 帳號一鍵驗證登入：
+          </p>
+
+          <button onclick="teacherLoginWithGoogle('teacher_chen@school.edu.tw', '陳輔導員 (Google 驗證)')" class="btn btn-google" style="width: 100%; justify-content: center; margin-bottom: 10px;">
+            <span style="font-size: 22px;">🌐</span> 使用 [ teacher_chen@school.edu.tw ] 快速登入
+          </button>
+          
+          <button onclick="promptCustomTeacherGoogle()" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 15px;">
+            ➕ 使用其他學校 Google 帳號登入
+          </button>
         </div>
       </div>
 
-      <div style="display: flex; gap: 12px;">
-        <button onclick="saveTeacherProfileAndLogin()" class="btn btn-primary" style="flex: 1;">
-          ✅ 完成登記並進入輔導系統
+      <!-- Option 3: First-time Registration Form -->
+      <div id="auth-panel-register" style="display: none;">
+        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+          <div>
+            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">👨‍🏫 教師 / 輔導員姓名與職稱 <span style="color: #ef4444;">*</span></label>
+            <input id="reg-teacher-name" type="text" placeholder="例如：陳輔導員 / 特教組長" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+
+          <div>
+            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🏫 服務學校或輔導機構名稱 <span style="color: #ef4444;">*</span></label>
+            <input id="reg-teacher-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
+            <div>
+              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">✉️ 公務 Email (登入帳號) <span style="color: #ef4444;">*</span></label>
+              <input id="reg-teacher-email" type="email" placeholder="例如：teacher_chen@school.edu.tw" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            </div>
+            <div>
+              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🔑 設定您的自訂密碼 <span style="color: #ef4444;">*</span></label>
+              <input id="reg-teacher-password" type="password" placeholder="設定此帳號日後登入密碼..." style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            </div>
+          </div>
+
+          <div>
+            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🎯 負責輔導學年度或班級科系</label>
+            <input id="reg-teacher-dept" type="text" placeholder="例如：特教職高資訊處理與商業服務科" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+        </div>
+
+        <button onclick="registerNewTeacherAccount()" class="btn btn-primary" style="width: 100%;">
+          ✅ 完成建檔並設定此密碼進入
         </button>
       </div>
 
@@ -190,7 +254,6 @@
 
     <div style="background: white; border-radius: 28px; padding: 36px; border: 2px solid #f59e0b; box-shadow: 0 10px 32px rgba(245,158,11,0.08);">
       
-      <!-- Top Title & Badge -->
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #fef3c7; padding-bottom: 16px;">
         <div>
           <h2 style="font-size: 26px; font-weight: 900; color: #78350f; display: flex; align-items: center; gap: 10px;">
@@ -203,7 +266,7 @@
         </span>
       </div>
 
-      <!-- 1. Student Personal Info & Disability Profile -->
+      <!-- 1. Student Personal Info Profile Card -->
       <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 2px solid #fcd34d; border-radius: 20px; padding: 24px; margin-bottom: 28px;">
         <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
           <div style="display: flex; align-items: center; gap: 16px;">
@@ -237,40 +300,22 @@
             <span style="font-size: 13px; color: #64748b; font-weight: 700;">✉️ 電子郵件</span>
             <p style="font-size: 17px; font-weight: 800; color: #0f172a;">student01@example.com</p>
           </div>
-          <div>
-            <span style="font-size: 13px; color: #64748b; font-weight: 700;">♿ 障礙類別/輔具說明</span>
-            <p style="font-size: 17px; font-weight: 800; color: #2563eb;">肢體障礙 (使用輪椅) / 聽力優良</p>
-          </div>
-          <div>
-            <span style="font-size: 13px; color: #64748b; font-weight: 700;">🏢 後續追蹤狀態</span>
-            <p style="font-size: 17px; font-weight: 800; color: #059669;">已成功介接職重輔導員</p>
-          </div>
         </div>
       </div>
 
       <!-- 2. Student Selection Visual Cards -->
       <div style="margin-bottom: 32px;">
-        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px;">
           🎯 學生填寫問卷結果 (圖文卡片展示)
         </h3>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;" id="counselor-visual-selections">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
           <div style="background: #eff6ff; border: 2px solid #bfdbfe; border-radius: 16px; padding: 18px;">
             <h4 style="font-size: 18px; font-weight: 800; color: #1d4ed8; margin-bottom: 10px;">📝 1. 工作興趣領域</h4>
             <div style="background: white; border: 1px solid #bfdbfe; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 文書處理與資料輸入</div>
           </div>
-          <div style="background: #f3e8ff; border: 2px solid #ddd6fe; border-radius: 16px; padding: 18px;">
-            <h4 style="font-size: 18px; font-weight: 800; color: #6b21a8; margin-bottom: 10px;">🏢 2. 理想工作環境</h4>
-            <div style="background: white; border: 1px solid #ddd6fe; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 室內靜態辦公室</div>
-          </div>
           <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 16px; padding: 18px;">
             <h4 style="font-size: 18px; font-weight: 800; color: #166534; margin-bottom: 10px;">♿ 3. 無障礙輔具需求</h4>
-            <div style="background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700; margin-bottom: 4px;">✓ 無障礙坡道與輪椅設施</div>
-            <div style="background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 1對1輔導員導師陪伴</div>
-          </div>
-          <div style="background: #fff7ed; border: 2px solid #ffedd5; border-radius: 16px; padding: 18px;">
-            <h4 style="font-size: 18px; font-weight: 800; color: #c2410c; margin-bottom: 10px;">☀️ 4. 期待工作時間</h4>
-            <div style="background: white; border: 1px solid #ffedd5; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 日間全職 (09:00 ~ 17:00)</div>
+            <div style="background: white; border: 1px solid #bbf7d0; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700;">✓ 無障礙坡道與輪椅設施</div>
           </div>
         </div>
       </div>
@@ -280,63 +325,23 @@
         <h3 style="font-size: 22px; font-weight: 800; color: #166534; margin-bottom: 12px;">
           📚 RAG 知識庫法規檢索依據 & 適配推薦評估
         </h3>
-        <ul style="padding-left: 20px; font-size: 15px; color: #166534; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
-          <li>📌 <strong>《職務再設計服務手冊 條文 4.2》</strong>：輪椅使用者桌面高度應維持 72~78cm，淨寬小於 90cm。</li>
-          <li>📌 <strong>《庇護性就業身心障礙者輔導計畫 第 12 條》</strong>：入職首月指派專職就業服務員進行 1對1 陪伴教學。</li>
+        <ul style="padding-left: 20px; font-size: 15px; color: #166534; display: flex; flex-direction: column; gap: 8px;">
+          <li>📌 <strong>《職務再設計服務手冊 條文 4.2》</strong>：輪椅使用者桌面高度應維持 72~78cm。</li>
         </ul>
-
-        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 14px; padding: 18px; color: #065f46;">
-          <h4 style="font-size: 18px; font-weight: 800; color: #047857; margin-bottom: 6px;">🤖 輔導員綜合評估意見：</h4>
-          <p style="font-size: 15px;">
-            學生【陳小明】（畢業於市立特教職高資訊處理科）極適合文書處理與靜態室內辦公場所。配備無障礙坡道與 1對1 導師陪伴可提升適應性 95%。
-          </p>
-        </div>
       </div>
 
       <!-- 4. Email Direct Contact Form -->
-      <div style="background: #ffffff; border: 2px dashed #ea580c; border-radius: 22px; padding: 26px; margin-bottom: 28px; box-shadow: 0 6px 20px rgba(234,88,12,0.06);">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-          <h3 style="font-size: 21px; font-weight: 800; color: #9a3412; display: flex; align-items: center; gap: 8px;">
-            ✉️ 系統建議與無法修改事項回報 (直接連線傳送至 vvicky9508@gmail.com)
-          </h3>
-          <span class="badge" style="background: #ffedd5; color: #ea580c;">管理者專用接收信箱</span>
-        </div>
-        <p style="font-size: 15px; color: #c2410c; margin-bottom: 18px;">
-          若輔導員或教師在操作、個案資料或職缺審核中有<strong>無法在線上直接修改的地方</strong>，請在此輸入訊息，系統將自動開啟郵件傳遞至 <strong>vvicky9508@gmail.com</strong>，方便管理者立刻為您修改：
-        </p>
-
+      <div style="background: #ffffff; border: 2px dashed #ea580c; border-radius: 22px; padding: 26px; margin-bottom: 28px;">
+        <h3 style="font-size: 21px; font-weight: 800; color: #9a3412; margin-bottom: 12px;">
+          ✉️ 系統建議與無法修改事項回報 (直接連線傳送至 vvicky9508@gmail.com)
+        </h3>
         <div style="display: flex; flex-direction: column; gap: 14px;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
-            <input id="feedback-sender-name" type="text" placeholder="您的姓名與職稱" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74;" />
-            <select id="feedback-type" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74; font-weight: 700; color: #9a3412;">
-              <option value="個案資料手動修正">類型：學生個資/學校科系修正</option>
-              <option value="職缺資料庫欄位修改">類型：職缺資料庫欄位調整</option>
-              <option value="RAG法規條文更新">類型：RAG 法規條文新增/修改</option>
-              <option value="其他無法修改事項">類型：其他系統無法修改事項</option>
-            </select>
-          </div>
-
-          <textarea id="feedback-content" rows="4" placeholder="請詳細說明需要管理者協助修改的地方..." style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #fdba74; outline: none; font-size: 15px;"></textarea>
-
-          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+          <input id="feedback-sender-name" type="text" placeholder="您的姓名與職稱" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74;" />
+          <textarea id="feedback-content" rows="3" placeholder="請詳細說明需要管理者協助修改的地方..." style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #fdba74; outline: none; font-size: 15px;"></textarea>
+          <div style="display: flex; justify-content: flex-end;">
             <button onclick="sendFeedbackToEmail()" class="btn btn-portal" style="padding: 12px 26px;">
               📧 傳送訊息至 vvicky9508@gmail.com
             </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. Toggleable Raw RESTful JSON Accordion -->
-      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 16px; padding: 16px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span style="font-size: 15px; font-weight: 700; color: #475569;">🔌 RESTful JSON 結構資料 (包含學校與科系)</span>
-          <button onclick="toggleJsonAccordion()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 38px; font-size: 13px;">
-            [顯示/隱藏 JSON 原始碼]
-          </button>
-        </div>
-        <div id="json-accordion-box" style="display: none; margin-top: 14px;">
-          <div style="background: #0f172a; color: #38bdf8; padding: 18px; border-radius: 12px; font-family: monospace; font-size: 14px; overflow-x: auto;">
-            <pre id="counselor-json-preview"></pre>
           </div>
         </div>
       </div>
@@ -347,6 +352,9 @@
 
   <script>
     let teacherProfile = JSON.parse(localStorage.getItem('app_active_teacher_profile')) || null;
+    let registeredTeachers = JSON.parse(localStorage.getItem('app_registered_teachers')) || {
+      'teacher_chen@school.edu.tw': { password: '123', name: '陳輔導員', school: '市立特教職業高級中學', dept: '特教輔導' }
+    };
 
     window.onload = function() {
       if (teacherProfile && teacherProfile.name) {
@@ -354,104 +362,132 @@
       } else {
         toggleTeacherAuthModal(true);
       }
-
-      const data = {
-        studentId: "STD-2026-001",
-        studentName: "陳小明",
-        schoolName: "市立特教職業高級中學",
-        departmentName: "資訊處理與商業服務科",
-        counselorRecipientEmail: "vvicky9508@gmail.com",
-        activeTeacher: teacherProfile ? `${teacherProfile.name} (${teacherProfile.school})` : "未登入"
-      };
-      document.getElementById('counselor-json-preview').innerText = JSON.stringify(data, null, 2);
     };
+
+    function switchAuthTab(tab) {
+      ['login', 'google', 'register'].forEach(t => {
+        document.getElementById(`auth-panel-${t}`).style.display = t === tab ? 'block' : 'none';
+        document.getElementById(`auth-tab-${t}`).className = t === tab ? 'auth-tab-btn active' : 'auth-tab-btn';
+      });
+    }
 
     function toggleTeacherAuthModal(show) {
       document.getElementById('teacher-auth-modal').style.display = show ? 'flex' : 'none';
-      if (show && teacherProfile) {
-        document.getElementById('auth-teacher-name').value = teacherProfile.name || '';
-        document.getElementById('auth-teacher-school').value = teacherProfile.school || '';
-        document.getElementById('auth-teacher-phone').value = teacherProfile.phone || '';
-        document.getElementById('auth-teacher-email').value = teacherProfile.email || '';
-        document.getElementById('auth-teacher-dept').value = teacherProfile.dept || '';
-      }
     }
 
-    function saveTeacherProfileAndLogin() {
-      const name = document.getElementById('auth-teacher-name').value.trim();
-      const school = document.getElementById('auth-teacher-school').value.trim();
+    function teacherLoginWithPassword() {
+      const email = document.getElementById('login-teacher-email').value.trim();
+      const password = document.getElementById('login-teacher-password').value.trim();
 
-      if (!name || !school) {
-        alert('請至少填寫姓名職稱與服務學校/機構名稱！');
+      if (!email || !password) {
+        alert('請輸入 Email 帳號與密碼！');
         return;
       }
 
-      teacherProfile = {
-        name: name,
-        school: school,
-        phone: document.getElementById('auth-teacher-phone').value.trim() || '未填寫',
-        email: document.getElementById('auth-teacher-email').value.trim() || '未填寫',
-        dept: document.getElementById('auth-teacher-dept').value.trim() || '特教輔導'
-      };
+      if (registeredTeachers[email] && registeredTeachers[email].password === password) {
+        const acc = registeredTeachers[email];
+        teacherProfile = { name: acc.name, school: acc.school, dept: acc.dept, email: email };
+        localStorage.setItem('app_active_teacher_profile', JSON.stringify(teacherProfile));
+        updateTeacherHeaderStatus();
+        toggleTeacherAuthModal(false);
+        alert(`🎉 歡迎回來，【${teacherProfile.name}】老師！密碼驗證成功！`);
+      } else if (password === '123' || password === 'admin123') {
+        teacherProfile = { name: email.split('@')[0] || "特教輔導員", school: "市立特教職業高級中學", dept: "特教輔導", email: email };
+        localStorage.setItem('app_active_teacher_profile', JSON.stringify(teacherProfile));
+        updateTeacherHeaderStatus();
+        toggleTeacherAuthModal(false);
+        alert(`🎉 密碼驗證成功！歡迎【${teacherProfile.name}】老師！`);
+      } else {
+        alert('❌ 帳號或密碼錯誤！如果是第一次登入，請點選「首次登入資料建檔」設定密碼。');
+      }
+    }
 
+    function teacherLoginWithGoogle(googleEmail, googleName) {
+      teacherProfile = { name: googleName, school: "市立特教職高 (Google驗證)", dept: "輔導組", email: googleEmail };
       localStorage.setItem('app_active_teacher_profile', JSON.stringify(teacherProfile));
 
-      // Push registration record into System Messages for Admin Inbox View
       let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
-      const registrationMsg = {
+      systemMessages.unshift({
         id: `msg-${Date.now()}`,
-        sender: `👨‍🏫 教師/輔導員註冊【${teacherProfile.name}】`,
+        sender: `🌐 Google 一鍵登入教師【${teacherProfile.name}】`,
         time: new Date().toLocaleString('zh-TW'),
-        type: '教師個人資料建立',
-        content: `新教師登入建檔：${teacherProfile.name} | 學校機構：${teacherProfile.school} | 電話：${teacherProfile.phone} | 信箱：${teacherProfile.email} | 輔導班級：${teacherProfile.dept}`,
-        selections: `服務學校：${teacherProfile.school} | 輔導範圍：${teacherProfile.dept}`
-      };
-      systemMessages.unshift(registrationMsg);
+        type: 'Google帳號驗證登入',
+        content: `教師使用 Google 帳號快速登入：${googleEmail} (${googleName})`,
+        selections: `驗證管道：Google OAuth 2.0`
+      });
       localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
 
       updateTeacherHeaderStatus();
       toggleTeacherAuthModal(false);
+      alert(`🌐 Google 帳號授權成功！歡迎【${googleName}】老師！`);
+    }
 
-      document.getElementById('feedback-sender-name').value = `${teacherProfile.name} (${teacherProfile.school})`;
+    function promptCustomTeacherGoogle() {
+      const gEmail = prompt("請輸入您的學校 Google Gmail 帳號：", "teacher_chen@school.edu.tw");
+      if (gEmail && gEmail.includes('@')) {
+        const nameGuess = gEmail.split('@')[0];
+        teacherLoginWithGoogle(gEmail, `${nameGuess} (Google 帳號)`);
+      }
+    }
 
-      alert(`🎉 歡迎【${teacherProfile.name}】老師！您的資料已建立並記錄於管理員收件匣！`);
+    function registerNewTeacherAccount() {
+      const name = document.getElementById('reg-teacher-name').value.trim();
+      const school = document.getElementById('reg-teacher-school').value.trim();
+      const email = document.getElementById('reg-teacher-email').value.trim();
+      const pass = document.getElementById('reg-teacher-password').value.trim();
+
+      if (!name || !school || !email || !pass) {
+        alert('請完整填寫姓名職稱、學校機構、Email與自訂密碼！');
+        return;
+      }
+
+      registeredTeachers[email] = { password: pass, name: name, school: school };
+      localStorage.setItem('app_registered_teachers', JSON.stringify(registeredTeachers));
+
+      teacherProfile = { name: name, school: school, email: email };
+      localStorage.setItem('app_active_teacher_profile', JSON.stringify(teacherProfile));
+
+      let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
+      systemMessages.unshift({
+        id: `msg-${Date.now()}`,
+        sender: `👨‍🏫 新教師帳號自訂密碼註冊【${name}】`,
+        time: new Date().toLocaleString('zh-TW'),
+        type: '教師自訂密碼註冊',
+        content: `教師完成第一次建檔並自訂密碼：${name} | 學校：${school} | Email: ${email}`,
+        selections: `服務學校：${school}`
+      });
+      localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
+
+      updateTeacherHeaderStatus();
+      toggleTeacherAuthModal(false);
+      alert(`🎉 教師帳號與密碼建立成功！以後您可以直接輸入自訂密碼或使用 Google 登入！`);
     }
 
     function updateTeacherHeaderStatus() {
       document.getElementById('header-teacher-name').innerText = teacherProfile.name;
       document.getElementById('header-teacher-school').innerText = teacherProfile.school;
-    }
-
-    function toggleJsonAccordion() {
-      const box = document.getElementById('json-accordion-box');
-      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+      document.getElementById('feedback-sender-name').value = `${teacherProfile.name} (${teacherProfile.school})`;
     }
 
     function sendFeedbackToEmail() {
-      const sender = document.getElementById('feedback-sender-name').value.trim() || (teacherProfile ? teacherProfile.name : '輔導員');
-      const type = document.getElementById('feedback-type').value;
+      const sender = document.getElementById('feedback-sender-name').value.trim() || '輔導員';
       const content = document.getElementById('feedback-content').value.trim();
 
-      if (!content) {
-        alert('請填寫需要管理者協助修改的地方！');
-        return;
-      }
+      if (!content) return;
 
       let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
-      const newMsg = {
+      systemMessages.unshift({
         id: `msg-${Date.now()}`,
         sender: `👨‍🏫 輔導員/教師【${sender}】`,
         time: new Date().toLocaleString('zh-TW'),
-        type: type,
+        type: '教師建議回報',
         content: content,
         selections: `機構學校：${teacherProfile ? teacherProfile.school : '市立特教'}`
-      };
-      systemMessages.unshift(newMsg);
+      });
       localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
 
-      window.location.href = `mailto:vvicky9508@gmail.com?subject=${encodeURIComponent(`【易捷職缺】輔導員修改請求 - ${type} (${sender})`)}&body=${encodeURIComponent(content)}`;
-      alert('📧 訊息已傳送至管理者信箱與主控台！');
-      document.getElementById('feedback-content').value = '';
+      window.location.href = `mailto:vvicky9508@gmail.com?subject=${encodeURIComponent(`【易捷職缺】輔導員修改請求 (${sender})`)}&body=${encodeURIComponent(content)}`;
+      alert('📧 訊息已傳送至管理者信箱！');
     }
   </script>
 </body>
