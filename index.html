@@ -6,8 +6,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>無障礙智慧職缺適配與輔導系統 (極致直覺版)</title>
-  <meta name="description" content="專為身心障礙求職者與學生設計的極致直覺化低認知步驟引導、學校科系追蹤、自訂密碼登入、Google 帳號一鍵登入、AI 自動生成圖解 SOP 卡片與管理員訊息中心。" />
+  <title>無障礙智慧職缺適配與輔導系統 - 全站入口 GateWay Hub</title>
+  <meta name="description" content="易捷無障礙智慧職缺適配系統入口，提供學生/求職者、教師/輔導員、與管理員之專屬獨立頁面選擇。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -15,142 +15,97 @@
   <style>
     :root {
       --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --primary-light: #eff6ff;
       --accent: #8b5cf6;
-      --accent-light: #f5f3ff;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --warning-light: #fffbeb;
-      --admin-color: #6366f1;
-      --admin-light: #eef2ff;
-      --rag-color: #0d9488;
-      --rag-light: #ccfbf1;
-      --portal-color: #ea580c;
-      --portal-light: #ffedd5;
-      --ai-color: #7c3aed;
-      --ai-light: #f3e8ff;
+      --counselor: #d97706;
+      --admin: #4f46e5;
       --bg: #f8fafc;
-      --card-bg: #ffffff;
       --text: #0f172a;
-      --border: #cbd5e1;
-      --radius: 24px;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Noto Sans TC', 'Outfit', sans-serif;
-      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 40%, #f1f5f9 100%);
+      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
       color: var(--text);
-      font-size: 19px;
-      line-height: 1.6;
       min-height: 100vh;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 26px;
-      font-size: 19px;
-      font-weight: 700;
-      border-radius: 16px;
-      border: none;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      min-height: 56px;
-      text-decoration: none;
-    }
-
-    .btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
-    .btn:active:not(:disabled) { transform: translateY(1px) scale(0.96) !important; }
-    .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; box-shadow: 0 6px 20px rgba(37,99,235,0.3); }
-    .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid var(--border); }
-    .btn-secondary:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
-    .btn-accent { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; box-shadow: 0 6px 20px rgba(124,58,237,0.3); }
-    .btn-google { background: #ffffff; color: #3c4043; border: 2px solid #dadce0; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-weight: 800; }
-    .btn-google:hover { background: #f8f9fa; border-color: #4285f4; color: #1a73e8; }
-    .btn-rag { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; box-shadow: 0 6px 20px rgba(13,148,136,0.3); }
-    .btn-portal { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; box-shadow: 0 6px 20px rgba(234,88,12,0.3); }
-    .btn-admin { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
-
-    .role-card {
-      background: white;
-      border: 3px solid #e2e8f0;
-      border-radius: var(--radius);
-      padding: 20px;
       display: flex;
-      align-items: center;
-      gap: 16px;
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      user-select: none;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .role-card:hover { transform: translateY(-4px); border-color: #93c5fd; box-shadow: 0 12px 28px rgba(37,99,235,0.12); }
-    .role-card.active-seeker { border-color: #2563eb; background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); box-shadow: 0 12px 30px rgba(37,99,235,0.2); }
-    .role-card.active-counselor { border-color: #f59e0b; background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%); box-shadow: 0 12px 30px rgba(245,158,11,0.2); }
-    .role-card.active-admin { border-color: #6366f1; background: linear-gradient(135deg, #ffffff 0%, #eef2ff 100%); box-shadow: 0 12px 30px rgba(99,102,241,0.2); }
-
-    .option-card {
-      background: var(--card-bg);
-      border: 3px solid #e2e8f0;
-      border-radius: var(--radius);
-      padding: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      cursor: pointer;
-      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.04);
-      user-select: none;
-    }
-
-    .option-card:hover { border-color: #93c5fd; transform: translateY(-4px); }
-    .option-card.selected { border-color: var(--primary); background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); box-shadow: 0 12px 28px -3px rgba(59,130,246,0.25); }
-    
-    .checkbox-circle {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 3px solid #cbd5e1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
-      font-weight: 900;
-      font-size: 20px;
-    }
-    .option-card.selected .checkbox-circle { background: var(--primary); border-color: var(--primary); color: white; }
-
     header {
-      background: #ffffff;
+      background: white;
       border-bottom: 2px solid #e2e8f0;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      padding: 24px 32px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.04);
     }
     .header-inner {
-      max-width: 1240px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-wrap: wrap;
       gap: 16px;
     }
-
     .container {
-      max-width: 1240px;
-      margin: 0 auto;
-      padding: 32px 24px;
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 24px;
+      width: 100%;
     }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 26px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 16px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
+    .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; }
+    .btn-secondary { background: white; color: var(--text); border: 2px solid #cbd5e1; }
 
+    .hub-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+    }
+    .hub-card {
+      background: white;
+      border-radius: 28px;
+      padding: 38px 30px;
+      border: 3px solid #cbd5e1;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+    }
+    .hub-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+    }
+    .hub-card.student { border-color: #3b82f6; background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); }
+    .hub-card.teacher { border-color: #f59e0b; background: linear-gradient(135deg, #ffffff 0%, #fffbeb 100%); }
+    .hub-card.admin { border-color: #6366f1; background: linear-gradient(135deg, #ffffff 0%, #eef2ff 100%); }
+
+    .card-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+      margin-bottom: 20px;
+    }
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -162,20 +117,6 @@
       z-index: 1000;
       padding: 20px;
     }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 14px;
-      font-weight: 800;
-      background: var(--primary-light);
-      color: var(--primary);
-    }
-    .badge-portal { background: var(--portal-light); color: var(--portal-color); }
-    .badge-admin { background: var(--admin-light); color: var(--admin-color); }
-    .badge-ai { background: var(--ai-light); color: var(--ai-color); }
-
     .auth-tab-btn {
       padding: 12px 22px;
       border-radius: 14px;
@@ -188,7 +129,6 @@
     .auth-tab-btn.active {
       background: #2563eb;
       color: white;
-      box-shadow: 0 4px 14px rgba(37,99,235,0.3);
     }
     .auth-tab-btn:not(.active) {
       background: #ffffff;
@@ -202,50 +142,102 @@
   <!-- Header -->
   <header>
     <div class="header-inner">
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="background: linear-gradient(135deg, #ea580c 0%, #3b82f6 100%); width: 52px; height: 52px; display: flex; align-items: center; justify-content: center; color: white; font-size: 28px; border-radius: 16px; box-shadow: 0 6px 16px rgba(37,99,235,0.25);">
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <div style="background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%); width: 56px; height: 56px; border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; font-size: 32px; box-shadow: 0 6px 16px rgba(37,99,235,0.3);">
           🌐
         </div>
         <div>
-          <h1 style="font-size: 23px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
-            易捷無障礙職缺適配系統 
-            <span style="font-size: 14px; background: linear-gradient(135deg, #c084fc 0%, #7c3aed 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
-              ✨ 自訂密碼/Google雙驗證版
-            </span>
-          </h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 600;">自訂密碼登入 ✕ Google 一鍵登入 ✕ 學校科系追蹤 ✕ AI 自動圖示 SOP</p>
+          <h1 style="font-size: 24px; font-weight: 900; color: #0f172a;">易捷無障礙智慧職缺適配系統 - 全站入口</h1>
+          <p style="font-size: 15px; color: #64748b;">請選擇您的專屬使用身分點擊進入（各頁面完全獨立）</p>
         </div>
       </div>
 
-      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <button onclick="toggleUserAuthModal(true, 'register')" class="btn btn-primary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">
-          📝 首次登入建檔與自訂密碼
+      <div style="display: flex; gap: 12px;">
+        <button onclick="toggleUserAuthModal(true, 'register')" class="btn btn-secondary" style="font-size: 15px; padding: 10px 18px;">
+          📝 首次登入建檔/自訂密碼
         </button>
-        <a href="student.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
-          ♿ 學生獨立頁 ➔
-        </a>
-        <a href="teacher.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #d97706; border-color: #fde68a; background: #fffbeb;">
-          👨‍🏫 教師獨立頁 ➔
-        </a>
-        <a href="admin.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #4f46e5; border-color: #c7d2fe; background: #eef2ff;">
-          🔒 管理員獨立頁 ➔
-        </a>
       </div>
     </div>
   </header>
 
-  <!-- User Authentication / Profile Registration Modal with Prominent Custom Password Box -->
-  <div id="user-auth-modal" class="modal-backdrop">
+  <!-- Container with 3 Large Clear Role Cards -->
+  <div class="container">
+    
+    <div style="text-align: center; margin-bottom: 36px;">
+      <h2 style="font-size: 30px; font-weight: 900; color: #1e3a8a; margin-bottom: 8px;">
+        👋 歡迎使用！請選擇您的系統專屬頁面
+      </h2>
+      <p style="font-size: 17px; color: #475569;">
+        學生、教師與管理員擁有完全獨立的網頁介面，點擊下方大卡片即可直接開啟：
+      </p>
+    </div>
+
+    <div class="hub-grid">
+      
+      <!-- Card 1: Student -->
+      <a href="student.html" class="hub-card student">
+        <div>
+          <div class="card-icon" style="background: #eff6ff; color: #2563eb;">♿</div>
+          <h3 style="font-size: 26px; font-weight: 900; color: #1e40af; margin-bottom: 10px;">
+            1. 學生 / 求職者專屬網頁 ➔
+          </h3>
+          <p style="font-size: 16px; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            提供 5 步驟低認知視覺問卷、自訂密碼/Google雙登入、AI 主動生成 3 步驟圖示 SOP 卡、與各大平台職缺。
+          </p>
+        </div>
+        <div style="background: #2563eb; color: white; padding: 14px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 18px;">
+          點擊進入學生網頁 ➔
+        </div>
+      </a>
+
+      <!-- Card 2: Teacher -->
+      <a href="teacher.html" class="hub-card teacher">
+        <div>
+          <div class="card-icon" style="background: #fffbeb; color: #d97706;">👨‍🏫</div>
+          <h3 style="font-size: 26px; font-weight: 900; color: #92400e; margin-bottom: 10px;">
+            2. 教師 / 輔導員專屬網頁 ➔
+          </h3>
+          <p style="font-size: 16px; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            包含特教職高學校與科系個案追蹤（市立特教職高-資訊處理科）、學生問卷結果圖文展示與法規檢索。
+          </p>
+        </div>
+        <div style="background: #d97706; color: white; padding: 14px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 18px;">
+          點擊進入教師網頁 ➔
+        </div>
+      </a>
+
+      <!-- Card 3: Admin -->
+      <a href="admin.html" class="hub-card admin">
+        <div>
+          <div class="card-icon" style="background: #eef2ff; color: #4f46e5;">🔒</div>
+          <h3 style="font-size: 26px; font-weight: 900; color: #3730a3; margin-bottom: 10px;">
+            3. 管理員全權控制頁 ➔
+          </h3>
+          <p style="font-size: 16px; color: #475569; line-height: 1.6; margin-bottom: 20px;">
+            專屬通行密碼解鎖控制台、全站使用者收件匣與刪除按鈕、一鍵檢視學校 Profile.pdf 個案檔案。
+          </p>
+        </div>
+        <div style="background: #4f46e5; color: white; padding: 14px; border-radius: 16px; text-align: center; font-weight: 800; font-size: 18px;">
+          點擊進入管理員網頁 ➔
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- User Authentication Modal (Closed by default on Hub Load) -->
+  <div id="user-auth-modal" class="modal-backdrop" style="display: none;">
     <div style="background: white; border-radius: 28px; max-width: 640px; width: 100%; max-height: 94vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
       
-      <div style="text-align: center; margin-bottom: 20px;">
-        <div style="width: 64px; height: 64px; border-radius: 20px; background: #eff6ff; color: #2563eb; font-size: 36px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; margin-bottom: 8px;">
-          🔑
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+        <div style="text-align: center; width: 100%;">
+          <div style="width: 64px; height: 64px; border-radius: 20px; background: #eff6ff; color: #2563eb; font-size: 36px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; margin-bottom: 8px;">
+            🔑
+          </div>
+          <h3 style="font-size: 25px; font-weight: 900; color: #1e40af;">首次登入個人資料建檔與自訂密碼</h3>
         </div>
-        <h3 style="font-size: 25px; font-weight: 900; color: #1e40af;">首次登入個人資料建檔與自訂密碼</h3>
-        <p style="font-size: 15px; color: #64748b; margin-top: 4px;">
-          第一次登入時請填寫個人資料，並在下方黃色區域<strong>「設定您專屬的登入密碼」</strong>！
-        </p>
+        <button onclick="toggleUserAuthModal(false)" style="background: #f1f5f9; border: none; font-size: 24px; border-radius: 50%; width: 40px; height: 40px; cursor: pointer;">✕</button>
       </div>
 
       <!-- Auth Mode Switcher Tabs -->
@@ -257,45 +249,26 @@
 
       <!-- PANEL 1: 首次登入建檔 + 必填【自訂密碼】-->
       <div id="auth-panel-register" style="display: block;">
-        
-        <div style="background: #f0fdf4; border: 2px dashed #34d399; border-radius: 16px; padding: 14px 18px; margin-bottom: 18px; color: #065f46; font-size: 15px; font-weight: 700;">
-          💡 提示：請在下方填寫您的姓名與學校，並務必在黃色區域<strong>「設定您日後登入的自訂密碼」</strong>！
-        </div>
-
         <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
-          
           <div>
             <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">👤 您的姓名 / 稱呼 <span style="color: #ef4444;">*</span></label>
-            <input id="reg-user-name" type="text" placeholder="例如：陳小明 (學生) 或 陳老師 (輔導員)" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            <input id="reg-user-name" type="text" placeholder="例如：陳小明 (學生)" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
-            <div>
-              <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">🏫 畢業/就讀/服務學校 <span style="color: #ef4444;">*</span></label>
-              <input id="reg-user-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
-            <div>
-              <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">📚 主修科系 / 輔導範圍 <span style="color: #ef4444;">*</span></label>
-              <input id="reg-user-dept" type="text" placeholder="例如：資訊處理與商業服務科" style="width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
+          <div>
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">🏫 畢業/就讀/服務學校 <span style="color: #ef4444;">*</span></label>
+            <input id="reg-user-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
-
           <div>
             <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">✉️ 電子郵件 Email (日後登入帳號) <span style="color: #ef4444;">*</span></label>
             <input id="reg-user-email" type="email" placeholder="例如：user01@example.com" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
-
-          <!-- PROMINENT CUSTOM PASSWORD INPUT BOX -->
-          <div style="background: #fffbeb; border: 2px solid #f59e0b; border-radius: 18px; padding: 18px; box-shadow: 0 4px 14px rgba(245,158,11,0.15);">
-            <label style="font-size: 17px; font-weight: 900; color: #92400e; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-              <span>🔑 設定您日後登入本系統的自訂密碼</span> <span style="color: #ef4444;">* (必填)</span>
+          <div style="background: #fffbeb; border: 2px solid #f59e0b; border-radius: 18px; padding: 18px;">
+            <label style="font-size: 17px; font-weight: 900; color: #92400e; display: block; margin-bottom: 6px;">
+              🔑 設定您日後登入本系統的自訂密碼 * (必填)
             </label>
-            <p style="font-size: 14px; color: #b45309; margin-bottom: 10px;">請牢記此密碼，以後您在任何設備開啟網頁時，只需輸入此密碼即可登入：</p>
-            <input id="reg-user-password" type="password" placeholder="請在此輸入您自訂的個人登入密碼 (例如: mypass123)..." style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f59e0b; outline: none; font-size: 17px; font-weight: 700; background: white;" />
+            <input id="reg-user-password" type="password" placeholder="請在此輸入您自訂的個人登入密碼..." style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f59e0b; font-size: 17px; font-weight: 700; background: white;" />
           </div>
-
         </div>
-
         <button onclick="registerNewUserAccount()" class="btn btn-primary" style="width: 100%; min-height: 60px; font-size: 20px;">
           ✅ 完成建檔並設定此密碼 ➔
         </button>
@@ -304,14 +277,8 @@
       <!-- PANEL 2: 已有密碼直接登入 -->
       <div id="auth-panel-login" style="display: none;">
         <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
-          <div>
-            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">✉️ 您填寫的 Email 帳號</label>
-            <input id="login-user-email" type="email" placeholder="例如：user01@example.com" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-          </div>
-          <div>
-            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">🔑 您先前自訂的登入密碼</label>
-            <input id="login-user-password" type="password" placeholder="請輸入您建檔時設定的密碼..." style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-          </div>
+          <input id="login-user-email" type="email" placeholder="Email 帳號" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1;" />
+          <input id="login-user-password" type="password" placeholder="自訂密碼" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1;" />
         </div>
         <button onclick="loginWithUserPassword()" class="btn btn-primary" style="width: 100%; min-height: 60px; font-size: 20px;">
           🔑 驗證自訂密碼並登入 ➔
@@ -321,18 +288,8 @@
       <!-- PANEL 3: Google 一鍵快速登入 -->
       <div id="auth-panel-google" style="display: none; text-align: center;">
         <div style="background: #f8fafc; border: 2px dashed #4285f4; border-radius: 20px; padding: 28px; margin-bottom: 20px;">
-          <div style="font-size: 52px; margin-bottom: 8px;">🌐</div>
-          <h4 style="font-size: 22px; font-weight: 900; color: #1a73e8; margin-bottom: 6px;">Google / 學校 Gmail 一鍵安全登入</h4>
-          <p style="font-size: 15px; color: #5f6368; margin-bottom: 20px;">
-            如果您不想記憶密碼，可以直接點選下方按鈕使用 Google 帳號授權登入：
-          </p>
-
-          <button onclick="loginWithUserGoogle('user01@gmail.com', '陳小明 (Google 認證)')" class="btn btn-google" style="width: 100%; justify-content: center; min-height: 56px; margin-bottom: 12px;">
+          <button onclick="loginWithUserGoogle('user01@gmail.com', '陳小明 (Google 認證)')" class="btn btn-google" style="width: 100%; justify-content: center; min-height: 56px;">
             <span style="font-size: 24px;">🌐</span> 使用 [ user01@gmail.com ] 一鍵登入
-          </button>
-          
-          <button onclick="promptCustomUserGoogle()" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 16px;">
-            ➕ 輸入其他 Google / 學校 Gmail 帳號
           </button>
         </div>
       </div>
@@ -340,50 +297,11 @@
     </div>
   </div>
 
-  <!-- Main Container -->
-  <div class="container">
-    
-    <!-- Role Hub Navigator Cards -->
-    <div style="margin-bottom: 28px;">
-      <h3 style="font-size: 16px; font-weight: 800; color: #64748b; margin-bottom: 10px;">
-        👇 請選擇您的使用身分（或直接前往獨立專頁）：
-      </h3>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
-        <a href="student.html" class="role-card active-seeker" style="text-decoration: none;">
-          <div style="font-size: 36px;">♿</div>
-          <div>
-            <h4 style="font-size: 20px; font-weight: 900; color: #1e40af;">前往【學生 / 求職者獨立網頁】➔</h4>
-            <p style="font-size: 14px; color: #475569;">5 步驟引導，AI 自動生成圖示 SOP 卡片。</p>
-          </div>
-        </a>
-        <a href="teacher.html" class="role-card" style="text-decoration: none;">
-          <div style="font-size: 36px;">👨‍🏫</div>
-          <div>
-            <h4 style="font-size: 20px; font-weight: 900; color: #92400e;">前往【教師 / 輔導員獨立網頁】➔</h4>
-            <p style="font-size: 14px; color: #475569;">學校科系個案追蹤與報告信箱連動。</p>
-          </div>
-        </a>
-        <a href="admin.html" class="role-card" style="text-decoration: none;">
-          <div style="font-size: 36px;">🔒</div>
-          <div>
-            <h4 style="font-size: 20px; font-weight: 900; color: #3730a3;">前往【管理員全權控制頁】➔</h4>
-            <p style="font-size: 14px; color: #475569;">全站訊息收件匣與學生個案 PDF 文件。</p>
-          </div>
-        </a>
-      </div>
-    </div>
-
-  </div>
+  <footer style="background: white; border-top: 1px solid #e2e8f0; padding: 20px; text-align: center; color: #64748b; font-size: 15px;">
+    易捷無障礙智慧職缺適配系統 © 2026 全權所有 | 服務信箱：vvicky9508@gmail.com
+  </footer>
 
   <script>
-    window.onload = function() {
-      // Auto pop modal if user profile does not exist
-      const p = localStorage.getItem('app_active_student_profile');
-      if (!p) {
-        toggleUserAuthModal(true, 'register');
-      }
-    };
-
     function switchAuthTab(tab) {
       ['register', 'login', 'google'].forEach(t => {
         document.getElementById(`auth-panel-${t}`).style.display = t === tab ? 'block' : 'none';
@@ -399,56 +317,30 @@
     function registerNewUserAccount() {
       const name = document.getElementById('reg-user-name').value.trim();
       const school = document.getElementById('reg-user-school').value.trim();
-      const dept = document.getElementById('reg-user-dept').value.trim();
       const email = document.getElementById('reg-user-email').value.trim();
       const pass = document.getElementById('reg-user-password').value.trim();
 
-      if (!name || !school || !dept || !email || !pass) {
-        alert('請完整填寫姓名、學校、科系、Email，以及設定您的自訂密碼！');
+      if (!name || !school || !email || !pass) {
+        alert('請完整填寫姓名、學校、Email，以及設定您的自訂密碼！');
         return;
       }
 
       let accounts = JSON.parse(localStorage.getItem('app_registered_students')) || {};
-      accounts[email] = { password: pass, name: name, school: school, dept: dept };
+      accounts[email] = { password: pass, name: name, school: school };
       localStorage.setItem('app_registered_students', JSON.stringify(accounts));
 
-      const profile = { name: name, school: school, department: dept, email: email };
-      localStorage.setItem('app_active_student_profile', JSON.stringify(profile));
-
-      let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
-      systemMessages.unshift({
-        id: `msg-${Date.now()}`,
-        sender: `🎓 首次建檔自訂密碼註冊【${name}】`,
-        time: new Date().toLocaleString('zh-TW'),
-        type: '首次建檔與密碼設定',
-        content: `完成首次建檔並設定自訂密碼 [${pass}]：姓名：${name} | 學校：${school} | 科系：${dept} | Email: ${email}`,
-        selections: `學校：${school} | 科系：${dept}`
-      });
-      localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
-
       toggleUserAuthModal(false);
-      alert(`🎉 恭喜【${name}】！個人建檔成功，自訂密碼 [${pass}] 已設定完成！您可以點選上方按鈕前往學生或教師專頁！`);
+      alert(`🎉 恭喜【${name}】！個人建檔成功，自訂密碼 [${pass}] 已設定完成！請點選下方卡片開啟您要進入的頁面！`);
     }
 
     function loginWithUserPassword() {
-      const email = document.getElementById('login-user-email').value.trim();
-      const password = document.getElementById('login-user-password').value.trim();
-      if (!email || !password) {
-        alert('請輸入 Email 與自訂密碼！');
-        return;
-      }
       toggleUserAuthModal(false);
-      alert(`🎉 自訂密碼驗證成功！歡迎登入！`);
+      alert(`🎉 自訂密碼驗證成功！`);
     }
 
     function loginWithUserGoogle(gEmail, gName) {
       toggleUserAuthModal(false);
       alert(`🌐 Google 帳號授權成功！歡迎【${gName}】！`);
-    }
-
-    function promptCustomUserGoogle() {
-      const gEmail = prompt("請輸入您的 Google 或學校 Gmail 帳號：", "user01@gmail.com");
-      if (gEmail && gEmail.includes('@')) loginWithUserGoogle(gEmail, `${gEmail.split('@')[0]} (Google 驗證)`);
     }
   </script>
 </body>
