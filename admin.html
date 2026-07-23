@@ -137,7 +137,7 @@
           <h2 style="font-size: 26px; font-weight: 900; color: #3730a3; display: flex; align-items: center; gap: 10px;">
             <span>👑 系統管理員全權控制台 & 全站訊息中心</span>
           </h2>
-          <p style="font-size: 15px; color: #4338ca;">🔒 通行證鑑權完成：點選未讀訊息或關聯按鈕即可點進檢視學生學校科系個案文件與附件。</p>
+          <p style="font-size: 15px; color: #4338ca;">🔒 通行證鑑權完成：即時呈現學生與教師登入登記之個人資料卡與修改需求。</p>
         </div>
         <button onclick="adminLogout()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 40px; font-size: 14px; color: #ef4444; border-color: #fca5a5;">重新驗證密碼登出</button>
       </div>
@@ -146,10 +146,10 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px;">
         <div onclick="openMessageDocModal('msg-001')" style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); padding: 18px; border-radius: 16px; border: 2px solid #a5b4fc; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1.00)'">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 14px; color: #4338ca; font-weight: 800;">📩 全站未讀/最新訊息 (點擊看文件)</span>
+            <span style="font-size: 14px; color: #4338ca; font-weight: 800;">📩 全站未讀/最新登入與需求訊息</span>
             <span class="badge badge-admin" style="font-size: 12px;">📄 點擊開啟文件</span>
           </div>
-          <h3 id="admin-msg-count" style="font-size: 28px; font-weight: 900; color: #3730a3; margin-top: 4px;">2 則訊息 (含3份關聯文件)</h3>
+          <h3 id="admin-msg-count" style="font-size: 28px; font-weight: 900; color: #3730a3; margin-top: 4px;">2 則訊息 (含關聯檔案)</h3>
         </div>
 
         <div style="background: #f0fdf4; padding: 18px; border-radius: 16px; border: 1px solid #bbf7d0;">
@@ -166,12 +166,12 @@
       <div style="background: #f5f3ff; border: 2px solid #ddd6fe; border-radius: 20px; padding: 24px; margin-bottom: 28px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
           <h3 style="font-size: 22px; font-weight: 800; color: #5b21b6; display: flex; align-items: center; gap: 8px;">
-            <span>📩 全站學生與教師修改需求收件匣 (點擊可查看關聯個案文件)</span>
+            <span>📩 全站學生與教師登入登記紀錄 & 修改需求收件匣</span>
           </h3>
           <button onclick="clearAdminMessages()" class="btn btn-secondary" style="padding: 4px 12px; min-height: 36px; font-size: 13px; color: #6b21a8; border-color: #ddd6fe;">清空已讀紀錄</button>
         </div>
         <p style="font-size: 15px; color: #6d28d9; margin-bottom: 18px;">
-          以下為學生與教師/輔導員從網頁前端直接傳送給管理者的所有修改建議與問題回報紀錄（點擊任意卡片即可點進查看附隨文件）：
+          當學生或教師第一次登入填寫個人資料、或傳送修改建議時，都會即時匯入此收件匣（點擊可查看檔案）：
         </p>
 
         <!-- Dynamic Admin Messages Feed Container -->
@@ -246,7 +246,7 @@
       
       <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e0e7ff; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
         <div>
-          <span class="badge" id="doc-modal-badge">未讀訊息關聯文件</span>
+          <span class="badge" id="doc-modal-badge">個案登入與需求文件</span>
           <h3 id="doc-modal-title" style="font-size: 24px; font-weight: 800; color: #3730a3; margin-top: 6px;">
             📄 訊息關聯文件與附件個案檢視
           </h3>
@@ -273,22 +273,15 @@
       <!-- Tab Content 1: Student Profile PDF View -->
       <div id="doc-content-1" style="background: #f8fafc; border: 2px solid #c7d2fe; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <h4 style="font-size: 19px; font-weight: 800; color: #1e1b4b;">📋 學生學校科系與適配報告個案檔 (STD-2026-001_School_Profile.pdf)</h4>
-          <span style="font-size: 13px; color: #166534; background: #dcfce7; padding: 2px 10px; border-radius: 10px; font-weight: 700;">狀態: 已記錄學校科系供追蹤</span>
+          <h4 style="font-size: 19px; font-weight: 800; color: #1e1b4b;">📋 學生/教師 學校科系與個案登入檔 (Profile_Record.pdf)</h4>
+          <span style="font-size: 13px; color: #166534; background: #dcfce7; padding: 2px 10px; border-radius: 10px; font-weight: 700;">狀態: 登入個人資料已建立</span>
         </div>
 
         <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 18px; font-size: 15px; color: #1e293b; display: flex; flex-direction: column; gap: 10px;">
-          <p><strong>學生姓名：</strong> 陳小明 (0912-345-678, student01@example.com)</p>
-          <p><strong>🏫 畢業/就讀學校：</strong> 市立特教職業高級中學</p>
-          <p><strong>📚 主修科系：</strong> 資訊處理與商業服務科</p>
-          <p><strong>障礙類別與輔具：</strong> 肢體障礙 (使用輪椅) / 聽力優良，具備電腦文書操作能力</p>
-          <p><strong>學生勾選之四大性向條件：</strong></p>
-          <ul style="padding-left: 20px; color: #2563eb; font-weight: 700;">
-            <li>📝 興趣：文書處理與資料輸入、數位媒體文字小幫手</li>
-            <li>🏢 環境：室內靜態辦公室、居家遠端免通勤</li>
-            <li>♿ 需求：無障礙坡道與輪椅設施、1對1輔導員導師陪伴</li>
-            <li>☀️ 時間：日間全職 (09:00 ~ 17:00)</li>
-          </ul>
+          <p><strong>登入人員/學生姓名：</strong> <span id="modal-doc-student-name">陳小明</span></p>
+          <p><strong>🏫 畢業/就讀/服務學校：</strong> <span id="modal-doc-school">市立特教職業高級中學</span></p>
+          <p><strong>📚 主修科系/輔導範圍：</strong> <span id="modal-doc-dept">資訊處理與商業服務科</span></p>
+          <p><strong>障礙類別與輔具標記：</strong> 肢體障礙 (使用輪椅) / 電腦輸入流利</p>
         </div>
       </div>
 
@@ -296,14 +289,9 @@
       <div id="doc-content-2" style="display: none; background: #f0fdf4; border: 2px solid #a7f3d0; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
           <h4 style="font-size: 19px; font-weight: 800; color: #065f46;">📘 無障礙職務再設計條文評估檔 (Accessibility_RAG_Report.docx)</h4>
-          <span style="font-size: 13px; color: #0f766e; background: #ccfbf1; padding: 2px 10px; border-radius: 10px; font-weight: 700;">來源: 勞動部職重資料庫</span>
         </div>
-
-        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 12px; padding: 18px; font-size: 15px; color: #065f46; display: flex; flex-direction: column; gap: 10px;">
-          <p>📌 <strong>《職務再設計服務手冊 條文 4.2 規範》：</strong></p>
-          <p>輪椅使用者之桌面高度應維持在 72~78cm 之間，桌面下方膝部空間淨深大於 45cm，進出通道淨寬不得小於 90cm，大門應設有平緩斜坡道與自動感應設備。</p>
-          <p>📌 <strong>《庇護性就業身心障礙者輔導計畫 第 12 條 規範》：</strong></p>
-          <p>入職首月應指派專職就業服務員進行 1對1 陪伴與圖示化 SOP 說明卡教學。</p>
+        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 12px; padding: 18px; font-size: 15px; color: #065f46;">
+          📌 《職務再設計服務手冊 條文 4.2》：輪椅使用者桌面高度應維持 72~78cm。
         </div>
       </div>
 
@@ -315,10 +303,7 @@
       <!-- Action Button Bar -->
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <span style="font-size: 14px; color: #64748b; font-weight: 700;">接收管理者信箱：vvicky9508@gmail.com</span>
-        <div style="display: flex; gap: 10px;">
-          <button onclick="alert('已複製此個案完整文件內容至剪貼簿！')" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">📋 複製文件內容</button>
-          <button onclick="toggleMsgDocModal(false)" class="btn btn-admin" style="padding: 8px 24px; min-height: 46px; font-size: 15px;">完成檢視關閉視窗</button>
-        </div>
+        <button onclick="toggleMsgDocModal(false)" class="btn btn-admin" style="padding: 8px 24px; min-height: 46px; font-size: 15px;">完成檢視關閉視窗</button>
       </div>
 
     </div>
@@ -333,17 +318,17 @@
         id: 'msg-001',
         sender: '🎓 學生/求職者【陳小明】(市立特教職高-資訊處理科)',
         time: '2026-07-23 13:58:20',
-        type: '學生修改需求',
-        content: '🙋 我想尋找更多適合我的【居家遠端】免通勤職缺，請管理者幫忙在資料庫推薦更多遠端文字客服！',
-        selections: '學校：市立特教職高 | 科系：資訊處理科 | 選填興趣：文書處理'
+        type: '學生個人資料建立',
+        content: '新學生填寫登入資料：陳小明 | 學校：市立特教職業高級中學 | 科系：資訊處理與商業服務科 | 電話：0912-345-678',
+        selections: '學校：市立特教職高 | 科系：資訊處理科'
       },
       {
         id: 'msg-002',
-        sender: '👨‍🏫 特教輔導員【陳老師】',
+        sender: '👨‍🏫 教師/輔導員【陳老師】(市立特教)',
         time: '2026-07-23 14:02:15',
-        type: '個案資料與RAG法規手動修正',
-        content: '學生陳小明（畢業於資訊處理科）希望加註聽力輔具需求，請協助更新 RAG 知識庫條文細節。',
-        selections: '學校：市立特教職高 | 個案編號：STD-2026-001'
+        type: '教師個人資料建立',
+        content: '新教師登入建檔：陳老師 | 服務學校：市立特教職業高級中學 | 輔導範圍：特教職高資訊處理科',
+        selections: '學校：市立特教職高 | 班級：資訊處理科'
       }
     ];
 
@@ -353,10 +338,8 @@
         title: '資料輸入與發票核對專員',
         company: '創昕數位科技股份有限公司',
         salary: '月薪 32,000 ~ 36,000 元',
-        score: 95,
         type: '室內靜態 / 無障礙完備',
-        fitReason: '完美符合您的文書偏好與輪椅無障礙通道要求，提供靜音獨立工作桌。',
-        ragRef: '符合《職務再設計手冊 條文 4.2》高標準規範'
+        fitReason: '符合文書偏好與輪椅無障礙通道要求。'
       }
     ];
 
@@ -364,12 +347,11 @@
       {
         tag: 'wheelchair',
         title: '《職務再設計服務手冊 條文 4.2》：肢體障礙與輪椅環境規範',
-        content: '輪椅使用者之桌面高度應維持在 72~78cm 之間，通道淨寬不得小於 90cm，並應備有平緩無階梯斜坡與專用電梯。'
+        content: '輪椅使用者之桌面高度應維持在 72~78cm 之間。'
       }
     ];
 
     window.onload = function() {
-      // Show auth modal on load
       document.getElementById('admin-auth-modal').style.display = 'flex';
       document.getElementById('admin-passcode-input').focus();
     };
@@ -404,14 +386,16 @@
     }
 
     function renderAdminDashboard() {
+      systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || systemMessages;
+
       document.getElementById('admin-job-count').innerText = `${mockJobs.length} 筆`;
-      document.getElementById('admin-msg-count').innerText = `${systemMessages.length} 則訊息 (含3份關聯文件)`;
+      document.getElementById('admin-msg-count').innerText = `${systemMessages.length} 則登記/需求訊息`;
 
       const msgListContainer = document.getElementById('admin-messages-list');
       msgListContainer.innerHTML = '';
 
       if (systemMessages.length === 0) {
-        msgListContainer.innerHTML = `<div style="background: white; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 20px; text-align: center; color: #64748b;">📩 目前收件匣中暫無來自學生或教師的新訊息。</div>`;
+        msgListContainer.innerHTML = `<div style="background: white; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 20px; text-align: center; color: #64748b;">📩 目前收件匣中暫無新訊息。</div>`;
       } else {
         systemMessages.forEach(msg => {
           const div = document.createElement('div');
@@ -419,17 +403,17 @@
           div.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="badge" style="font-size: 13px;">${msg.type}</span>
+                <span class="badge" style="font-size: 13px; background: ${msg.type.includes('登入') || msg.type.includes('個人資料') ? '#dcfce7' : '#e0e7ff'}; color: ${msg.type.includes('登入') || msg.type.includes('個人資料') ? '#166534' : '#3730a3'};">${msg.type}</span>
                 <h4 style="font-size: 18px; font-weight: 800; color: #3730a3;">${msg.sender}</h4>
               </div>
               <span style="font-size: 13px; color: #64748b; font-weight: 600;">🕒 ${msg.time}</span>
             </div>
             <p style="font-size: 15px; color: #1e293b; margin-top: 8px; line-height: 1.6; background: #f8fafc; padding: 12px; border-radius: 10px; border-left: 4px solid #6366f1;">
-              ✉️ <strong>訊息詳細內文：</strong> ${msg.content}
+              ✉️ <strong>紀錄詳情：</strong> ${msg.content}
             </p>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size: 13px; color: #475569;">📊 學生學校/選填依據：${msg.selections}</span>
-              <button onclick="openMessageDocModal('${msg.id}')" class="btn btn-admin" style="padding: 4px 12px; min-height: 36px; font-size: 13px;">📄 點擊開啟檢視學校個案文件 (3 份)</button>
+              <span style="font-size: 13px; color: #475569;">📊 學校與科系依據：${msg.selections}</span>
+              <button onclick="openMessageDocModal('${msg.id}')" class="btn btn-admin" style="padding: 4px 12px; min-height: 36px; font-size: 13px;">📄 檢視個人檔案與附件文件 (3 份)</button>
             </div>
           `;
           msgListContainer.appendChild(div);
@@ -463,22 +447,15 @@
 
     function openMessageDocModal(msgId) {
       const msg = systemMessages.find(m => m.id === msgId) || systemMessages[0];
-      document.getElementById('doc-modal-title').innerText = `📄 學校與個案文件檢視 - ${msg.sender}`;
-      document.getElementById('doc-modal-subtitle').innerText = `發送類別：${msg.type} | 時間：${msg.time}`;
+      document.getElementById('doc-modal-title').innerText = `📄 學校與個人檔案檢視 - ${msg.sender}`;
+      document.getElementById('doc-modal-subtitle').innerText = `紀錄類別：${msg.type} | 時間：${msg.time}`;
 
       const jsonData = {
         messageId: msg.id,
         sender: msg.sender,
         sendTime: msg.time,
         content: msg.content,
-        studentSchool: "市立特教職業高級中學",
-        studentDepartment: "資訊處理與商業服務科",
-        targetAdminEmail: "vvicky9508@gmail.com",
-        attachedFiles: [
-          "STD-2026-001_School_Profile.pdf",
-          "Accessibility_RAG_Report_v4.2.docx",
-          "Student_Resume_Department_Track.pdf"
-        ]
+        targetAdminEmail: "vvicky9508@gmail.com"
       };
       document.getElementById('modal-json-doc-view').innerText = JSON.stringify(jsonData, null, 2);
 
@@ -500,7 +477,7 @@
     }
 
     function clearAdminMessages() {
-      if (confirm('確定要清空全站歷史訊息收件匣嗎？')) {
+      if (confirm('確定要清空全站歷史紀錄嗎？')) {
         systemMessages = [];
         localStorage.removeItem('app_system_messages');
         renderAdminDashboard();
@@ -511,36 +488,19 @@
       const title = document.getElementById('admin-new-title').value;
       const company = document.getElementById('admin-new-company').value;
       const salary = document.getElementById('admin-new-salary').value || '月薪 30,000 元';
-      const type = document.getElementById('admin-new-type').value || '無障礙友善';
-      const reason = document.getElementById('admin-new-reason').value || '符合求職者選填之條件。';
 
       if (!title || !company) {
         alert('請填寫職缺名稱與公司名稱！');
         return;
       }
 
-      mockJobs.push({
-        id: `job-${Date.now()}`,
-        title,
-        company,
-        salary,
-        score: 92,
-        type,
-        fitReason: reason,
-        ragRef: '管理員新增之無障礙適配規範'
-      });
-
-      alert(`成功新增職缺【${title}】至系統資料庫！`);
-      document.getElementById('admin-new-title').value = '';
-      document.getElementById('admin-new-company').value = '';
-      document.getElementById('admin-new-salary').value = '';
-      document.getElementById('admin-new-type').value = '';
-      document.getElementById('admin-new-reason').value = '';
+      mockJobs.push({ id: `job-${Date.now()}`, title, company, salary, fitReason: '符合適配條件' });
+      alert(`成功新增職缺【${title}】！`);
       renderAdminDashboard();
     }
 
     function adminDeleteJob(id) {
-      if (confirm('確定要刪除此筆無障礙職缺嗎？')) {
+      if (confirm('確定要刪除此筆職缺嗎？')) {
         mockJobs = mockJobs.filter(j => j.id !== id);
         renderAdminDashboard();
       }
@@ -549,13 +509,8 @@
     function adminAddRag() {
       const title = document.getElementById('admin-rag-title').value;
       const content = document.getElementById('admin-rag-content').value;
-      if (!title || !content) {
-        alert('請填寫條文名稱與內文說明！');
-        return;
-      }
+      if (!title || !content) return;
       RAG_DATABASE.push({ tag: 'custom', title, content });
-      document.getElementById('admin-rag-title').value = '';
-      document.getElementById('admin-rag-content').value = '';
       renderAdminDashboard();
     }
 
