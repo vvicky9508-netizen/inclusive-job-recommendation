@@ -6,8 +6,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>學生/求職者專屬網頁 - 首次建檔與自訂密碼</title>
-  <meta name="description" content="專為求職者與學生打造的獨立網頁，包含第一次登入個人資料填寫、必填自訂密碼設定、5步驟低認知問卷與 AI 圖解 SOP 說明卡。" />
+  <title>學生/求職者專屬網頁 - 無障礙智慧職缺適配與 AI 圖解 SOP</title>
+  <meta name="description" content="專為身障求職者與學生打造的專屬獨立網頁，包含首次建檔、自訂密碼/Google雙登入、低認知5步驟問卷、AI主動生成3步驟圖卡、與即時全網職缺搜尋。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -183,11 +183,11 @@
           <h1 style="font-size: 23px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
             學生 / 求職者專屬網頁 
             <span style="font-size: 14px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
-              ✨ 首次建檔 + 自訂密碼
+              ✨ AI 圖示 SOP + 職缺適配
             </span>
           </h1>
           <p id="student-header-status" style="font-size: 14px; color: #64748b; font-weight: 600;">
-            目前學生：<strong id="header-student-name" style="color: #2563eb;">未登入</strong> (<span id="header-student-school">請完成首次建檔與自訂密碼</span>)
+            目前學生：<strong id="header-student-name" style="color: #2563eb;">陳小明</strong> (<span id="header-student-school">市立特教職業高級中學 - 資訊處理與商業服務科</span>)
           </p>
         </div>
       </div>
@@ -198,6 +198,9 @@
         </button>
         <button onclick="toggleStudentAuthModal(true, 'login')" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
           🔑 已有密碼？直接登入
+        </button>
+        <button onclick="speakCurrentPage()" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">
+          🔊 語音朗讀
         </button>
         <a href="teacher.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #d97706; border-color: #fde68a; background: #fffbeb;">
           👨‍🏫 教師/輔導員網頁 ➔
@@ -210,7 +213,7 @@
   </header>
 
   <!-- Student Authentication / Profile Registration Modal -->
-  <div id="student-auth-modal" class="modal-backdrop">
+  <div id="student-auth-modal" class="modal-backdrop" style="display: none;">
     <div style="background: white; border-radius: 28px; max-width: 640px; width: 100%; max-height: 94vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
       
       <div style="text-align: center; margin-bottom: 20px;">
@@ -219,7 +222,7 @@
         </div>
         <h3 style="font-size: 25px; font-weight: 900; color: #1e40af;">學生 / 求職者首次建檔與自訂密碼</h3>
         <p style="font-size: 15px; color: #64748b; margin-top: 4px;">
-          第一次登入時請填寫個人資料，並在下方<strong>「設定您專屬的登入密碼」</strong>！
+          第一次登入時請填寫個人資料，並在下方黃色區域<strong>「設定您專屬的登入密碼」</strong>！
         </p>
       </div>
 
@@ -332,9 +335,12 @@
       </div>
 
       <div style="display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
-        <input id="global-search-input" type="text" placeholder="輸入關鍵字 (如: 文書、輪椅、台北...)" oninput="handleKeywordSearch(this.value)" style="flex: 1; padding: 14px 18px; font-size: 17px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; min-width: 260px;" />
+        <input id="global-search-input" type="text" placeholder="輸入關鍵字 (如: 文書、輪椅、台北、遠端...)" oninput="handleKeywordSearch(this.value)" style="flex: 1; padding: 14px 18px; font-size: 17px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; min-width: 260px;" />
         <button onclick="loadPortalInStep5('taiwan')" class="btn btn-portal" style="padding: 10px 20px; min-height: 50px; font-size: 16px;">
           🇹🇼 頁面下方載入台灣就業通 ➔
+        </button>
+        <button onclick="loadPortalInStep5('104')" class="btn btn-primary" style="padding: 10px 20px; min-height: 50px; font-size: 16px; background: #ea580c;">
+          💼 頁面下方載入 104 身障專區 ➔
         </button>
       </div>
 
@@ -343,6 +349,7 @@
         <button onclick="setKeywordSearch('文書處理')" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">📝 文書處理</button>
         <button onclick="setKeywordSearch('居家遠端')" style="background: #f3e8ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🏠 居家遠端</button>
         <button onclick="setKeywordSearch('輪椅無障礙')" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">♿ 輪椅無障礙</button>
+        <button onclick="setKeywordSearch('1對1導師')" style="background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 4px 12px; border-radius: 14px; font-size: 14px; font-weight: 700; cursor: pointer;">🤝 1對1導師陪伴</button>
       </div>
     </div>
 
@@ -356,6 +363,7 @@
           <h2 id="step-title" style="font-size: 28px; font-weight: 900; color: #0f172a; margin-top: 6px;">
             1. 工作興趣領域
           </h2>
+          <p id="step-subtitle" style="font-size: 16px; color: #64748b;">請點選您喜歡或想嘗試的工作類型（點擊卡片可多選）</p>
         </div>
         <div style="text-align: right;">
           <span id="step-percent" style="font-size: 36px; font-weight: 900; color: #2563eb;">0%</span>
@@ -406,6 +414,13 @@
               <p style="font-size: 15px; color: #475569; margin-top: 4px;">手作餅乾烘焙輔助、禮盒定點包裝。</p>
             </div>
           </div>
+          <div class="option-card" onclick="toggleOption('interests', '數位媒體與文字小幫手', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">💻 數位媒體與文字小幫手</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">社群排版回應、圖卡上字處理。</p>
+            </div>
+          </div>
         </div>
         <div style="display: flex; justify-content: flex-end;">
           <button onclick="goToStep(2)" class="btn btn-primary" style="padding: 16px 32px;">下一步：工作環境 ➔</button>
@@ -420,6 +435,14 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🏢 室內靜態辦公室</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">安靜舒適冷氣房、獨立固定桌位。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('environments', '居家遠端免通勤', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🏠 居家遠端免通勤</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">在家工作，省去搭車轉乘交通體力。</p>
             </div>
           </div>
         </div>
@@ -437,6 +460,14 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">♿ 無障礙坡道與輪椅設施</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">無階梯入口、斜坡道與專用洗手面。</p>
+            </div>
+          </div>
+          <div class="option-card selected" onclick="toggleOption('accommodations', '1對1輔導員導師陪伴', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🤝 1對1 輔導員/導師陪伴</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">入職初始提供親切耐心教學。</p>
             </div>
           </div>
         </div>
@@ -454,6 +485,7 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">☀️ 日間全職 (09:00 ~ 17:00)</h4>
+              <p style="font-size: 15px; color: #475569; margin-top: 4px;">作息規律，週休二日。</p>
             </div>
           </div>
         </div>
@@ -465,14 +497,18 @@
 
       <!-- Step 5 View -->
       <div id="step-5" class="step-view" style="display: none;">
-        <div id="job-results-container" style="display: flex; flex-direction: column; gap: 20px;"></div>
+        <div id="job-results-container" style="display: flex; flex-direction: column; gap: 24px;"></div>
 
         <!-- Post-Onboarding AI Workplace Assistant Card -->
         <div style="background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%); border: 2px solid #c084fc; border-radius: 26px; padding: 28px; margin-top: 32px;">
-          <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8; margin-bottom: 12px;">🤖 入職後 AI 職場諮詢小幫手 (AI 主動生成 SOP 圖卡)</h3>
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8;">🤖 入職後 AI 職場諮詢小幫手 (AI 主動生成圖解 SOP 卡)</h3>
+            <span class="badge badge-ai" style="font-size: 14px;">不用找導師要，AI 主動生成與解釋</span>
+          </div>
+
           <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
-            <input id="ai-workplace-input" type="text" placeholder="輸入想讓 AI 生成 SOP 的工作名稱..." style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #d8b4fe; outline: none; font-size: 16px;" />
-            <button onclick="submitCustomAiQuestion()" class="btn btn-accent" style="padding: 12px 24px;">🤖 生成圖示 SOP 卡</button>
+            <input id="ai-workplace-input" type="text" placeholder="輸入想讓 AI 生成 SOP 的工作名稱 (如: 發票核對)..." style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #d8b4fe; outline: none; font-size: 16px;" />
+            <button onclick="submitCustomAiQuestion()" class="btn btn-accent" style="padding: 12px 24px;">🤖 主動生成圖示 SOP 卡</button>
           </div>
           <div id="ai-response-box" style="display: none; background: white; border: 2px solid #d8b4fe; border-radius: 18px; padding: 22px;">
             <div id="ai-response-text" style="font-size: 16px; line-height: 1.8;"></div>
@@ -493,17 +529,18 @@
 
   <script>
     let currentStepNum = 1;
-    let studentProfile = JSON.parse(localStorage.getItem('app_active_student_profile')) || null;
+    let studentProfile = JSON.parse(localStorage.getItem('app_active_student_profile')) || {
+      name: "陳小明",
+      school: "市立特教職業高級中學",
+      department: "資訊處理與商業服務科",
+      email: "student01@example.com"
+    };
     let registeredAccounts = JSON.parse(localStorage.getItem('app_registered_students')) || {
       'student01@example.com': { password: '123', name: '陳小明', school: '市立特教職業高級中學', dept: '資訊處理與商業服務科' }
     };
 
     window.onload = function() {
-      if (studentProfile && studentProfile.name) {
-        updateHeaderStatus();
-      } else {
-        toggleStudentAuthModal(true, 'register');
-      }
+      updateHeaderStatus();
     };
 
     function switchAuthTab(tab) {
@@ -599,10 +636,32 @@
     }
 
     function submitCustomAiQuestion() {
-      const q = document.getElementById('ai-workplace-input').value.trim();
-      if (!q) return;
+      const q = document.getElementById('ai-workplace-input').value.trim() || '發票核對';
       document.getElementById('ai-response-box').style.display = 'block';
-      document.getElementById('ai-response-text').innerHTML = `<p style="color: #1d4ed8; font-weight: 800;">📄 ➔ 📁 ➔ ⌨️ 3 步驟圖文 SOP 已生成！</p>`;
+      document.getElementById('ai-response-text').innerHTML = `
+        <div style="background: #faf5ff; border: 2px solid #c084fc; border-radius: 18px; padding: 20px;">
+          <h4 style="color: #6b21a8; font-size: 20px; font-weight: 800; margin-bottom: 12px;">🤖 【AI 主動生成 3 步驟圖示 SOP 說明卡 - ${q}】</h4>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 16px;">
+            <div style="background: white; border: 2px solid #d8b4fe; border-radius: 14px; padding: 14px; text-align: center;">
+              <div style="font-size: 32px;">📄</div>
+              <h5 style="font-weight: 800; color: #6b21a8;">步驟 1: 整理單據</h5>
+              <p style="font-size: 14px; color: #475569;">將紙本發票依日期由小到大疊好。</p>
+            </div>
+            <div style="background: white; border: 2px solid #d8b4fe; border-radius: 14px; padding: 14px; text-align: center;">
+              <div style="font-size: 32px;">📁</div>
+              <h5 style="font-weight: 800; color: #6b21a8;">步驟 2: 開啟系統</h5>
+              <p style="font-size: 14px; color: #475569;">點選桌面藍色圖示開啟試算表。</p>
+            </div>
+            <div style="background: white; border: 2px solid #d8b4fe; border-radius: 14px; padding: 14px; text-align: center;">
+              <div style="font-size: 32px;">⌨️</div>
+              <h5 style="font-weight: 800; color: #6b21a8;">步驟 3: Key入金額</h5>
+              <p style="font-size: 14px; color: #475569;">依序輸入發票號碼與含稅金額。</p>
+            </div>
+          </div>
+          <p style="font-size: 15px; color: #5b21b6; background: #f3e8ff; padding: 12px; border-radius: 12px; font-weight: 700;">💡 白話文解釋：免找導師索取說明卡！AI 已主動替您拆解成上方 3 個簡單步驟，跟著圖示操作即可順利完成！</p>
+        </div>
+      `;
     }
 
     function handleKeywordSearch(kw) { if (currentStepNum === 5) renderLLMResults(); }
@@ -616,6 +675,7 @@
       document.getElementById('step-badge').innerText = `步驟 ${num} / 5`;
       document.getElementById('step-percent').innerText = `${Math.round(((num-1)/4)*100)}%`;
       document.getElementById('progress-fill').style.width = `${Math.round(((num-1)/4)*100)}%`;
+      if (num === 5) renderLLMResults();
     }
 
     function toggleOption(cat, val, el) {
@@ -625,9 +685,43 @@
 
     function renderLLMResults() {
       document.getElementById('job-results-container').innerHTML = `
-        <div style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 24px;">
-          <h4 style="font-size: 22px; font-weight: 800;">資料輸入與發票核對專員</h4>
-          <p style="color: #475569;">創昕數位科技 • 月薪 32,000 ~ 36,000 元</p>
+        <!-- AI Job Recommendation Card 1 -->
+        <div style="background: white; border: 2px solid #3b82f6; border-radius: 24px; padding: 28px; box-shadow: 0 10px 30px rgba(59,130,246,0.1);">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+            <div>
+              <span class="badge" style="margin-bottom: 6px;">💡 AI 適配度 98% (最佳推薦)</span>
+              <h3 style="font-size: 24px; font-weight: 900; color: #1e3a8a;">資料輸入與發票核對專員</h3>
+              <p style="font-size: 16px; color: #475569;">創昕數位科技股份有限公司 • 月薪 32,000 ~ 36,000 元</p>
+            </div>
+            <a href="mailto:vvicky9508@gmail.com?subject=應徵資料輸入專員" class="btn btn-primary" style="padding: 10px 22px; min-height: 48px;">📧 一鍵投遞履歷</a>
+          </div>
+
+          <div style="background: #eff6ff; border: 1.5px solid #bfdbfe; border-radius: 18px; padding: 18px; margin-bottom: 18px;">
+            <h4 style="font-size: 17px; font-weight: 800; color: #1d4ed8; margin-bottom: 6px;">🧠 AI 適配原因與環境評估：</h4>
+            <p style="font-size: 15px; color: #1e40af; line-height: 1.6;">
+              完全符合您勾選的「文書處理」、「室內靜態辦公室」與「輪椅無障礙坡道」需求。辦公室全區電梯與通道均大於 90cm，具備 1 對 1 導師陪伴入職。
+            </p>
+          </div>
+
+          <!-- AI SOP 3-Step Visual Card inside Job Result -->
+          <div style="background: #faf5ff; border: 2px solid #c084fc; border-radius: 18px; padding: 18px;">
+            <h4 style="font-size: 17px; font-weight: 800; color: #6b21a8; margin-bottom: 10px;">📋 【AI 主動生成圖示 SOP 說明卡】</h4>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px;">
+              <div style="background: white; padding: 12px; border-radius: 12px; border: 1px solid #d8b4fe; text-align: center;">
+                <span style="font-size: 28px;">📄</span>
+                <p style="font-size: 14px; font-weight: 800; color: #5b21b6;">1. 整理單據</p>
+              </div>
+              <div style="background: white; padding: 12px; border-radius: 12px; border: 1px solid #d8b4fe; text-align: center;">
+                <span style="font-size: 28px;">📁</span>
+                <p style="font-size: 14px; font-weight: 800; color: #5b21b6;">2. 開啟系統</p>
+              </div>
+              <div style="background: white; padding: 12px; border-radius: 12px; border: 1px solid #d8b4fe; text-align: center;">
+                <span style="font-size: 28px;">⌨️</span>
+                <p style="font-size: 14px; font-weight: 800; color: #5b21b6;">3. Key入金額</p>
+              </div>
+            </div>
+            <p style="font-size: 13px; color: #7c3aed; margin-top: 8px; font-weight: 700;">💡 白話文說明：無需向導師索取說明卡，AI 已直接為您生成 3 步驟簡單流程圖！</p>
+          </div>
         </div>
       `;
     }
@@ -635,7 +729,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用學生與求職者網頁。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用學生與求職者專屬網頁。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
