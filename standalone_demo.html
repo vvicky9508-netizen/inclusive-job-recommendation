@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (含 RAG + 管理員權限)</title>
-  <meta name="description" content="專為身心障礙求職者、職業輔導員與系統管理員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、管理員權限控制與 LLM 智慧匹配系統。" />
+  <title>無障礙智慧職缺適配與輔導系統 (RAG 檢索增強 + 密碼防護管理員)</title>
+  <meta name="description" content="專為身心障礙求職者、職業輔導員與系統管理員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、管理員密碼鑑權與 LLM 智慧匹配系統。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -193,12 +193,12 @@
   <header>
     <div class="header-inner">
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
+        <div style="background: linear-gradient(135deg, #6366f1 0%, #0d9488 100%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
           ♿
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #eef2ff; color: #4338ca; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">+ 管理員控制權限</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 知識庫 ✕ 系統管理員面板 ✕ 輔導員權限管理</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ccfbf1; color: #0f766e; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">RAG + 管理員鑑權鎖</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 檢索增強 ✕ 管理員密碼驗證 ✕ 輔導員權限管理</p>
         </div>
       </div>
 
@@ -211,7 +211,7 @@
           🔌 REST API 測試
         </button>
 
-        <!-- Role Switcher (Seeker / Counselor / Admin) -->
+        <!-- Role Switcher -->
         <div style="display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 14px; border: 1px solid #cbd5e1; flex-wrap: wrap;">
           <button id="role-seeker-btn" onclick="setRole('seeker')" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: white; color: #2563eb; cursor: pointer;">
             ♿ 求職者
@@ -219,8 +219,8 @@
           <button id="role-counselor-btn" onclick="setRole('counselor')" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
             👨‍🏫 輔導員 (唯讀)
           </button>
-          <button id="role-admin-btn" onclick="setRole('admin')" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
-            👑 系統管理員
+          <button id="role-admin-btn" onclick="requestAdminRole()" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
+            🔒 系統管理員 (需密碼)
           </button>
         </div>
       </div>
@@ -231,14 +231,14 @@
       🛡️ 【輔導員唯讀模式已啟用】全頁控制項已暫時凍結，提供安全評估檢視與 RAG 知識庫檢索導出。
     </div>
     <div id="admin-banner" class="admin-banner">
-      👑 【系統管理員權限已啟用】您擁有最權限：可自由管理職缺資料庫、RAG 知識庫條文與 LLM 評估參數配置。
+      👑 【管理員驗證授權通過】您已取得最高權限：可管理職缺資料庫、RAG 知識條文與 LLM 安全審計配置。
     </div>
   </header>
 
   <!-- Main Container -->
   <div class="container">
 
-    <!-- Progress Bar Card (Seeker Mode) -->
+    <!-- Progress Bar Card -->
     <div id="progress-card" style="background: #ffffff; border-radius: 24px; padding: 28px; margin-bottom: 32px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
         <div>
@@ -476,9 +476,9 @@
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; border-bottom: 2px solid #e0e7ff; padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
         <div>
           <h2 style="font-size: 24px; font-weight: 800; color: #3730a3;">👑 系統管理員全權控制台 (Admin Control Panel)</h2>
-          <p style="font-size: 15px; color: #4338ca;">管理員權限：職缺資料庫維護、RAG 知識庫管理、權限紀錄與系統參數配置</p>
+          <p style="font-size: 15px; color: #4338ca;">🔒 已完成通行證鑑權：您具有全站職缺資料庫維護、RAG 條文管理與權限配置存取權</p>
         </div>
-        <span class="badge badge-admin" style="font-size: 15px; padding: 6px 16px;">超級管理員模組 (Active)</span>
+        <button onclick="adminLogout()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 40px; font-size: 14px; color: #ef4444; border-color: #fca5a5;">登出管理員身分</button>
       </div>
 
       <!-- Quick Admin Stats -->
@@ -492,8 +492,8 @@
           <h3 id="admin-rag-count" style="font-size: 28px; font-weight: 900; color: #166534;">4 條</h3>
         </div>
         <div style="background: #fffbeb; padding: 18px; border-radius: 16px; border: 1px solid #fde68a;">
-          <span style="font-size: 14px; color: #b45309; font-weight: 700;">全站安全審計紀錄</span>
-          <h3 style="font-size: 28px; font-weight: 900; color: #78350f;">正常 (OK)</h3>
+          <span style="font-size: 14px; color: #b45309; font-weight: 700;">管理員權限鑑權狀態</span>
+          <h3 style="font-size: 28px; font-weight: 900; color: #78350f;">已驗證 (Auth)</h3>
         </div>
       </div>
 
@@ -531,6 +531,22 @@
 
   </div>
 
+  <!-- Admin Login Auth Modal -->
+  <div id="admin-auth-modal" class="modal-backdrop">
+    <div style="background: white; border-radius: 24px; max-width: 480px; width: 100%; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3); text-align: center;">
+      <div style="font-size: 42px; margin-bottom: 8px;">🔒</div>
+      <h3 style="font-size: 22px; font-weight: 800; color: #3730a3; margin-bottom: 8px;">管理員權限密碼驗證</h3>
+      <p style="font-size: 15px; color: #64748b; margin-bottom: 20px;">請輸入系統管理者通行密碼，以解鎖全站控制面板。</p>
+      
+      <input id="admin-passcode-input" type="password" placeholder="請輸入管理員通行密碼 (預設: admin123)" style="width: 100%; padding: 14px; font-size: 17px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; margin-bottom: 18px; text-align: center;" />
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="toggleAdminAuthModal(false)" class="btn btn-secondary" style="flex: 1;">取消</button>
+        <button onclick="verifyAdminPasscode()" class="btn btn-admin" style="flex: 1;">解鎖管理員面板</button>
+      </div>
+    </div>
+  </div>
+
   <!-- REST API 說明對話框 -->
   <div id="api-modal" class="modal-backdrop">
     <div style="background: white; border-radius: 24px; max-width: 700px; width: 100%; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
@@ -546,7 +562,7 @@
         <p style="margin-top: 8px;"><strong>2. 提交條件:</strong> POST /api/v1/profile</p>
         <p style="margin-top: 8px;"><strong>3. RAG 知識庫檢索:</strong> POST /api/v1/rag/retrieve</p>
         <p style="margin-top: 8px;"><strong>4. LLM+RAG 推薦:</strong> POST /api/v1/recommend/analyze</p>
-        <p style="margin-top: 8px;"><strong>5. 管理員職缺管理:</strong> POST /api/v1/admin/jobs</p>
+        <p style="margin-top: 8px;"><strong>5. 管理員 API (需X-Admin-Key):</strong> POST /api/v1/admin/jobs</p>
       </div>
 
       <div style="display: flex; justify-content: flex-end;">
@@ -558,6 +574,9 @@
   <script>
     let currentRole = 'seeker';
     let currentStepNum = 1;
+    let isAdminAuthenticated = false;
+    const ADMIN_PASSCODE = 'admin123'; // 可在此自訂全站管理者金鑰密碼
+
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
     // RAG Knowledge Base Documents
@@ -617,7 +636,46 @@
       }
     ];
 
+    function requestAdminRole() {
+      if (isAdminAuthenticated) {
+        setRole('admin');
+      } else {
+        toggleAdminAuthModal(true);
+      }
+    }
+
+    function toggleAdminAuthModal(show) {
+      document.getElementById('admin-auth-modal').style.display = show ? 'flex' : 'none';
+      if (show) {
+        document.getElementById('admin-passcode-input').value = '';
+        document.getElementById('admin-passcode-input').focus();
+      }
+    }
+
+    function verifyAdminPasscode() {
+      const input = document.getElementById('admin-passcode-input').value;
+      if (input === ADMIN_PASSCODE) {
+        isAdminAuthenticated = true;
+        toggleAdminAuthModal(false);
+        setRole('admin');
+        alert('🎉 系統管理員通行證身分驗證成功！已為您解除控制台封鎖。');
+      } else {
+        alert('❌ 密碼錯誤！您無權存取系統管理員面板。');
+      }
+    }
+
+    function adminLogout() {
+      isAdminAuthenticated = false;
+      setRole('seeker');
+      alert('已安全性登出管理員權限。');
+    }
+
     function setRole(role) {
+      if (role === 'admin' && !isAdminAuthenticated) {
+        requestAdminRole();
+        return;
+      }
+
       currentRole = role;
       document.getElementById('counselor-banner').style.display = role === 'counselor' ? 'block' : 'none';
       document.getElementById('admin-banner').style.display = role === 'admin' ? 'block' : 'none';
@@ -752,6 +810,7 @@
     }
 
     function adminAddJob() {
+      if (!isAdminAuthenticated) return;
       const title = document.getElementById('admin-new-title').value;
       const company = document.getElementById('admin-new-company').value;
       const salary = document.getElementById('admin-new-salary').value || '月薪 30,000 元';
@@ -784,6 +843,7 @@
     }
 
     function adminDeleteJob(id) {
+      if (!isAdminAuthenticated) return;
       if (confirm('確定要刪除此筆無障礙職缺嗎？')) {
         mockJobs = mockJobs.filter(j => j.id !== id);
         renderAdminDashboard();
@@ -791,6 +851,7 @@
     }
 
     function adminAddRag() {
+      if (!isAdminAuthenticated) return;
       const title = document.getElementById('admin-rag-title').value;
       const content = document.getElementById('admin-rag-content').value;
       if (!title || !content) {
@@ -804,6 +865,7 @@
     }
 
     function adminDeleteRag(idx) {
+      if (!isAdminAuthenticated) return;
       RAG_DATABASE.splice(idx, 1);
       renderAdminDashboard();
     }
@@ -815,7 +877,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為您啟動管理員控制權限。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為您啟動管理員鑑權防護與 RAG 檢索增強。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
