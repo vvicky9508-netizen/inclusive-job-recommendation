@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統</title>
-  <meta name="description" content="專為身心障礙求職者與職業輔導員設計的低認知負擔職缺步驟式引導、LLM智慧匹配與外部 RESTful API 整合系統。" />
+  <title>無障礙智慧職缺適配與輔導系統 (含 RAG 檢索增強)</title>
+  <meta name="description" content="專為身心障礙求職者與職業輔導員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、LLM智慧匹配與外部 RESTful API 整合系統。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -19,10 +19,11 @@
       --success: #10b981;
       --warning: #f59e0b;
       --warning-light: #fffbeb;
+      --rag-color: #0d9488;
+      --rag-light: #ccfbf1;
       --bg: #f8fafc;
       --card-bg: #ffffff;
       --text: #0f172a;
-      --text-muted: #475569;
       --border: #cbd5e1;
       --radius: 20px;
     }
@@ -60,6 +61,7 @@
     .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid var(--border); }
     .btn-secondary:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
     .btn-accent { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; box-shadow: 0 6px 18px rgba(124,58,237,0.3); }
+    .btn-rag { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; box-shadow: 0 6px 18px rgba(13,148,136,0.3); }
 
     /* Card Option Selection */
     .option-card {
@@ -155,6 +157,18 @@
       background: var(--primary-light);
       color: var(--primary);
     }
+    .badge-rag {
+      background: var(--rag-light);
+      color: var(--rag-color);
+    }
+
+    .rag-box {
+      background: #f0fdf4;
+      border: 2px dashed #34d399;
+      border-radius: 16px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+    }
   </style>
 </head>
 <body>
@@ -163,12 +177,12 @@
   <header>
     <div class="header-inner">
       <div style="display: flex; align-items: center; gap: 14px;">
-        <div style="background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); width: 48px; height: 48px; borderRadius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
-          ♿
+        <div style="background: linear-gradient(135deg, #0d9488 0%, #3b82f6 100%); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
+          🧠
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統</h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ LLM 智慧推薦 ✕ 輔導員權限管理</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ccfbf1; color: #0f766e; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">+ RAG 檢索增強</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 輔導知識庫 ✕ LLM 智慧適配 ✕ 輔導員權限管理</p>
         </div>
       </div>
 
@@ -194,7 +208,7 @@
     </div>
 
     <div id="counselor-banner" class="counselor-banner">
-      🛡️ 【輔導員唯讀模式已啟用】您正處於唯讀狀態，所有修改控制已凍結，提供安全評估與資料導出。
+      🛡️ 【輔導員唯讀模式已啟用】全頁控制項已暫時凍結，提供安全評估檢視與 RAG 知識庫檢索導出。
     </div>
   </header>
 
@@ -221,7 +235,7 @@
       </div>
 
       <div style="height: 14px; background: #e2e8f0; border-radius: 10px; overflow: hidden;">
-        <div id="progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%); transition: width 0.4s ease;"></div>
+        <div id="progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, #0d9488 0%, #3b82f6 50%, #8b5cf6 100%); transition: width 0.4s ease;"></div>
       </div>
 
       <!-- Quick Step Buttons -->
@@ -230,7 +244,7 @@
         <button onclick="goToStep(2)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">2. 環境</button>
         <button onclick="goToStep(3)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">3. 需求</button>
         <button onclick="goToStep(4)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">4. 時間</button>
-        <button onclick="goToStep(5)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">5. LLM推薦</button>
+        <button onclick="goToStep(5)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">5. LLM+RAG推薦</button>
       </div>
     </div>
 
@@ -348,7 +362,7 @@
 
       <!-- Step 4 View -->
       <div id="step-4" class="step-view" style="display: none;">
-        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您希望的工作時間：</h3>
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您希望的工作時間型態：</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
           <div class="option-card selected" onclick="toggleOption('schedule', 'daytime', this)">
             <div class="checkbox-circle">✓</div>
@@ -367,16 +381,32 @@
         </div>
         <div style="display: flex; justify-content: space-between;">
           <button onclick="goToStep(3)" class="btn btn-secondary">⬅️ 上一步</button>
-          <button onclick="renderLLMResults(); goToStep(5);" class="btn btn-accent">✨ 產生 LLM 智慧評估 ➔</button>
+          <button onclick="renderLLMResults(); goToStep(5);" class="btn btn-rag">🧠 檢索 RAG 知識庫 + 產生 LLM 評估 ➔</button>
         </div>
       </div>
 
-      <!-- Step 5 View (LLM Dynamic Recommendations) -->
+      <!-- Step 5 View (LLM + RAG Dynamic Recommendations) -->
       <div id="step-5" class="step-view" style="display: none;">
         
+        <!-- RAG Knowledge Retrieval Panel -->
+        <div class="rag-box">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <h4 style="font-size: 19px; font-weight: 800; color: #065f46; display: flex; align-items: center; gap: 8px;">
+              <span>📚 RAG 檢索增強知識庫 (Retrieval-Augmented Generation)</span>
+            </h4>
+            <span className="badge badge-rag" style="background: #ccfbf1; color: #0f766e; font-size: 13px; font-weight: 800; padding: 2px 10px; border-radius: 10px;">檢索比對成功</span>
+          </div>
+          <p style="font-size: 15px; color: #047857; margin-bottom: 10px;">
+            系統已從《勞動部職職再設計法規手冊》與《庇護性就業輔導資料庫》檢索相關專業知識注入 LLM 提示：
+          </p>
+          <ul id="rag-knowledge-list" style="padding-left: 20px; font-size: 15px; color: #065f46; display: flex; flexDirection: column; gap: 4px;">
+            <!-- Injected by JS -->
+          </ul>
+        </div>
+
         <!-- LLM Modifier Box -->
         <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 20px; padding: 24px; color: white; margin-bottom: 28px;">
-          <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 12px;">🎛️ LLM 推薦動態微調參數</h3>
+          <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 12px;">🎛️ LLM + RAG 推薦動態微調參數</h3>
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
             <button onclick="toggleModifier('reducePhysical')" class="btn btn-secondary" style="font-size: 15px; justify-content: space-between; background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
               <span>🦾 減輕體力負荷</span>
@@ -389,7 +419,7 @@
           </div>
           <div style="display: flex; gap: 10px;">
             <input id="custom-prompt-input" type="text" placeholder="自訂Prompt（例如：優先選擇近捷運站...）" style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" />
-            <button onclick="renderLLMResults()" class="btn btn-primary" style="padding: 10px 20px; font-size: 15px;">🔄 重新計算</button>
+            <button onclick="renderLLMResults()" class="btn btn-primary" style="padding: 10px 20px; font-size: 15px;">🔍 重新檢索與計算</button>
           </div>
         </div>
 
@@ -403,27 +433,27 @@
 
     </div>
 
-    <!-- Counselor Read-Only Dashboard -->
+    <!-- 輔導員唯讀儀表板 -->
     <div id="counselor-dashboard" style="display: none; background: white; border-radius: 24px; padding: 32px; border: 2px solid #f59e0b;">
-      <h2 style="font-size: 24px; font-weight: 800; color: #78350f; margin-bottom: 16px;">👨‍🏫 輔導員個案評估與 API 導出儀表板 (唯讀模式)</h2>
-      <p style="font-size: 16px; color: #92400e; margin-bottom: 24px;">求職者：陳小明 (ID: user-001) | 已完成所有步驟勾選</p>
+      <h2 style="font-size: 24px; font-weight: 800; color: #78350f; margin-bottom: 16px;">👨‍🏫 輔導員個案評估與 RAG 檢索報告 (唯讀模式)</h2>
+      <p style="font-size: 16px; color: #92400e; margin-bottom: 24px;">求職者：陳小明 (ID: user-001) | 已完成所有步驟與 RAG 知識庫比對</p>
       
       <div style="background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 16px; font-family: monospace; font-size: 14px; overflow-x: auto; margin-bottom: 20px;">
         <pre id="counselor-json-preview"></pre>
       </div>
 
-      <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製 API JSON 報告');" class="btn btn-primary">
-        📋 複製個案 RESTful JSON 報告
+      <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製包含 RAG 依據之個案 RESTful JSON 報告');" class="btn btn-primary">
+        📋 複製含 RAG 檢索紀錄之 RESTful JSON 報告
       </button>
     </div>
 
   </div>
 
-  <!-- REST API Docs Modal -->
+  <!-- REST API 說明對話框 -->
   <div id="api-modal" class="modal-backdrop">
     <div style="background: white; border-radius: 24px; max-width: 700px; width: 100%; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3 style="font-size: 22px; font-weight: 800;">🔌 RESTful API 串接與測試說明</h3>
+        <h3 style="font-size: 22px; font-weight: 800;">🔌 RESTful API + RAG 端點測試說明</h3>
         <button onclick="toggleApiModal(false)" style="border: none; background: none; font-size: 24px; cursor: pointer;">✕</button>
       </div>
 
@@ -432,8 +462,9 @@
       <div style="background: #f8fafc; padding: 16px; border-radius: 14px; font-family: monospace; font-size: 14px; margin-bottom: 20px;">
         <p><strong>1. 健康檢查:</strong> GET /api/v1/health</p>
         <p style="margin-top: 8px;"><strong>2. 提交條件:</strong> POST /api/v1/profile</p>
-        <p style="margin-top: 8px;"><strong>3. LLM 推薦:</strong> POST /api/v1/recommend/analyze</p>
-        <p style="margin-top: 8px;"><strong>4. 輔導員導出:</strong> GET /api/v1/counselor/reports/user-001</p>
+        <p style="margin-top: 8px;"><strong>3. RAG 知識庫檢索:</strong> POST /api/v1/rag/retrieve</p>
+        <p style="margin-top: 8px;"><strong>4. LLM+RAG 推薦:</strong> POST /api/v1/recommend/analyze</p>
+        <p style="margin-top: 8px;"><strong>5. 輔導員導出:</strong> GET /api/v1/counselor/reports/user-001</p>
       </div>
 
       <div style="display: flex; justify-content: flex-end;">
@@ -447,6 +478,30 @@
     let currentStepNum = 1;
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
+    // RAG Knowledge Base Documents
+    const RAG_DATABASE = [
+      {
+        tag: 'wheelchair',
+        title: '《職務再設計服務手冊 條文 4.2》：肢體障礙與輪椅環境規範',
+        content: '輪椅使用者之桌面高度應維持在 72~78cm 之間，通道淨寬不得小於 90cm，並應備有平緩無階梯斜坡與專用電梯。'
+      },
+      {
+        tag: 'mentor',
+        title: '《庇護性就業身心障礙者輔導計畫 第 12 條》：一對一輔導機制',
+        content: '入職首月應指派專職就業服務員進行密集陪伴與工作 SOP 分解教學，建立職場安全感。'
+      },
+      {
+        tag: 'visual_sop',
+        title: '《認知功能輔助手冊 附錄 B》：圖像化與色塊標示規範',
+        content: '針對圖文理解需求者，應提供標準視覺化輔助說明卡（Visual SOP），並採高對比色區分物件類別。'
+      },
+      {
+        tag: 'light_physical',
+        title: '《職業安全衛生設施規則》：體力負擔減輕條例',
+        content: '建議單次搬運重量小於 5kg，或設置油壓輔助推車與定點輸送帶，避免肌肉骨骼重複性累積傷病。'
+      }
+    ];
+
     const mockJobs = [
       {
         title: '資料輸入與發票核對專員',
@@ -454,7 +509,8 @@
         salary: '月薪 32,000 ~ 36,000 元',
         score: 95,
         type: '室內靜態 / 無障礙完備',
-        fitReason: '完美符合您的文書偏好與輪椅無障礙通道要求，提供靜音獨立工作桌。'
+        fitReason: '完美符合您的文書偏好與輪椅無障礙通道要求，提供靜音獨立工作桌。',
+        ragRef: '符合《職務再設計手冊 條文 4.2》高標準規範'
       },
       {
         title: '線上社群內容排版與客服小幫手',
@@ -462,7 +518,8 @@
         salary: '時薪 210 ~ 250 元 (彈性)',
         score: 91,
         type: '居家遠端 / 免通勤',
-        fitReason: '完全居家工作，省去交通體力負擔，溝通均為文字與圖卡說明。'
+        fitReason: '完全居家工作，省去交通體力負擔，溝通均為文字與圖卡說明。',
+        ragRef: '符合《體力負擔減輕條例》免通勤最佳實踐'
       },
       {
         title: '庇護餐飲手作與包裝助理',
@@ -470,7 +527,8 @@
         salary: '月薪 28,500 ~ 31,000 元',
         score: 87,
         type: '手工作業 / 導師陪伴',
-        fitReason: '配備一對一耐心輔導員指導，工坊步調溫馨穩定。'
+        fitReason: '配備一對一耐心輔導員指導，工坊步調溫馨穩定。',
+        ragRef: '符合《庇護就業輔導計畫 第 12 條》陪伴規範'
       }
     ];
 
@@ -514,6 +572,16 @@
     }
 
     function renderLLMResults() {
+      // 1. Render RAG Knowledge Base List
+      const ragList = document.getElementById('rag-knowledge-list');
+      ragList.innerHTML = '';
+      RAG_DATABASE.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `📌 <strong>${item.title}</strong>：${item.content}`;
+        ragList.appendChild(li);
+      });
+
+      // 2. Render Job Cards
       const container = document.getElementById('job-results-container');
       container.innerHTML = '';
       
@@ -526,7 +594,7 @@
         card.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
             <div>
-              <span class="badge" style="background: #ecfdf5; color: #059669;">LLM 匹配度：${score}%</span>
+              <span class="badge" style="background: #ecfdf5; color: #059669;">LLM+RAG 匹配度：${score}%</span>
               <h4 style="font-size: 22px; font-weight: 800; margin-top: 6px;">${job.title}</h4>
               <p style="font-size: 16px; color: #475569;">${job.company} • ${job.salary}</p>
             </div>
@@ -535,6 +603,9 @@
           <div style="background: #f8fafc; border-left: 4px solid #8b5cf6; padding: 14px; border-radius: 10px; font-size: 15px; color: #334155; margin-top: 10px;">
             🤖 <strong>LLM 推薦分析：</strong>${job.fitReason}
           </div>
+          <div style="background: #f0fdf4; border-left: 4px solid #0d9488; padding: 10px 14px; border-radius: 10px; font-size: 14px; color: #0f766e; margin-top: 8px; font-weight: 600;">
+            📚 <strong>RAG 法規與手冊引據：</strong>${job.ragRef}
+          </div>
         `;
         container.appendChild(card);
       });
@@ -542,13 +613,15 @@
 
     function renderCounselorJson() {
       const data = {
-        reportId: "REP-20260723-001",
+        reportId: "REP-20260723-RAG-001",
         userName: "陳小明",
         status: "READ_ONLY_MODE",
+        ragEnabled: true,
+        retrievedDocuments: RAG_DATABASE.map(r => r.title),
         selectedInterests: ["文書處理"],
         accommodations: ["無障礙坡道", "1對1導師陪伴"],
         topMatchedJob: mockJobs[0].title,
-        llmAssessment: "求職者極度適合靜態高架無障礙辦公場所，建議優先安排參訪。"
+        llmAssessment: "求職者極度適合靜態高架無障礙辦公場所，依據 RAG 檢索《職務再設計手冊 4.2條》，建議優先安排參訪。"
       };
       document.getElementById('counselor-json-preview').innerText = JSON.stringify(data, null, 2);
     }
@@ -560,7 +633,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。請照著步驟選擇您的興趣與條件。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為您啟動 RAG 輔導知識庫檢索增強。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
