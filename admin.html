@@ -3,8 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>系統管理員控制台 - 全站訊息中心與檔案管理獨立網頁</title>
-  <meta name="description" content="系統管理員專屬獨立網頁控制台，提供密碼授權、全站訊息收件匣、點擊看學校科系個案文件、職缺增刪與 RAG 條文管理。" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>系統管理員控制台 - 使用者帳號刪除與全站訊息管理</title>
+  <meta name="description" content="系統管理員專屬獨立網頁控制台，提供密碼授權、全站使用者帳號刪除按鈕、點擊檢視學校個案文件、職缺增刪與 RAG 條文管理。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -48,7 +51,7 @@
     .btn:hover:not(:disabled) { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 25px rgba(0,0,0,0.12); }
     .btn-admin { background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: white; box-shadow: 0 6px 20px rgba(99,102,241,0.3); }
     .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid #cbd5e1; }
-    .btn-danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; }
+    .btn-danger { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; box-shadow: 0 6px 20px rgba(239,68,68,0.25); }
     .btn-rag { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; }
 
     header {
@@ -112,17 +115,17 @@
           <h1 style="font-size: 23px; font-weight: 900; color: #3730a3; display: flex; align-items: center; gap: 8px;">
             系統管理員獨立控制頁 
             <span style="font-size: 14px; background: linear-gradient(135deg, #6366f1 0%, #3730a3 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
-              👑 最高管理權限
+              👑 最高管理權限 (支援刪除使用者)
             </span>
           </h1>
-          <p style="font-size: 14px; color: #4338ca; font-weight: 600;">全站訊息收件匣 ✕ 點擊檢視學校個案文件 ✕ 職缺與 RAG 條文管理</p>
+          <p style="font-size: 14px; color: #4338ca; font-weight: 600;">使用者帳號刪除 ✕ 檢視學校個案文件 ✕ 職缺與 RAG 條文管理</p>
         </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
         <a href="student.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">♿ 學生網頁</a>
         <a href="teacher.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">👨‍🏫 教師網頁</a>
-        <a href="index.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">🏠 回系統入口 Hub</a>
+        <a href="index.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">🏠 回入口 Hub</a>
       </div>
     </div>
   </header>
@@ -135,21 +138,18 @@
       <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; border-bottom: 2px solid #e0e7ff; padding-bottom: 16px; flex-wrap: wrap; gap: 12px;">
         <div>
           <h2 style="font-size: 26px; font-weight: 900; color: #3730a3; display: flex; align-items: center; gap: 10px;">
-            <span>👑 系統管理員全權控制台 & 全站訊息中心</span>
+            <span>👑 系統管理員控制台 & 全站使用者帳號管理</span>
           </h2>
-          <p style="font-size: 15px; color: #4338ca;">🔒 通行證鑑權完成：即時呈現學生與教師登入登記之個人資料卡與修改需求。</p>
+          <p style="font-size: 15px; color: #4338ca;">🔒 通行證鑑權完成：您可以隨時刪除違規或測試用之學生/教師使用者帳號。</p>
         </div>
         <button onclick="adminLogout()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 40px; font-size: 14px; color: #ef4444; border-color: #fca5a5;">重新驗證密碼登出</button>
       </div>
 
       <!-- Quick Admin Stats -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px;">
-        <div onclick="openMessageDocModal('msg-001')" style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); padding: 18px; border-radius: 16px; border: 2px solid #a5b4fc; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1.00)'">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="font-size: 14px; color: #4338ca; font-weight: 800;">📩 全站未讀/最新登入與需求訊息</span>
-            <span class="badge badge-admin" style="font-size: 12px;">📄 點擊開啟文件</span>
-          </div>
-          <h3 id="admin-msg-count" style="font-size: 28px; font-weight: 900; color: #3730a3; margin-top: 4px;">2 則訊息 (含關聯檔案)</h3>
+        <div style="background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); padding: 18px; border-radius: 16px; border: 2px solid #a5b4fc;">
+          <span style="font-size: 14px; color: #4338ca; font-weight: 800;">👤 全站註冊使用者與登入紀錄</span>
+          <h3 id="admin-msg-count" style="font-size: 28px; font-weight: 900; color: #3730a3; margin-top: 4px;">2 位使用者紀錄</h3>
         </div>
 
         <div style="background: #f0fdf4; padding: 18px; border-radius: 16px; border: 1px solid #bbf7d0;">
@@ -162,19 +162,19 @@
         </div>
       </div>
 
-      <!-- Admin Messages Center Section -->
+      <!-- Admin Messages & Users Management Center Section -->
       <div style="background: #f5f3ff; border: 2px solid #ddd6fe; border-radius: 20px; padding: 24px; margin-bottom: 28px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
           <h3 style="font-size: 22px; font-weight: 800; color: #5b21b6; display: flex; align-items: center; gap: 8px;">
-            <span>📩 全站學生與教師登入登記紀錄 & 修改需求收件匣</span>
+            <span>👥 全站學生與教師使用者帳號列表 & 刪除控制</span>
           </h3>
-          <button onclick="clearAdminMessages()" class="btn btn-secondary" style="padding: 4px 12px; min-height: 36px; font-size: 13px; color: #6b21a8; border-color: #ddd6fe;">清空已讀紀錄</button>
+          <button onclick="clearAdminMessages()" class="btn btn-secondary" style="padding: 4px 12px; min-height: 36px; font-size: 13px; color: #6b21a8; border-color: #ddd6fe;">清空所有記錄</button>
         </div>
         <p style="font-size: 15px; color: #6d28d9; margin-bottom: 18px;">
-          當學生或教師第一次登入填寫個人資料、或傳送修改建議時，都會即時匯入此收件匣（點擊可查看檔案）：
+          管理員點選右側<strong>【🗑️ 刪除此使用者帳號】</strong>即可將學生或教師從系統中永久移除：
         </p>
 
-        <!-- Dynamic Admin Messages Feed Container -->
+        <!-- Dynamic Admin Messages / Users Feed Container -->
         <div id="admin-messages-list" style="display: flex; flex-direction: column; gap: 14px;"></div>
       </div>
 
@@ -183,7 +183,6 @@
         <h3 style="font-size: 19px; font-weight: 800; color: #3730a3; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
           🔑 變更管理員通行密碼 (Change Admin Passcode)
         </h3>
-        <p style="font-size: 14px; color: #4338ca; margin-bottom: 12px;">您可以隨時在此修改全站管理員通行密碼，新密碼將即刻生效：</p>
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           <input id="admin-change-pass-input" type="password" placeholder="請輸入您自訂的新密碼..." style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #a5b4fc; min-width: 240px;" />
           <button onclick="adminChangePasscode()" class="btn btn-admin" style="padding: 10px 20px; min-height: 46px; font-size: 15px;">儲存新密碼</button>
@@ -197,9 +196,7 @@
           <input id="admin-new-title" type="text" placeholder="職缺名稱 (如: 行政助理)" style="padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1;" />
           <input id="admin-new-company" type="text" placeholder="公司名稱" style="padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1;" />
           <input id="admin-new-salary" type="text" placeholder="薪資待遇 (如: 月薪 35,000 元)" style="padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1;" />
-          <input id="admin-new-type" type="text" placeholder="工作型態與無障礙特色" style="padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1;" />
         </div>
-        <input id="admin-new-reason" type="text" placeholder="LLM 評估理由範本..." style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #cbd5e1; margin-bottom: 14px;" />
         <button onclick="adminAddJob()" class="btn btn-admin" style="min-height: 46px; font-size: 16px;">新增職缺至系統資料庫</button>
       </div>
 
@@ -207,17 +204,6 @@
       <div style="margin-bottom: 28px;">
         <h3 style="font-size: 20px; font-weight: 800; color: #1e293b; margin-bottom: 14px;">🛠️ 職缺資料庫編輯與刪除</h3>
         <div id="admin-job-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
-      </div>
-
-      <!-- Section 3: RAG Knowledge Base Manager -->
-      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 18px; padding: 24px;">
-        <h3 style="font-size: 20px; font-weight: 800; color: #166534; margin-bottom: 12px;">📚 RAG 知識庫法規條文管理</h3>
-        <div style="display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;">
-          <input id="admin-rag-title" type="text" placeholder="法規條文名稱" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #a7f3d0;" />
-          <input id="admin-rag-content" type="text" placeholder="內文規範說明..." style="flex: 2; padding: 10px; border-radius: 8px; border: 1px solid #a7f3d0;" />
-          <button onclick="adminAddRag()" class="btn btn-rag" style="padding: 8px 16px; min-height: 42px; font-size: 15px;">新增 RAG 條文</button>
-        </div>
-        <ul id="admin-rag-list" style="padding-left: 20px; font-size: 15px; color: #166534;"></ul>
       </div>
 
     </div>
@@ -243,69 +229,19 @@
   <!-- Message Related Documents Viewer Modal -->
   <div id="msg-doc-modal" class="modal-backdrop" style="display: none;">
     <div style="background: white; border-radius: 24px; max-width: 850px; width: 100%; max-height: 90vh; overflow-y: auto; padding: 32px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
-      
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e0e7ff; padding-bottom: 16px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #e0e7ff; padding-bottom: 16px; margin-bottom: 20px;">
         <div>
           <span class="badge" id="doc-modal-badge">個案登入與需求文件</span>
-          <h3 id="doc-modal-title" style="font-size: 24px; font-weight: 800; color: #3730a3; margin-top: 6px;">
-            📄 訊息關聯文件與附件個案檢視
-          </h3>
-          <p id="doc-modal-subtitle" style="font-size: 15px; color: #64748b;">
-            發送者：🎓 學生【陳小明】 | 時間：2026-07-23 13:58
-          </p>
+          <h3 id="doc-modal-title" style="font-size: 24px; font-weight: 800; color: #3730a3; margin-top: 6px;">📄 使用者詳細檔案</h3>
         </div>
         <button onclick="toggleMsgDocModal(false)" style="background: #f1f5f9; border: none; font-size: 24px; border-radius: 50%; width: 44px; height: 44px; cursor: pointer;">✕</button>
       </div>
-
-      <!-- Document Tabs -->
-      <div style="display: flex; gap: 10px; border-bottom: 2px solid #cbd5e1; padding-bottom: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-        <button id="doc-tab-1" onclick="switchDocTab(1)" style="padding: 8px 16px; border-radius: 10px; font-weight: 800; border: none; background: #3730a3; color: white; cursor: pointer;">
-          📄 文件1: 學生學校與科系檔案 (Profile.pdf)
-        </button>
-        <button id="doc-tab-2" onclick="switchDocTab(2)" style="padding: 8px 16px; border-radius: 10px; font-weight: 800; border: none; background: #e2e8f0; color: #475569; cursor: pointer;">
-          📘 文件2: 職重再設計評估建議 (RAG.docx)
-        </button>
-        <button id="doc-tab-3" onclick="switchDocTab(3)" style="padding: 8px 16px; border-radius: 10px; font-weight: 800; border: none; background: #e2e8f0; color: #475569; cursor: pointer;">
-          🔌 文件3: API JSON 即時資料
-        </button>
-      </div>
-
-      <!-- Tab Content 1: Student Profile PDF View -->
-      <div id="doc-content-1" style="background: #f8fafc; border: 2px solid #c7d2fe; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <h4 style="font-size: 19px; font-weight: 800; color: #1e1b4b;">📋 學生/教師 學校科系與個案登入檔 (Profile_Record.pdf)</h4>
-          <span style="font-size: 13px; color: #166534; background: #dcfce7; padding: 2px 10px; border-radius: 10px; font-weight: 700;">狀態: 登入個人資料已建立</span>
-        </div>
-
-        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 18px; font-size: 15px; color: #1e293b; display: flex; flex-direction: column; gap: 10px;">
-          <p><strong>登入人員/學生姓名：</strong> <span id="modal-doc-student-name">陳小明</span></p>
-          <p><strong>🏫 畢業/就讀/服務學校：</strong> <span id="modal-doc-school">市立特教職業高級中學</span></p>
-          <p><strong>📚 主修科系/輔導範圍：</strong> <span id="modal-doc-dept">資訊處理與商業服務科</span></p>
-          <p><strong>障礙類別與輔具標記：</strong> 肢體障礙 (使用輪椅) / 電腦輸入流利</p>
+      <div style="background: #f8fafc; border: 2px solid #c7d2fe; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
+        <div style="background: white; border: 1px solid #cbd5e1; border-radius: 12px; padding: 18px; font-size: 15px; color: #1e293b;">
+          <p><strong>使用者資料：</strong> <span id="modal-doc-student-name">陳小明 (市立特教職業高級中學 - 資訊處理與商業服務科)</span></p>
         </div>
       </div>
-
-      <!-- Tab Content 2: RAG Assessment Document -->
-      <div id="doc-content-2" style="display: none; background: #f0fdf4; border: 2px solid #a7f3d0; border-radius: 16px; padding: 22px; margin-bottom: 20px;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
-          <h4 style="font-size: 19px; font-weight: 800; color: #065f46;">📘 無障礙職務再設計條文評估檔 (Accessibility_RAG_Report.docx)</h4>
-        </div>
-        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 12px; padding: 18px; font-size: 15px; color: #065f46;">
-          📌 《職務再設計服務手冊 條文 4.2》：輪椅使用者桌面高度應維持 72~78cm。
-        </div>
-      </div>
-
-      <!-- Tab Content 3: RESTful API JSON Payload -->
-      <div id="doc-content-3" style="display: none; background: #0f172a; border-radius: 16px; padding: 22px; color: #38bdf8; margin-bottom: 20px; font-family: monospace; font-size: 14px; overflow-x: auto;">
-        <pre id="modal-json-doc-view"></pre>
-      </div>
-
-      <!-- Action Button Bar -->
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-        <span style="font-size: 14px; color: #64748b; font-weight: 700;">接收管理者信箱：vvicky9508@gmail.com</span>
-        <button onclick="toggleMsgDocModal(false)" class="btn btn-admin" style="padding: 8px 24px; min-height: 46px; font-size: 15px;">完成檢視關閉視窗</button>
-      </div>
-
+      <button onclick="toggleMsgDocModal(false)" class="btn btn-admin" style="width: 100%;">關閉視窗</button>
     </div>
   </div>
 
@@ -319,36 +255,25 @@
         sender: '🎓 學生/求職者【陳小明】(市立特教職高-資訊處理科)',
         time: '2026-07-23 13:58:20',
         type: '學生個人資料建立',
-        content: '新學生填寫登入資料：陳小明 | 學校：市立特教職業高級中學 | 科系：資訊處理與商業服務科 | 電話：0912-345-678',
-        selections: '學校：市立特教職高 | 科系：資訊處理科'
+        content: '學生登入建檔：陳小明 | 學校：市立特教職業高級中學 | 科系：資訊處理與商業服務科 | Email: student01@example.com',
+        selections: '學校：市立特教職高 | 科系：資訊處理科',
+        userEmail: 'student01@example.com',
+        userName: '陳小明'
       },
       {
         id: 'msg-002',
         sender: '👨‍🏫 教師/輔導員【陳老師】(市立特教)',
         time: '2026-07-23 14:02:15',
         type: '教師個人資料建立',
-        content: '新教師登入建檔：陳老師 | 服務學校：市立特教職業高級中學 | 輔導範圍：特教職高資訊處理科',
-        selections: '學校：市立特教職高 | 班級：資訊處理科'
+        content: '教師登入建檔：陳老師 | 服務學校：市立特教職業高級中學 | Email: teacher_chen@school.edu.tw',
+        selections: '學校：市立特教職高 | 班級：資訊處理科',
+        userEmail: 'teacher_chen@school.edu.tw',
+        userName: '陳老師'
       }
     ];
 
     let mockJobs = [
-      {
-        id: 'job-1',
-        title: '資料輸入與發票核對專員',
-        company: '創昕數位科技股份有限公司',
-        salary: '月薪 32,000 ~ 36,000 元',
-        type: '室內靜態 / 無障礙完備',
-        fitReason: '符合文書偏好與輪椅無障礙通道要求。'
-      }
-    ];
-
-    let RAG_DATABASE = [
-      {
-        tag: 'wheelchair',
-        title: '《職務再設計服務手冊 條文 4.2》：肢體障礙與輪椅環境規範',
-        content: '輪椅使用者之桌面高度應維持在 72~78cm 之間。'
-      }
+      { id: 'job-1', title: '資料輸入與發票核對專員', company: '創昕數位科技股份有限公司', salary: '月薪 32,000 ~ 36,000 元' }
     ];
 
     window.onload = function() {
@@ -376,7 +301,7 @@
       }
       ADMIN_PASSCODE = newPass.trim();
       localStorage.setItem('app_admin_passcode', ADMIN_PASSCODE);
-      alert(`🔑 管理員密碼已成功變更為【${ADMIN_PASSCODE}】！`);
+      alert(`🔑 管理員密碼已變更為【${ADMIN_PASSCODE}】！`);
       document.getElementById('admin-change-pass-input').value = '';
     }
 
@@ -389,31 +314,35 @@
       systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || systemMessages;
 
       document.getElementById('admin-job-count').innerText = `${mockJobs.length} 筆`;
-      document.getElementById('admin-msg-count').innerText = `${systemMessages.length} 則登記/需求訊息`;
+      document.getElementById('admin-msg-count').innerText = `${systemMessages.length} 個使用者紀錄`;
 
       const msgListContainer = document.getElementById('admin-messages-list');
       msgListContainer.innerHTML = '';
 
       if (systemMessages.length === 0) {
-        msgListContainer.innerHTML = `<div style="background: white; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 20px; text-align: center; color: #64748b;">📩 目前收件匣中暫無新訊息。</div>`;
+        msgListContainer.innerHTML = `<div style="background: white; border: 1px dashed #cbd5e1; border-radius: 14px; padding: 20px; text-align: center; color: #64748b;">📩 目前無使用者紀錄。</div>`;
       } else {
         systemMessages.forEach(msg => {
           const div = document.createElement('div');
-          div.style.cssText = 'background: white; border: 1px solid #c7d2fe; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(99,102,241,0.05); cursor: pointer;';
+          div.style.cssText = 'background: white; border: 1px solid #c7d2fe; border-radius: 16px; padding: 18px; box-shadow: 0 2px 8px rgba(99,102,241,0.05);';
           div.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; flex-wrap: wrap; gap: 8px;">
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="badge" style="font-size: 13px; background: ${msg.type.includes('登入') || msg.type.includes('個人資料') ? '#dcfce7' : '#e0e7ff'}; color: ${msg.type.includes('登入') || msg.type.includes('個人資料') ? '#166534' : '#3730a3'};">${msg.type}</span>
+                <span class="badge" style="font-size: 13px; background: ${msg.type.includes('登入') || msg.type.includes('資料') ? '#dcfce7' : '#e0e7ff'}; color: ${msg.type.includes('登入') || msg.type.includes('資料') ? '#166534' : '#3730a3'};">${msg.type}</span>
                 <h4 style="font-size: 18px; font-weight: 800; color: #3730a3;">${msg.sender}</h4>
               </div>
               <span style="font-size: 13px; color: #64748b; font-weight: 600;">🕒 ${msg.time}</span>
             </div>
             <p style="font-size: 15px; color: #1e293b; margin-top: 8px; line-height: 1.6; background: #f8fafc; padding: 12px; border-radius: 10px; border-left: 4px solid #6366f1;">
-              ✉️ <strong>紀錄詳情：</strong> ${msg.content}
+              ✉️ <strong>資料詳情：</strong> ${msg.content}
             </p>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 8px;">
-              <span style="font-size: 13px; color: #475569;">📊 學校與科系依據：${msg.selections}</span>
-              <button onclick="openMessageDocModal('${msg.id}')" class="btn btn-admin" style="padding: 4px 12px; min-height: 36px; font-size: 13px;">📄 檢視個人檔案與附件文件 (3 份)</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; flex-wrap: wrap; gap: 8px;">
+              <button onclick="openMessageDocModal('${msg.id}')" class="btn btn-secondary" style="padding: 4px 12px; min-height: 36px; font-size: 13px;">📄 檢視個人檔案</button>
+              
+              <!-- ADMIN DELETE USER BUTTON -->
+              <button onclick="deleteUserAccount('${msg.id}', '${msg.userName || msg.sender}')" class="btn btn-danger" style="padding: 6px 16px; min-height: 40px; font-size: 14px; font-weight: 800;">
+                🗑️ 刪除此使用者帳號與資料
+              </button>
             </div>
           `;
           msgListContainer.appendChild(div);
@@ -434,32 +363,28 @@
         `;
         listEl.appendChild(div);
       });
+    }
 
-      const ragList = document.getElementById('admin-rag-list');
-      ragList.innerHTML = '';
-      RAG_DATABASE.forEach((item, idx) => {
-        const li = document.createElement('li');
-        li.style.marginBottom = '6px';
-        li.innerHTML = `📌 <strong>${item.title}</strong>：${item.content} <button onclick="adminDeleteRag(${idx})" style="color: #ef4444; border: none; background: none; cursor: pointer; font-size: 13px; font-weight: 700; margin-left: 8px;">[刪除]</button>`;
-        ragList.appendChild(li);
-      });
+    // ADMIN DELETE USER ACCOUNT FUNCTION
+    function deleteUserAccount(msgId, userName) {
+      if (confirm(`⚠️ 確定要從系統中永久刪除【${userName}】的使用者帳號與個人建檔資料嗎？`)) {
+        systemMessages = systemMessages.filter(m => m.id !== msgId);
+        localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
+
+        // Clear active profile if matched
+        let activeStudent = JSON.parse(localStorage.getItem('app_active_student_profile'));
+        if (activeStudent && (userName.includes(activeStudent.name) || activeStudent.name.includes(userName))) {
+          localStorage.removeItem('app_active_student_profile');
+        }
+
+        renderAdminDashboard();
+        alert(`✅ 已成功將使用者【${userName}】從系統中永久刪除！`);
+      }
     }
 
     function openMessageDocModal(msgId) {
       const msg = systemMessages.find(m => m.id === msgId) || systemMessages[0];
-      document.getElementById('doc-modal-title').innerText = `📄 學校與個人檔案檢視 - ${msg.sender}`;
-      document.getElementById('doc-modal-subtitle').innerText = `紀錄類別：${msg.type} | 時間：${msg.time}`;
-
-      const jsonData = {
-        messageId: msg.id,
-        sender: msg.sender,
-        sendTime: msg.time,
-        content: msg.content,
-        targetAdminEmail: "vvicky9508@gmail.com"
-      };
-      document.getElementById('modal-json-doc-view').innerText = JSON.stringify(jsonData, null, 2);
-
-      switchDocTab(1);
+      document.getElementById('modal-doc-student-name').innerText = `${msg.sender} (${msg.content})`;
       toggleMsgDocModal(true);
     }
 
@@ -467,20 +392,14 @@
       document.getElementById('msg-doc-modal').style.display = show ? 'flex' : 'none';
     }
 
-    function switchDocTab(tabNum) {
-      [1, 2, 3].forEach(n => {
-        document.getElementById(`doc-content-${n}`).style.display = n === tabNum ? 'block' : 'none';
-        const tabBtn = document.getElementById(`doc-tab-${n}`);
-        tabBtn.style.background = n === tabNum ? '#3730a3' : '#e2e8f0';
-        tabBtn.style.color = n === tabNum ? 'white' : '#475569';
-      });
-    }
-
     function clearAdminMessages() {
-      if (confirm('確定要清空全站歷史紀錄嗎？')) {
+      if (confirm('確定要清空全站所有使用者紀錄嗎？')) {
         systemMessages = [];
         localStorage.removeItem('app_system_messages');
+        localStorage.removeItem('app_active_student_profile');
+        localStorage.removeItem('app_active_teacher_profile');
         renderAdminDashboard();
+        alert('✅ 已成功清空所有使用者帳號與登入紀錄！');
       }
     }
 
@@ -494,7 +413,7 @@
         return;
       }
 
-      mockJobs.push({ id: `job-${Date.now()}`, title, company, salary, fitReason: '符合適配條件' });
+      mockJobs.push({ id: `job-${Date.now()}`, title, company, salary });
       alert(`成功新增職缺【${title}】！`);
       renderAdminDashboard();
     }
@@ -504,19 +423,6 @@
         mockJobs = mockJobs.filter(j => j.id !== id);
         renderAdminDashboard();
       }
-    }
-
-    function adminAddRag() {
-      const title = document.getElementById('admin-rag-title').value;
-      const content = document.getElementById('admin-rag-content').value;
-      if (!title || !content) return;
-      RAG_DATABASE.push({ tag: 'custom', title, content });
-      renderAdminDashboard();
-    }
-
-    function adminDeleteRag(idx) {
-      RAG_DATABASE.splice(idx, 1);
-      renderAdminDashboard();
     }
   </script>
 </body>
