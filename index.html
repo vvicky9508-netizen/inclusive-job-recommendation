@@ -1,18 +1,569 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♿</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>無障礙智慧職缺適配與輔導系統 | 低認知與LLM適配輔助</title>
-    <meta name="description" content="專為身心障礙求職者與職業輔導員設計的低認知負擔職缺步驟式引導、LLM智慧匹配與外部 RESTful API 整合系統。" />
-    <!-- Google Fonts: Noto Sans TC, Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>無障礙智慧職缺適配與輔導系統</title>
+  <meta name="description" content="專為身心障礙求職者與職業輔導員設計的低認知負擔職缺步驟式引導、LLM智慧匹配與外部 RESTful API 整合系統。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --primary-light: #eff6ff;
+      --accent: #8b5cf6;
+      --accent-light: #f5f3ff;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Sans TC', 'Outfit', sans-serif;
+      background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f1f5f9 100%);
+      color: var(--text);
+      font-size: 19px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Interactive Buttons with Haptic Bounce Animations */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 26px;
+      font-size: 19px;
+      font-weight: 700;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      min-height: 56px;
+    }
+
+    .btn:hover:not(:disabled) { transform: translateY(-2px) scale(1.02); }
+    .btn:active:not(:disabled) { transform: translateY(1px) scale(0.96) !important; }
+    .btn-primary { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); color: white; box-shadow: 0 6px 18px rgba(37,99,235,0.3); }
+    .btn-secondary { background: #ffffff; color: var(--text); border: 2px solid var(--border); }
+    .btn-secondary:hover:not(:disabled) { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .btn-accent { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; box-shadow: 0 6px 18px rgba(124,58,237,0.3); }
+
+    /* Card Option Selection */
+    .option-card {
+      background: var(--card-bg);
+      border: 3px solid #e2e8f0;
+      border-radius: var(--radius);
+      padding: 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      cursor: pointer;
+      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      user-select: none;
+    }
+
+    .option-card:hover:not(.disabled) { border-color: #93c5fd; transform: translateY(-3px); }
+    .option-card:active:not(.disabled) { transform: scale(0.97); }
+    .option-card.selected { border-color: var(--primary); background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%); box-shadow: 0 10px 25px -3px rgba(59,130,246,0.25); }
+    
+    .checkbox-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 4px;
+      font-weight: 900;
+    }
+    .option-card.selected .checkbox-circle { background: var(--primary); border-color: var(--primary); color: white; }
+
+    /* Header */
+    header {
+      background: #ffffff;
+      border-bottom: 2px solid #e2e8f0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Counselor Warning Banner */
+    .counselor-banner {
+      background: #fffbeb;
+      border-top: 1px solid #fde68a;
+      border-bottom: 1px solid #fde68a;
+      padding: 10px;
+      text-align: center;
+      color: #b45309;
+      font-weight: 700;
+      display: none;
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15,23,42,0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <div style="display: flex; align-items: center; gap: 14px;">
+        <div style="background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); width: 48px; height: 48px; borderRadius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-size: 26px; border-radius: 14px;">
+          ♿
+        </div>
+        <div>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統</h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ LLM 智慧推薦 ✕ 輔導員權限管理</p>
+        </div>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+        <button onclick="speakCurrentPage()" class="btn btn-secondary" style="padding: 8px 16px; min-height: 44px; font-size: 15px;">
+          🔊 語音朗讀
+        </button>
+
+        <button onclick="toggleApiModal(true)" class="btn btn-secondary" style="padding: 8px 16px; min-height: 44px; font-size: 15px; color: #6366f1; border-color: #c7d2fe; background: #eef2ff;">
+          🔌 REST API 測試
+        </button>
+
+        <!-- Role Switcher -->
+        <div style="display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 14px; border: 1px solid #cbd5e1;">
+          <button id="role-seeker-btn" onclick="setRole('seeker')" style="padding: 8px 16px; border-radius: 10px; font-size: 15px; font-weight: 700; border: none; background: white; color: #2563eb; cursor: pointer;">
+            ♿ 求職者 (完整操作)
+          </button>
+          <button id="role-counselor-btn" onclick="setRole('counselor')" style="padding: 8px 16px; border-radius: 10px; font-size: 15px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
+            👨‍🏫 輔導員 (唯讀)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="counselor-banner" class="counselor-banner">
+      🛡️ 【輔導員唯讀模式已啟用】您正處於唯讀狀態，所有修改控制已凍結，提供安全評估與資料導出。
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Progress Bar Card -->
+    <div id="progress-card" style="background: #ffffff; border-radius: 24px; padding: 28px; margin-bottom: 32px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <span id="step-badge" style="background: #eff6ff; color: #2563eb; font-weight: 800; font-size: 15px; padding: 4px 14px; border-radius: 20px; border: 1px solid #bfdbfe;">
+            步驟 1 / 5
+          </span>
+          <h2 id="step-title" style="font-size: 26px; font-weight: 800; color: #0f172a; margin-top: 6px;">
+            工作興趣領域
+          </h2>
+          <p id="step-subtitle" style="font-size: 16px; color: #64748b;">
+            請選擇您喜歡或想嘗試的工作類型（可多選）
+          </p>
+        </div>
+        <div style="text-align: right;">
+          <span id="step-percent" style="font-size: 32px; font-weight: 900; color: #2563eb;">0%</span>
+        </div>
+      </div>
+
+      <div style="height: 14px; background: #e2e8f0; border-radius: 10px; overflow: hidden;">
+        <div id="progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%); transition: width 0.4s ease;"></div>
+      </div>
+
+      <!-- Quick Step Buttons -->
+      <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 20px;">
+        <button onclick="goToStep(1)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">1. 興趣</button>
+        <button onclick="goToStep(2)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">2. 環境</button>
+        <button onclick="goToStep(3)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">3. 需求</button>
+        <button onclick="goToStep(4)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">4. 時間</button>
+        <button onclick="goToStep(5)" class="btn btn-secondary" style="padding: 8px; font-size: 14px; min-height: 48px;">5. LLM推薦</button>
+      </div>
+    </div>
+
+    <!-- Seeker Main Wizard Step Card -->
+    <div id="wizard-card" style="background: #ffffff; border-radius: 24px; padding: 36px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); border: 2px solid #e2e8f0;">
+      
+      <!-- Step 1 View -->
+      <div id="step-1" class="step-view">
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">請點選您感興趣的工作類型：</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
+          <div class="option-card selected" onclick="toggleOption('interests', '文書處理', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">📝 文書處理與資料輸入</h4>
+              <p style="font-size: 15px; color: #475569;">靜態電腦表格輸入、發票分類整理。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('interests', '手工作業', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">🍪 庇護餐飲與手工包裝</h4>
+              <p style="font-size: 15px; color: #475569;">手作餅乾烘焙輔助、禮盒定點包裝。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('interests', '數位媒體', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">💻 數位媒體與文字小幫手</h4>
+              <p style="font-size: 15px; color: #475569;">社群排版回應、圖卡上字處理。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('interests', '倉儲物流', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">📦 圖書與物品分類管理</h4>
+              <p style="font-size: 15px; color: #475569;">依據標籤將書籍上架與商品擺放。</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: flex-end;">
+          <button onclick="goToStep(2)" class="btn btn-primary">下一步：工作環境 ➔</button>
+        </div>
+      </div>
+
+      <!-- Step 2 View -->
+      <div id="step-2" class="step-view" style="display: none;">
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">請選擇最舒適的工作環境：</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
+          <div class="option-card selected" onclick="toggleOption('environments', '室內靜態', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">🏢 室內靜態辦公室</h4>
+              <p style="font-size: 15px; color: #475569;">安靜舒適冷氣房、獨立固定桌位。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('environments', '團隊合作', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">👥 溫馨團隊與導師陪伴</h4>
+              <p style="font-size: 15px; color: #475569;">有輔導員在身旁，隨時提問協助。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('environments', '居家遠端', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">🏠 居家遠端免通勤</h4>
+              <p style="font-size: 15px; color: #475569;">在家工作，省去搭車轉乘交通體力。</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <button onclick="goToStep(1)" class="btn btn-secondary">⬅️ 上一步</button>
+          <button onclick="goToStep(3)" class="btn btn-primary">下一步：無障礙需求 ➔</button>
+        </div>
+      </div>
+
+      <!-- Step 3 View -->
+      <div id="step-3" class="step-view" style="display: none;">
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您的無障礙設施與輔助需求：</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
+          <div class="option-card selected" onclick="toggleOption('accommodations', 'wheelchair', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">♿ 無障礙坡道與輪椅設施</h4>
+              <p style="font-size: 15px; color: #475569;">無階梯入口、斜坡道與專用洗手間。</p>
+            </div>
+          </div>
+          <div class="option-card selected" onclick="toggleOption('accommodations', 'mentor', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">🤝 1對1 輔導員/導師陪伴</h4>
+              <p style="font-size: 15px; color: #475569;">入職初始提供親切耐心教學。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('accommodations', 'visual_sop', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">📋 圖示化 SOP 說明卡</h4>
+              <p style="font-size: 15px; color: #475569;">對應圖像文字標籤，學習超容易。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('accommodations', 'light_physical', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">🦾 減輕體力/免搬重物</h4>
+              <p style="font-size: 15px; color: #475569;">完全無重物搬運或備有推車工具。</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <button onclick="goToStep(2)" class="btn btn-secondary">⬅️ 上一步</button>
+          <button onclick="goToStep(4)" class="btn btn-primary">下一步：工作時間 ➔</button>
+        </div>
+      </div>
+
+      <!-- Step 4 View -->
+      <div id="step-4" class="step-view" style="display: none;">
+        <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您希望的工作時間：</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
+          <div class="option-card selected" onclick="toggleOption('schedule', 'daytime', this)">
+            <div class="checkbox-circle">✓</div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">☀️ 日間全職 (09:00 ~ 17:00)</h4>
+              <p style="font-size: 15px; color: #475569;">作息規律，週休二日。</p>
+            </div>
+          </div>
+          <div class="option-card" onclick="toggleOption('schedule', 'parttime', this)">
+            <div class="checkbox-circle"></div>
+            <div>
+              <h4 style="font-size: 20px; font-weight: 800;">⏱️ 計時半日 (4小時/天)</h4>
+              <p style="font-size: 15px; color: #475569;">留時間安排復健與休養。</p>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <button onclick="goToStep(3)" class="btn btn-secondary">⬅️ 上一步</button>
+          <button onclick="renderLLMResults(); goToStep(5);" class="btn btn-accent">✨ 產生 LLM 智慧評估 ➔</button>
+        </div>
+      </div>
+
+      <!-- Step 5 View (LLM Dynamic Recommendations) -->
+      <div id="step-5" class="step-view" style="display: none;">
+        
+        <!-- LLM Modifier Box -->
+        <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border-radius: 20px; padding: 24px; color: white; margin-bottom: 28px;">
+          <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 12px;">🎛️ LLM 推薦動態微調參數</h3>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 16px;">
+            <button onclick="toggleModifier('reducePhysical')" class="btn btn-secondary" style="font-size: 15px; justify-content: space-between; background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
+              <span>🦾 減輕體力負荷</span>
+              <span id="mod-physical">已啟用</span>
+            </button>
+            <button onclick="toggleModifier('emphasizeMentor')" class="btn btn-secondary" style="font-size: 15px; justify-content: space-between; background: rgba(255,255,255,0.1); color: white; border-color: rgba(255,255,255,0.2);">
+              <span>🤝 優先導師陪伴</span>
+              <span id="mod-mentor">已啟用</span>
+            </button>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <input id="custom-prompt-input" type="text" placeholder="自訂Prompt（例如：優先選擇近捷運站...）" style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;" />
+            <button onclick="renderLLMResults()" class="btn btn-primary" style="padding: 10px 20px; font-size: 15px;">🔄 重新計算</button>
+          </div>
+        </div>
+
+        <!-- Job List Container -->
+        <div id="job-results-container" style="display: flex; flex-direction: column; gap: 20px;"></div>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 28px;">
+          <button onclick="goToStep(4)" class="btn btn-secondary">⬅️ 修改問卷條件</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Counselor Read-Only Dashboard -->
+    <div id="counselor-dashboard" style="display: none; background: white; border-radius: 24px; padding: 32px; border: 2px solid #f59e0b;">
+      <h2 style="font-size: 24px; font-weight: 800; color: #78350f; margin-bottom: 16px;">👨‍🏫 輔導員個案評估與 API 導出儀表板 (唯讀模式)</h2>
+      <p style="font-size: 16px; color: #92400e; margin-bottom: 24px;">求職者：陳小明 (ID: user-001) | 已完成所有步驟勾選</p>
+      
+      <div style="background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 16px; font-family: monospace; font-size: 14px; overflow-x: auto; margin-bottom: 20px;">
+        <pre id="counselor-json-preview"></pre>
+      </div>
+
+      <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製 API JSON 報告');" class="btn btn-primary">
+        📋 複製個案 RESTful JSON 報告
+      </button>
+    </div>
+
+  </div>
+
+  <!-- REST API Docs Modal -->
+  <div id="api-modal" class="modal-backdrop">
+    <div style="background: white; border-radius: 24px; max-width: 700px; width: 100%; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="font-size: 22px; font-weight: 800;">🔌 RESTful API 串接與測試說明</h3>
+        <button onclick="toggleApiModal(false)" style="border: none; background: none; font-size: 24px; cursor: pointer;">✕</button>
+      </div>
+
+      <p style="font-size: 15px; color: #475569; margin-bottom: 16px;">外部個案管理系統或社服機構可直接透過 JSON API 存取與對接。</p>
+      
+      <div style="background: #f8fafc; padding: 16px; border-radius: 14px; font-family: monospace; font-size: 14px; margin-bottom: 20px;">
+        <p><strong>1. 健康檢查:</strong> GET /api/v1/health</p>
+        <p style="margin-top: 8px;"><strong>2. 提交條件:</strong> POST /api/v1/profile</p>
+        <p style="margin-top: 8px;"><strong>3. LLM 推薦:</strong> POST /api/v1/recommend/analyze</p>
+        <p style="margin-top: 8px;"><strong>4. 輔導員導出:</strong> GET /api/v1/counselor/reports/user-001</p>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button onclick="toggleApiModal(false)" class="btn btn-primary">關閉視窗</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentRole = 'seeker';
+    let currentStepNum = 1;
+    let modifiers = { reducePhysical: true, emphasizeMentor: true };
+
+    const mockJobs = [
+      {
+        title: '資料輸入與發票核對專員',
+        company: '創昕數位科技股份有限公司',
+        salary: '月薪 32,000 ~ 36,000 元',
+        score: 95,
+        type: '室內靜態 / 無障礙完備',
+        fitReason: '完美符合您的文書偏好與輪椅無障礙通道要求，提供靜音獨立工作桌。'
+      },
+      {
+        title: '線上社群內容排版與客服小幫手',
+        company: '藍天文化創意工作室',
+        salary: '時薪 210 ~ 250 元 (彈性)',
+        score: 91,
+        type: '居家遠端 / 免通勤',
+        fitReason: '完全居家工作，省去交通體力負擔，溝通均為文字與圖卡說明。'
+      },
+      {
+        title: '庇護餐飲手作與包裝助理',
+        company: '暖心日光手作工坊',
+        salary: '月薪 28,500 ~ 31,000 元',
+        score: 87,
+        type: '手工作業 / 導師陪伴',
+        fitReason: '配備一對一耐心輔導員指導，工坊步調溫馨穩定。'
+      }
+    ];
+
+    function setRole(role) {
+      currentRole = role;
+      document.getElementById('counselor-banner').style.display = role === 'counselor' ? 'block' : 'none';
+      document.getElementById('progress-card').style.display = role === 'counselor' ? 'none' : 'block';
+      document.getElementById('wizard-card').style.display = role === 'counselor' ? 'none' : 'block';
+      document.getElementById('counselor-dashboard').style.display = role === 'counselor' ? 'block' : 'none';
+
+      document.getElementById('role-seeker-btn').style.background = role === 'seeker' ? 'white' : 'transparent';
+      document.getElementById('role-seeker-btn').style.color = role === 'seeker' ? '#2563eb' : '#64748b';
+      document.getElementById('role-counselor-btn').style.background = role === 'counselor' ? '#f59e0b' : 'transparent';
+      document.getElementById('role-counselor-btn').style.color = role === 'counselor' ? 'white' : '#64748b';
+
+      if (role === 'counselor') renderCounselorJson();
+    }
+
+    function goToStep(num) {
+      if (currentRole === 'counselor') return;
+      currentStepNum = num;
+      document.querySelectorAll('.step-view').forEach(el => el.style.display = 'none');
+      document.getElementById(`step-${num}`).style.display = 'block';
+
+      document.getElementById('step-badge').innerText = `步驟 ${num} / 5`;
+      document.getElementById('step-percent').innerText = `${Math.round(((num-1)/4)*100)}%`;
+      document.getElementById('progress-fill').style.width = `${Math.round(((num-1)/4)*100)}%`;
+    }
+
+    function toggleOption(category, value, el) {
+      if (currentRole === 'counselor') return;
+      el.classList.toggle('selected');
+      const circle = el.querySelector('.checkbox-circle');
+      circle.innerText = el.classList.contains('selected') ? '✓' : '';
+    }
+
+    function toggleModifier(key) {
+      if (currentRole === 'counselor') return;
+      modifiers[key] = !modifiers[key];
+      document.getElementById(`mod-${key === 'reducePhysical' ? 'physical' : 'mentor'}`).innerText = modifiers[key] ? '已啟用' : '未啟用';
+    }
+
+    function renderLLMResults() {
+      const container = document.getElementById('job-results-container');
+      container.innerHTML = '';
+      
+      mockJobs.forEach((job) => {
+        let score = job.score;
+        if (modifiers.reducePhysical && job.type.includes('遠端')) score = 98;
+
+        const card = document.createElement('div');
+        card.style.cssText = 'background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);';
+        card.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+            <div>
+              <span class="badge" style="background: #ecfdf5; color: #059669;">LLM 匹配度：${score}%</span>
+              <h4 style="font-size: 22px; font-weight: 800; margin-top: 6px;">${job.title}</h4>
+              <p style="font-size: 16px; color: #475569;">${job.company} • ${job.salary}</p>
+            </div>
+            <button onclick="alert('已登記此職缺，輔導員將盡快聯繫您')" class="btn btn-primary" style="padding: 10px 18px; font-size: 15px;">我要諮詢</button>
+          </div>
+          <div style="background: #f8fafc; border-left: 4px solid #8b5cf6; padding: 14px; border-radius: 10px; font-size: 15px; color: #334155; margin-top: 10px;">
+            🤖 <strong>LLM 推薦分析：</strong>${job.fitReason}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function renderCounselorJson() {
+      const data = {
+        reportId: "REP-20260723-001",
+        userName: "陳小明",
+        status: "READ_ONLY_MODE",
+        selectedInterests: ["文書處理"],
+        accommodations: ["無障礙坡道", "1對1導師陪伴"],
+        topMatchedJob: mockJobs[0].title,
+        llmAssessment: "求職者極度適合靜態高架無障礙辦公場所，建議優先安排參訪。"
+      };
+      document.getElementById('counselor-json-preview').innerText = JSON.stringify(data, null, 2);
+    }
+
+    function toggleApiModal(show) {
+      document.getElementById('api-modal').style.display = show ? 'flex' : 'none';
+    }
+
+    function speakCurrentPage() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。請照著步驟選擇您的興趣與條件。");
+      msg.lang = 'zh-TW';
+      window.speechSynthesis.speak(msg);
+    }
+  </script>
+</body>
 </html>
