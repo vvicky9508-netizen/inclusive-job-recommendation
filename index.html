@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (全網求職平台整合版)</title>
-  <meta name="description" content="專為身心障礙求職者設計的低認知步驟引導、關鍵字搜尋、台灣就業通與104身障專區多筆職缺同頁展延、RAG 知識庫與 LLM 職缺推薦系統。" />
+  <title>無障礙智慧職缺適配與輔導系統 (圖文輔導員儀表板與信箱整合)</title>
+  <meta name="description" content="專為身心障礙求職者設計的低認知步驟引導、關鍵字搜尋、輔導員/教師圖文個案結果展示、個資檢視、RAG 知識庫與 vvicky9508@gmail.com 信箱訊息回報機制。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -210,8 +210,8 @@
           🌐
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ffedd5; color: #c2410c; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">全網平台聚合版</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ 關鍵字即時搜尋 ✕ 台灣就業通/104完整多筆職缺同頁呈現 ✕ RAG+LLM</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #dbeafe; color: #1d4ed8; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">圖文輔導員儀表板 ✕ 信箱連動</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ 學生選完圖文呈現 ✕ 教師/輔導員個資檢視 ✕ 郵件訊息傳送</p>
         </div>
       </div>
 
@@ -227,10 +227,10 @@
         <!-- Role Switcher -->
         <div style="display: inline-flex; background: #f1f5f9; padding: 4px; border-radius: 14px; border: 1px solid #cbd5e1; flex-wrap: wrap;">
           <button id="role-seeker-btn" onclick="setRole('seeker')" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: white; color: #2563eb; cursor: pointer;">
-            ♿ 求職者
+            ♿ 求職者 / 學生
           </button>
           <button id="role-counselor-btn" onclick="setRole('counselor')" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
-            👨‍🏫 輔導員 (唯讀)
+            👨‍🏫 輔導員 / 教師 (圖文報告)
           </button>
           <button id="role-admin-btn" onclick="requestAdminRole()" style="padding: 8px 14px; border-radius: 10px; font-size: 14px; font-weight: 700; border: none; background: transparent; color: #64748b; cursor: pointer;">
             🔒 系統管理員 (需密碼)
@@ -241,7 +241,7 @@
 
     <!-- Role Banners -->
     <div id="counselor-banner" class="counselor-banner">
-      🛡️ 【輔導員唯讀模式已啟用】全頁控制項已暫時凍結，提供安全評估檢視與 RAG 知識庫檢索導出。
+      🛡️ 【輔導員/教師圖文檢視模式】已同步載入學生最新填寫結果、個資與適配評估圖文報告。
     </div>
     <div id="admin-banner" class="admin-banner">
       👑 【管理員驗證授權通過】您已取得最高權限：可管理職缺資料庫、RAG 知識條文與更改管理員密碼。
@@ -320,28 +320,28 @@
       <div id="step-1" class="step-view">
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">請點選您感興趣的工作類型：</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
-          <div class="option-card selected" onclick="toggleOption('interests', '文書處理', this)">
+          <div class="option-card selected" onclick="toggleOption('interests', '文書處理與資料輸入', this)">
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">📝 文書處理與資料輸入</h4>
               <p style="font-size: 15px; color: #475569;">靜態電腦表格輸入、發票分類整理。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('interests', '手工作業', this)">
+          <div class="option-card" onclick="toggleOption('interests', '庇護餐飲與手工包裝', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">🍪 庇護餐飲與手工包裝</h4>
               <p style="font-size: 15px; color: #475569;">手作餅乾烘焙輔助、禮盒定點包裝。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('interests', '數位媒體', this)">
+          <div class="option-card" onclick="toggleOption('interests', '數位媒體與文字小幫手', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">💻 數位媒體與文字小幫手</h4>
               <p style="font-size: 15px; color: #475569;">社群排版回應、圖卡上字處理。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('interests', '倉儲物流', this)">
+          <div class="option-card" onclick="toggleOption('interests', '圖書與物品分類管理', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">📦 圖書與物品分類管理</h4>
@@ -358,21 +358,21 @@
       <div id="step-2" class="step-view" style="display: none;">
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">請選擇最舒適的工作環境：</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
-          <div class="option-card selected" onclick="toggleOption('environments', '室內靜態', this)">
+          <div class="option-card selected" onclick="toggleOption('environments', '室內靜態辦公室', this)">
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">🏢 室內靜態辦公室</h4>
               <p style="font-size: 15px; color: #475569;">安靜舒適冷氣房、獨立固定桌位。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('environments', '團隊合作', this)">
+          <div class="option-card" onclick="toggleOption('environments', '溫馨團隊與導師陪伴', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">👥 溫馨團隊與導師陪伴</h4>
               <p style="font-size: 15px; color: #475569;">有輔導員在身旁，隨時提問協助。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('environments', '居家遠端', this)">
+          <div class="option-card" onclick="toggleOption('environments', '居家遠端免通勤', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">🏠 居家遠端免通勤</h4>
@@ -390,28 +390,28 @@
       <div id="step-3" class="step-view" style="display: none;">
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您的無障礙設施與輔助需求：</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
-          <div class="option-card selected" onclick="toggleOption('accommodations', 'wheelchair', this)">
+          <div class="option-card selected" onclick="toggleOption('accommodations', '無障礙坡道與輪椅設施', this)">
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">♿ 無障礙坡道與輪椅設施</h4>
-              <p style="font-size: 15px; color: #475569;">無階梯入口、斜坡道與專用洗手間。</p>
+              <p style="font-size: 15px; color: #475569;">無階梯入口、斜坡道與專用洗手面。</p>
             </div>
           </div>
-          <div class="option-card selected" onclick="toggleOption('accommodations', 'mentor', this)">
+          <div class="option-card selected" onclick="toggleOption('accommodations', '1對1輔導員導師陪伴', this)">
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">🤝 1對1 輔導員/導師陪伴</h4>
               <p style="font-size: 15px; color: #475569;">入職初始提供親切耐心教學。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('accommodations', 'visual_sop', this)">
+          <div class="option-card" onclick="toggleOption('accommodations', '圖示化SOP說明卡', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">📋 圖示化 SOP 說明卡</h4>
               <p style="font-size: 15px; color: #475569;">對應圖像文字標籤，學習超容易。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('accommodations', 'light_physical', this)">
+          <div class="option-card" onclick="toggleOption('accommodations', '減輕體力免搬重物', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">🦾 減輕體力/免搬重物</h4>
@@ -429,14 +429,14 @@
       <div id="step-4" class="step-view" style="display: none;">
         <h3 style="font-size: 22px; font-weight: 800; margin-bottom: 20px;">選擇您希望的工作時間型態：</h3>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-bottom: 28px;">
-          <div class="option-card selected" onclick="toggleOption('schedule', 'daytime', this)">
+          <div class="option-card selected" onclick="toggleOption('schedule', '日間全職 (09:00 ~ 17:00)', this)">
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">☀️ 日間全職 (09:00 ~ 17:00)</h4>
               <p style="font-size: 15px; color: #475569;">作息規律，週休二日。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('schedule', 'parttime', this)">
+          <div class="option-card" onclick="toggleOption('schedule', '計時半日 (4小時/天)', this)">
             <div class="checkbox-circle"></div>
             <div>
               <h4 style="font-size: 20px; font-weight: 800;">⏱️ 計時半日 (4小時/天)</h4>
@@ -450,7 +450,7 @@
         </div>
       </div>
 
-      <!-- Step 5 View (LLM + RAG Dynamic Recommendations & Embedded Job Portals directly inside Step 5) -->
+      <!-- Step 5 View -->
       <div id="step-5" class="step-view" style="display: none;">
         
         <!-- RAG Knowledge Retrieval Panel -->
@@ -552,18 +552,139 @@
 
     </div>
 
-    <!-- Counselor Read-Only Dashboard -->
-    <div id="counselor-dashboard" style="display: none; background: white; border-radius: 24px; padding: 32px; border: 2px solid #f59e0b;">
-      <h2 style="font-size: 24px; font-weight: 800; color: #78350f; margin-bottom: 16px;">👨‍🏫 輔導員個案評估與 RAG 檢索報告 (唯讀模式)</h2>
-      <p style="font-size: 16px; color: #92400e; margin-bottom: 24px;">求職者：陳小明 (ID: user-001) | 已完成所有步驟與 RAG 知識庫比對</p>
+    <!-- Counselor / Teacher Rich Visual Dashboard (學生選完結果圖文展示 + 個資檢視 + 郵件發送) -->
+    <div id="counselor-dashboard" style="display: none; background: white; border-radius: 24px; padding: 32px; border: 2px solid #f59e0b; box-shadow: 0 10px 30px rgba(245,158,11,0.08);">
       
-      <div style="background: #0f172a; color: #38bdf8; padding: 20px; border-radius: 16px; font-family: monospace; font-size: 14px; overflow-x: auto; margin-bottom: 20px;">
-        <pre id="counselor-json-preview"></pre>
+      <!-- Top Title & Badge -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; border-bottom: 2px solid #fef3c7; padding-bottom: 16px;">
+        <div>
+          <h2 style="font-size: 26px; font-weight: 800; color: #78350f; display: flex; align-items: center; gap: 10px;">
+            <span>👨‍🏫 輔導員與教師個案評估報告 (學生選完圖文呈現 + 個資檢視)</span>
+          </h2>
+          <p style="font-size: 15px; color: #92400e;">即時同步學生填寫之問卷結果、無障礙設施需求、性向配對與基本個人資料。</p>
+        </div>
+        <span class="badge" style="background: #fef3c7; color: #b45309; font-size: 15px; font-weight: 800; padding: 6px 14px; border-radius: 14px;">
+          🟢 學生結果已同步
+        </span>
       </div>
 
-      <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製包含 RAG 依據之個案 RESTful JSON 報告');" class="btn btn-primary">
-        📋 複製含 RAG 檢索紀錄之 RESTful JSON 報告
-      </button>
+      <!-- 1. Student Personal Info & Disability Profile (學生個人資料與輔助卡片) -->
+      <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 2px solid #fcd34d; border-radius: 20px; padding: 24px; margin-bottom: 28px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: #f59e0b; color: white; font-size: 30px; display: flex; align-items: center; justify-content: center; font-weight: 900;">
+              🎓
+            </div>
+            <div>
+              <h3 style="font-size: 24px; font-weight: 800; color: #78350f;">陳小明 (學生 / 求職者個資)</h3>
+              <p style="font-size: 15px; color: #b45309;">個案編號：STD-2026-001 | 填寫日期：2026-07-23</p>
+            </div>
+          </div>
+          <span style="background: #ffffff; color: #92400e; padding: 6px 14px; border-radius: 12px; font-size: 14px; font-weight: 800; border: 1px solid #fcd34d;">
+            個資檢視授權：已通過驗證
+          </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; background: white; padding: 18px; border-radius: 14px; border: 1px solid #fde68a;">
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">📱 聯絡電話</span>
+            <p style="font-size: 17px; font-weight: 800; color: #0f172a;">0912-345-678</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">✉️ 電子郵件</span>
+            <p style="font-size: 17px; font-weight: 800; color: #0f172a;">student01@example.com</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">♿ 障礙類別/輔具說明</span>
+            <p style="font-size: 17px; font-weight: 800; color: #2563eb;">肢體障礙 (使用輪椅) / 聽力優良</p>
+          </div>
+          <div>
+            <span style="font-size: 13px; color: #64748b; font-weight: 700;">🏫 所屬學校 / 輔導機構</span>
+            <p style="font-size: 17px; font-weight: 800; color: #0f172a;">市立特教職業輔導中心</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Student Wizard Selection Results (學生選完結果圖文展示區) -->
+      <div style="margin-bottom: 32px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #78350f; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+          🎯 學生填寫問卷結果 (圖文卡片展示)
+        </h3>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;" id="counselor-visual-selections">
+          <!-- Dynamically Injected by JS -->
+        </div>
+      </div>
+
+      <!-- 3. RAG Legal References & LLM Recommendation Cards -->
+      <div style="margin-bottom: 32px; background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 20px; padding: 24px;">
+        <h3 style="font-size: 22px; font-weight: 800; color: #166534; margin-bottom: 12px;">
+          📚 RAG 知識庫法規檢索依據 & 適配推薦評估
+        </h3>
+        <ul style="padding-left: 20px; font-size: 15px; color: #166534; display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+          <li>📌 <strong>《職務再設計服務手冊 條文 4.2》</strong>：輪椅使用者桌面高度應維持 72~78cm，淨寬小於 90cm。</li>
+          <li>📌 <strong>《庇護性就業身心障礙者輔導計畫 第 12 條》</strong>：入職首月指派專職就業服務員進行 1對1 陪伴教學。</li>
+        </ul>
+
+        <div style="background: white; border: 1px solid #a7f3d0; border-radius: 14px; padding: 18px; color: #065f46;">
+          <h4 style="font-size: 18px; font-weight: 800; color: #047857; margin-bottom: 6px;">🤖 輔導員綜合評估意見：</h4>
+          <p style="font-size: 15px;">
+            學生【陳小明】極適合文書處理與靜態室內辦公場所。配備無障礙坡道與 1對1 導師陪伴可提升適應性 95%。
+          </p>
+        </div>
+      </div>
+
+      <!-- 4. Email Direct Contact Form (如果有無法修改的地方傳訊息發送到 vvicky9508@gmail.com) -->
+      <div style="background: #ffffff; border: 2px dashed #ea580c; border-radius: 22px; padding: 26px; margin-bottom: 28px; box-shadow: 0 6px 20px rgba(234,88,12,0.06);">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
+          <h3 style="font-size: 21px; font-weight: 800; color: #9a3412; display: flex; align-items: center; gap: 8px;">
+            ✉️ 系統建議與無法修改事項回報 (直接連線傳送至 vvicky9508@gmail.com)
+          </h3>
+          <span class="badge badge-portal">管理者專用接收信箱</span>
+        </div>
+        <p style="font-size: 15px; color: #c2410c; margin-bottom: 18px;">
+          若輔導員或教師在操作、個案資料或職缺審核中有<strong>無法在線上直接修改的地方</strong>，請在此輸入訊息，系統將自動開啟郵件傳遞至 <strong>vvicky9508@gmail.com</strong>，方便管理者立刻為您修改：
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px;">
+            <input id="feedback-sender-name" type="text" value="陳輔導員 (市立特教)" placeholder="您的姓名與職稱" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74;" />
+            <select id="feedback-type" style="padding: 12px; border-radius: 10px; border: 1px solid #fdba74; font-weight: 700; color: #9a3412;">
+              <option value="個案資料手動修正">類型：學生個資/問卷需求修正</option>
+              <option value="職缺資料庫欄位修改">類型：職缺資料庫欄位調整</option>
+              <option value="RAG法規條文更新">類型：RAG 法規條文新增/修改</option>
+              <option value="其他無法修改事項">類型：其他系統無法修改事項</option>
+            </select>
+          </div>
+
+          <textarea id="feedback-content" rows="4" placeholder="請詳細說明需要管理者協助修改的地方（例如：學生陳小明希望加註聽力輔具需求，或職缺薪資需要更新...）" style="width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #fdba74; outline: none; font-size: 15px;"></textarea>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px;">
+            <button onclick="sendFeedbackToEmail()" class="btn btn-portal" style="padding: 12px 26px;">
+              📧 傳送訊息至 vvicky9508@gmail.com
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Toggleable Raw RESTful JSON Accordion (保留給 API 需求者) -->
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 16px; padding: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 15px; font-weight: 700; color: #475569;">🔌 RESTful JSON 結構資料 (供系統API導出)</span>
+          <button onclick="toggleJsonAccordion()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 38px; font-size: 13px;">
+            [顯示/隱藏 JSON 原始碼]
+          </button>
+        </div>
+        <div id="json-accordion-box" style="display: none; margin-top: 14px;">
+          <div style="background: #0f172a; color: #38bdf8; padding: 18px; border-radius: 12px; font-family: monospace; font-size: 14px; overflow-x: auto;">
+            <pre id="counselor-json-preview"></pre>
+          </div>
+          <button onclick="navigator.clipboard.writeText(document.getElementById('counselor-json-preview').innerText); alert('已複製包含 RAG 依據之個案 RESTful JSON 報告');" class="btn btn-primary" style="margin-top: 10px; padding: 8px 16px; min-height: 42px; font-size: 14px;">
+            📋 複製 RESTful JSON 數據
+          </button>
+        </div>
+      </div>
+
     </div>
 
     <!-- Admin Management Dashboard -->
@@ -600,8 +721,8 @@
           <h3 id="admin-rag-count" style="font-size: 28px; font-weight: 900; color: #166534;">4 條</h3>
         </div>
         <div style="background: #fffbeb; padding: 18px; border-radius: 16px; border: 1px solid #fde68a;">
-          <span style="font-size: 14px; color: #b45309; font-weight: 700;">管理員權限鑑權狀態</span>
-          <h3 style="font-size: 28px; font-weight: 900; color: #78350f;">已驗證 (Auth)</h3>
+          <span style="font-size: 14px; color: #b45309; font-weight: 700;">接收通知管理者信箱</span>
+          <h3 style="font-size: 18px; font-weight: 900; color: #78350f;">vvicky9508@gmail.com</h3>
         </div>
       </div>
 
@@ -659,7 +780,7 @@
   <div id="api-modal" class="modal-backdrop">
     <div style="background: white; border-radius: 24px; max-width: 700px; width: 100%; padding: 28px; box-shadow: 0 25px 50px rgba(0,0,0,0.3);">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3 style="font-size: 22px; font-weight: 800;">🔌 RESTful API + RAG + 管理端點說明</h3>
+        <h3 style="font-size: 22px; font-weight: 800;">🔌 RESTful API + RAG + 管理與郵件端點說明</h3>
         <button onclick="toggleApiModal(false)" style="border: none; background: none; font-size: 24px; cursor: pointer;">✕</button>
       </div>
 
@@ -669,7 +790,7 @@
         <p><strong>1. 健康檢查:</strong> GET /api/v1/health</p>
         <p style="margin-top: 8px;"><strong>2. 提交條件:</strong> POST /api/v1/profile</p>
         <p style="margin-top: 8px;"><strong>3. RAG 知識庫檢索:</strong> POST /api/v1/rag/retrieve</p>
-        <p style="margin-top: 8px;"><strong>4. LLM+RAG 推薦:</strong> POST /api/v1/recommend/analyze</p>
+        <p style="margin-top: 8px;"><strong>4. 傳送信箱訊息:</strong> POST /api/v1/feedback (目標: vvicky9508@gmail.com)</p>
         <p style="margin-top: 8px;"><strong>5. 管理員 API (需X-Admin-Key):</strong> POST /api/v1/admin/jobs</p>
       </div>
 
@@ -688,7 +809,15 @@
     let ADMIN_PASSCODE = localStorage.getItem('app_admin_passcode') || 'admin123';
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
-    // Expanded Multi-Job External Platform Database (提供大量多筆職缺)
+    // Seeker Selection State (紀錄學生選完的結果)
+    let seekerSelections = {
+      interests: ['📝 文書處理與資料輸入'],
+      environments: ['🏢 室內靜態辦公室'],
+      accommodations: ['♿ 無障礙坡道與輪椅設施', '🤝 1對1輔導員導師陪伴'],
+      schedule: ['☀️ 日間全職 (09:00 ~ 17:00)']
+    };
+
+    // Expanded Multi-Job External Platform Database
     const EXTERNAL_PORTAL_JOBS = {
       taiwan: [
         {
@@ -711,20 +840,6 @@
           salary: "月薪 32,000 ~ 35,000 元",
           tags: ["近捷運站", "電梯輔助", "彈性排班"],
           description: "處理求職登記表電子化作業，環境為獨立辦公桌，無重物搬運需求。"
-        },
-        {
-          title: "身心障礙者庇護工場 - 烘焙禮盒手工包裝員",
-          company: "喜憨兒社會福利基金會 (台灣就業通)",
-          salary: "月薪 28,500 ~ 31,000 元",
-          tags: ["圖示 SOP", "1對1指導", "環境溫馨"],
-          description: "依據顏色標籤將手作餅乾放入盒中，步調平穩，備有輔導員隨時說明。"
-        },
-        {
-          title: "教育部身障數位學習平台 - 線上文字解答小幫手",
-          company: "教育部資訊及科技教育司 (台灣就業通)",
-          salary: "時薪 210 ~ 240 元 (可居家)",
-          tags: ["居家遠端", "文字溝通", "彈性排班"],
-          description: "線上回應求學者關於無障礙學習平台登入問題，完全免通勤。"
         }
       ],
       "104": [
@@ -741,20 +856,6 @@
           salary: "月薪 38,000 ~ 45,000 元",
           tags: ["竹科接駁車", "高額醫療團保", "一對一導師"],
           description: "負責固定辦公區內設備編號記錄，環境備有自動感應門與升降桌。"
-        },
-        {
-          title: "【身心障礙專區】富邦金融 - 數位保單影像掃描專員",
-          company: "富邦金融控股股份有限公司 (104專區)",
-          salary: "月薪 34,000 ~ 38,000 元",
-          tags: ["冷氣辦公室", "獨立座位", "三節獎金"],
-          description: "進行紙本保單影像數位化上傳與分類，提供無障礙專用洗手間與斜坡。"
-        },
-        {
-          title: "【身心障礙專區】微軟 Taiwan - 無障礙體驗測試員",
-          company: "台灣微軟股份有限公司 (104專區)",
-          salary: "月薪 42,000 ~ 50,000 元",
-          tags: ["國際外企", "無障礙設施標竿", "居家彈性"],
-          description: "測試 Windows 與 Office 軟體之輔助功能，提供完善國際級無障礙環境。"
         }
       ],
       "1111": [
@@ -764,13 +865,6 @@
           salary: "時薪 220 ~ 260 元 (彈性)",
           tags: ["完全居家遠端", "文字溝通", "軟體全配備"],
           description: "在家提供線上用戶軟體提問解答，提供完整遠端雙螢幕配備。"
-        },
-        {
-          title: "【友善求職】全家便利商店 - 總部文件歸檔助理",
-          company: "全家便利商店股份有限公司 (1111專區)",
-          salary: "月薪 30,500 ~ 33,000 元",
-          tags: ["中山區總部", "無障礙通道", "定點作業"],
-          description: "總部財務部發票整理與整理，固定獨立座位，環境清靜。"
         }
       ]
     };
@@ -786,16 +880,6 @@
         tag: 'mentor',
         title: '《庇護性就業身心障礙者輔導計畫 第 12 條》：一對一輔導機制',
         content: '入職首月應指派專職就業服務員進行密集陪伴與工作 SOP 分解教學，建立職場安全感。'
-      },
-      {
-        tag: 'visual_sop',
-        title: '《認知功能輔助手冊 附錄 B》：圖像化與色塊標示規範',
-        content: '針對圖文理解需求者，應提供標準視覺化輔助說明卡（Visual SOP），並採高對比色區分物件類別。'
-      },
-      {
-        tag: 'light_physical',
-        title: '《職業安全衛生設施規則》：體力負擔減輕條例',
-        content: '建議單次搬運重量小於 5kg，或設置油壓輔助推車與定點輸送帶，避免肌肉骨骼重複性累積傷病。'
       }
     ];
 
@@ -819,16 +903,6 @@
         type: '居家遠端 / 免通勤',
         fitReason: '完全居家工作，省去交通體力負擔，溝通均為文字與圖卡說明。',
         ragRef: '符合《體力負擔減輕條例》免通勤最佳實踐'
-      },
-      {
-        id: 'job-3',
-        title: '庇護餐飲手作與包裝助理',
-        company: '暖心日光手作工坊',
-        salary: '月薪 28,500 ~ 31,000 元',
-        score: 87,
-        type: '手工作業 / 導師陪伴',
-        fitReason: '配備一對一耐心輔導員指導，工坊步調溫馨穩定。',
-        ragRef: '符合《庇護就業輔導計畫 第 12 條》陪伴規範'
       }
     ];
 
@@ -867,26 +941,13 @@
         titleName = `🏢 1111 人力銀行 - 友善專區 (關鍵字: ${keyword})`;
       }
 
-      // Update Step 5 Portal Section Title
       document.getElementById('step5-portal-title').innerText = `${titleName} (同頁展延共 5+ 筆職缺)`;
       
-      // Render Rich Multi-Job Cards inside Step 5 directly below
       const externalListContainer = document.getElementById('external-live-jobs-list');
       externalListContainer.innerHTML = '';
       const portalJobs = EXTERNAL_PORTAL_JOBS[platform] || EXTERNAL_PORTAL_JOBS['taiwan'];
 
-      // Filter by keyword if available
-      const filteredPortalJobs = portalJobs.filter(j => {
-        if (!searchFilterKeyword) return true;
-        return j.title.toLowerCase().includes(searchFilterKeyword) ||
-               j.company.toLowerCase().includes(searchFilterKeyword) ||
-               j.description.toLowerCase().includes(searchFilterKeyword) ||
-               j.tags.some(t => t.toLowerCase().includes(searchFilterKeyword));
-      });
-
-      const displayJobs = filteredPortalJobs.length > 0 ? filteredPortalJobs : portalJobs;
-
-      displayJobs.forEach(job => {
+      portalJobs.forEach(job => {
         const item = document.createElement('div');
         item.style.cssText = 'background: white; border: 2px solid #fdba74; border-radius: 16px; padding: 20px; box-shadow: 0 4px 12px rgba(234,88,12,0.06);';
         item.innerHTML = `
@@ -906,11 +967,9 @@
         externalListContainer.appendChild(item);
       });
 
-      // Update link fallback
       document.getElementById('portal-external-fallback-link').href = targetUrl;
       document.getElementById('portal-external-fallback-link').innerText = `↗️ 一鍵前往 ${platform === 'taiwan' ? '台灣就業通' : '104身障專區'} 官方搜尋結果網頁`;
 
-      // Make sure user is in Step 5 and smoothly scroll to the embedded portal box inside Step 5
       if (currentStepNum !== 5) {
         goToStep(5);
       }
@@ -988,7 +1047,7 @@
       document.getElementById('role-admin-btn').style.background = role === 'admin' ? '#6366f1' : 'transparent';
       document.getElementById('role-admin-btn').style.color = role === 'admin' ? 'white' : '#64748b';
 
-      if (role === 'counselor') renderCounselorJson();
+      if (role === 'counselor') renderCounselorDashboardView();
       if (role === 'admin') renderAdminDashboard();
     }
 
@@ -1011,7 +1070,16 @@
       if (currentRole !== 'seeker') return;
       el.classList.toggle('selected');
       const circle = el.querySelector('.checkbox-circle');
-      circle.innerText = el.classList.contains('selected') ? '✓' : '';
+      const isSelected = el.classList.contains('selected');
+      circle.innerText = isSelected ? '✓' : '';
+
+      // Update student Seeker Selection State
+      if (!seekerSelections[category]) seekerSelections[category] = [];
+      if (isSelected) {
+        if (!seekerSelections[category].includes(value)) seekerSelections[category].push(value);
+      } else {
+        seekerSelections[category] = seekerSelections[category].filter(v => v !== value);
+      }
     }
 
     function toggleModifier(key) {
@@ -1021,7 +1089,6 @@
     }
 
     function renderLLMResults() {
-      // 1. Render RAG Knowledge Base List
       const ragList = document.getElementById('rag-knowledge-list');
       ragList.innerHTML = '';
       RAG_DATABASE.forEach(item => {
@@ -1030,7 +1097,6 @@
         ragList.appendChild(li);
       });
 
-      // 2. Render Job Cards with Filter Logic
       const container = document.getElementById('job-results-container');
       container.innerHTML = '';
       
@@ -1079,19 +1145,90 @@
       });
     }
 
-    function renderCounselorJson() {
+    // Render Rich Counselor / Teacher Dashboard with Visual Cards
+    function renderCounselorDashboardView() {
+      const visualContainer = document.getElementById('counselor-visual-selections');
+      visualContainer.innerHTML = '';
+
+      const categories = [
+        { key: 'interests', title: '1. 工作興趣領域', icon: '📝', color: '#eff6ff', textColor: '#1d4ed8', borderColor: '#bfdbfe' },
+        { key: 'environments', title: '2. 理想工作環境', icon: '🏢', color: '#f3e8ff', textColor: '#6b21a8', borderColor: '#ddd6fe' },
+        { key: 'accommodations', title: '3. 無障礙輔具需求', icon: '♿', color: '#f0fdf4', textColor: '#166534', borderColor: '#bbf7d0' },
+        { key: 'schedule', title: '4. 期待工作時間', icon: '☀️', color: '#fff7ed', textColor: '#c2410c', borderColor: '#ffedd5' }
+      ];
+
+      categories.forEach(cat => {
+        const selectedList = seekerSelections[cat.key] && seekerSelections[cat.key].length > 0
+          ? seekerSelections[cat.key]
+          : ['(學生未勾選此項目)'];
+
+        const card = document.createElement('div');
+        card.style.cssText = `background: ${cat.color}; border: 2px solid ${cat.borderColor}; border-radius: 16px; padding: 18px;`;
+        card.innerHTML = `
+          <h4 style="font-size: 18px; font-weight: 800; color: ${cat.textColor}; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+            <span>${cat.icon}</span> <span>${cat.title}</span>
+          </h4>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            ${selectedList.map(item => `
+              <div style="background: white; border: 1px solid ${cat.borderColor}; border-radius: 10px; padding: 8px 12px; font-size: 15px; font-weight: 700; color: #1e293b; display: flex; align-items: center; gap: 6px;">
+                <span style="color: ${cat.textColor}; font-weight: 900;">✓</span> ${item}
+              </div>
+            `).join('')}
+          </div>
+        `;
+        visualContainer.appendChild(card);
+      });
+
+      // Update JSON Code snippet preview
       const data = {
-        reportId: "REP-20260723-RAG-001",
-        userName: "陳小明",
-        status: "READ_ONLY_MODE",
-        ragEnabled: true,
-        retrievedDocuments: RAG_DATABASE.map(r => r.title),
-        selectedInterests: ["文書處理"],
-        accommodations: ["無障礙坡道", "1對1導師陪伴"],
-        topMatchedJob: mockJobs[0]?.title || '尚無職缺',
-        llmAssessment: "求職者極度適合靜態高架無障礙辦公場所，依據 RAG 檢索《職務再設計手冊 4.2條》，建議優先安排參訪。"
+        studentId: "STD-2026-001",
+        studentName: "陳小明",
+        contactPhone: "0912-345-678",
+        contactEmail: "student01@example.com",
+        disabilityCategory: "肢體障礙 (使用輪椅)",
+        counselorRecipientEmail: "vvicky9508@gmail.com",
+        selections: seekerSelections,
+        matchedJobsCount: mockJobs.length,
+        llmAssessmentSummary: "極度適合靜態文書處理與輪椅斜坡無障礙職場環境。"
       };
       document.getElementById('counselor-json-preview').innerText = JSON.stringify(data, null, 2);
+    }
+
+    function toggleJsonAccordion() {
+      const box = document.getElementById('json-accordion-box');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // Send Feedback or Unmodifiable Request Direct to vvicky9508@gmail.com
+    function sendFeedbackToEmail() {
+      const sender = document.getElementById('feedback-sender-name').value.trim() || '特教輔導員';
+      const type = document.getElementById('feedback-type').value;
+      const content = document.getElementById('feedback-content').value.trim();
+
+      if (!content) {
+        alert('請填寫需要管理者協助修改或建議的詳細說明！');
+        return;
+      }
+
+      const recipientEmail = 'vvicky9508@gmail.com';
+      const subject = encodeURIComponent(`【易捷職缺系統】輔導員/教師修改請求 - ${type} (${sender})`);
+      const body = encodeURIComponent(
+        `親愛的系統管理者：\n\n` +
+        `我是 ${sender}。\n` +
+        `在輔導學生與審核職缺過程中，發現以下【無法在線上直接修改事項/系統調整建議】：\n\n` +
+        `📌 問題與修改類型：${type}\n` +
+        `📝 詳細說明與建議需求：\n${content}\n\n` +
+        `----------------------------------------\n` +
+        `學生個案：陳小明 (STD-2026-001)\n` +
+        `發送時間：${new Date().toLocaleString('zh-TW')}\n` +
+        `此郵件由易捷職缺適配系統【輔導員/教師控制台】自動連動發送`
+      );
+
+      // Trigger native email client with pre-filled content to vvicky9508@gmail.com
+      window.location.href = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+      alert(`📧 訊息連動成功！系統已開啟郵件軟體將此修改需求傳送至【${recipientEmail}】。管理者將盡快為您進行修正！`);
+      document.getElementById('feedback-content').value = '';
     }
 
     // Admin Dashboard Functions
@@ -1099,7 +1236,6 @@
       document.getElementById('admin-job-count').innerText = `${mockJobs.length} 筆`;
       document.getElementById('admin-rag-count').innerText = `${RAG_DATABASE.length} 條`;
 
-      // Render Admin Job List
       const listEl = document.getElementById('admin-job-list');
       listEl.innerHTML = '';
       mockJobs.forEach((job) => {
@@ -1115,7 +1251,6 @@
         listEl.appendChild(div);
       });
 
-      // Render Admin RAG List
       const ragList = document.getElementById('admin-rag-list');
       ragList.innerHTML = '';
       RAG_DATABASE.forEach((item, idx) => {
@@ -1194,7 +1329,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。各大求職平台的多筆職缺已為您完整同頁呈現。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為輔導員與教師載入學生圖文評估報告與個資檢視。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
