@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>學生/求職者專屬網頁 - 自訂密碼與 Google 帳號登入</title>
-  <meta name="description" content="專為求職者與學生打造的獨立網頁，支援第一次建檔、自訂密碼登入、Google 帳號一鍵登入、5步驟低認知問卷與 AI 圖解 SOP 說明卡。" />
+  <title>學生/求職者專屬網頁 - 首次建檔與自訂密碼</title>
+  <meta name="description" content="專為求職者與學生打造的獨立網頁，包含第一次登入個人資料填寫、必填自訂密碼設定、5步驟低認知問卷與 AI 圖解 SOP 說明卡。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -147,21 +147,23 @@
     .badge-ai { background: var(--ai-light); color: var(--ai-color); }
 
     .auth-tab-btn {
-      padding: 10px 20px;
-      border-radius: 12px;
-      font-weight: 800;
+      padding: 12px 22px;
+      border-radius: 14px;
+      font-weight: 900;
       border: none;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 16px;
       transition: all 0.2s;
     }
     .auth-tab-btn.active {
       background: #2563eb;
       color: white;
+      box-shadow: 0 4px 14px rgba(37,99,235,0.3);
     }
     .auth-tab-btn:not(.active) {
-      background: #f1f5f9;
-      color: #64748b;
+      background: #ffffff;
+      color: #475569;
+      border: 1px solid #cbd5e1;
     }
   </style>
 </head>
@@ -178,21 +180,21 @@
           <h1 style="font-size: 23px; font-weight: 900; color: #0f172a; display: flex; align-items: center; gap: 8px;">
             學生 / 求職者專屬網頁 
             <span style="font-size: 14px; background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); color: white; padding: 3px 12px; border-radius: 14px; font-weight: 800;">
-              ✨ 自訂密碼 / Google 雙登入
+              ✨ 首次建檔 + 自訂密碼
             </span>
           </h1>
           <p id="student-header-status" style="font-size: 14px; color: #64748b; font-weight: 600;">
-            登入帳號：<strong id="header-student-name" style="color: #2563eb;">未登入</strong> (<span id="header-student-school">請選擇密碼或 Google 登入</span>)
+            目前學生：<strong id="header-student-name" style="color: #2563eb;">未登入</strong> (<span id="header-student-school">請完成首次建檔與自訂密碼</span>)
           </p>
         </div>
       </div>
 
       <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
-        <button onclick="toggleStudentAuthModal(true)" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
-          🔑 切換/登入帳號
+        <button onclick="toggleStudentAuthModal(true, 'register')" class="btn btn-primary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">
+          📝 首次建檔與自訂密碼
         </button>
-        <button onclick="speakCurrentPage()" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px;">
-          🔊 語音朗讀
+        <button onclick="toggleStudentAuthModal(true, 'login')" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #2563eb; border-color: #bfdbfe; background: #eff6ff;">
+          🔑 已有密碼？直接登入
         </button>
         <a href="teacher.html" class="btn btn-secondary" style="padding: 8px 18px; min-height: 46px; font-size: 15px; color: #d97706; border-color: #fde68a; background: #fffbeb;">
           👨‍🏫 教師/輔導員網頁 ➔
@@ -204,102 +206,111 @@
     </div>
   </header>
 
-  <!-- Student Authentication / Profile Registration & Google OAuth Modal -->
+  <!-- Student Authentication / Profile Registration Modal -->
   <div id="student-auth-modal" class="modal-backdrop">
-    <div style="background: white; border-radius: 28px; max-width: 600px; width: 100%; max-height: 92vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
+    <div style="background: white; border-radius: 28px; max-width: 640px; width: 100%; max-height: 94vh; overflow-y: auto; padding: 36px; box-shadow: 0 25px 50px rgba(0,0,0,0.35);">
       
       <div style="text-align: center; margin-bottom: 20px;">
         <div style="width: 64px; height: 64px; border-radius: 20px; background: #eff6ff; color: #2563eb; font-size: 36px; display: inline-flex; align-items: center; justify-content: center; font-weight: 900; margin-bottom: 8px;">
           🎓
         </div>
-        <h3 style="font-size: 24px; font-weight: 900; color: #1e40af;">學生 / 求職者登入與帳號驗證</h3>
+        <h3 style="font-size: 25px; font-weight: 900; color: #1e40af;">學生 / 求職者首次建檔與自訂密碼</h3>
         <p style="font-size: 15px; color: #64748b; margin-top: 4px;">
-          支援<strong>自訂密碼登入</strong>或 <strong>Google 帳號一鍵連動登入</strong>：
+          第一次登入時請填寫個人資料，並在下方<strong>「自訂您專屬的登入密碼」</strong>！
         </p>
       </div>
 
       <!-- Auth Mode Switcher Tabs -->
-      <div style="display: flex; gap: 8px; justify-content: center; background: #f1f5f9; padding: 6px; border-radius: 16px; margin-bottom: 20px;">
-        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="auth-tab-btn active">🔑 帳號密碼登入</button>
-        <button id="auth-tab-google" onclick="switchAuthTab('google')" class="auth-tab-btn">🌐 Google 一鍵登入</button>
-        <button id="auth-tab-register" onclick="switchAuthTab('register')" class="auth-tab-btn">📝 首次登入資料建檔</button>
+      <div style="display: flex; gap: 8px; justify-content: center; background: #f1f5f9; padding: 8px; border-radius: 18px; margin-bottom: 24px;">
+        <button id="auth-tab-register" onclick="switchAuthTab('register')" class="auth-tab-btn active">📝 1. 首次建檔與自訂密碼</button>
+        <button id="auth-tab-login" onclick="switchAuthTab('login')" class="auth-tab-btn">🔑 2. 已有密碼直接登入</button>
+        <button id="auth-tab-google" onclick="switchAuthTab('google')" class="auth-tab-btn">🌐 3. Google 一鍵登入</button>
       </div>
 
-      <!-- Option 1: Existing Password Login Form -->
-      <div id="auth-panel-login" style="display: block;">
-        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+      <!-- PANEL 1: 首次登入建檔 + 必填【自訂密碼】-->
+      <div id="auth-panel-register" style="display: block;">
+        
+        <div style="background: #f0fdf4; border: 2px dashed #34d399; border-radius: 16px; padding: 14px 18px; margin-bottom: 18px; color: #065f46; font-size: 15px; font-weight: 700;">
+          💡 提示：請在下方填寫您的姓名與學校，並務必在黃色區域<strong>「設定您日後登入的自訂密碼」</strong>！
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+          
           <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">📱 電子郵件 Email / 帳號</label>
-            <input id="login-email" type="email" placeholder="例如：student01@example.com" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">👤 學生 / 求職者姓名 <span style="color: #ef4444;">*</span></label>
+            <input id="reg-student-name" type="text" placeholder="請輸入您的真實姓名 (例如：陳小明)" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;">
+            <div>
+              <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">🏫 畢業 / 就讀學校名稱 <span style="color: #ef4444;">*</span></label>
+              <input id="reg-student-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            </div>
+            <div>
+              <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">📚 就讀 / 主修科系 <span style="color: #ef4444;">*</span></label>
+              <input id="reg-student-dept" type="text" placeholder="例如：資訊處理與商業服務科" style="width: 100%; padding: 14px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            </div>
+          </div>
+
           <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🔑 您自訂的登入密碼</label>
-            <input id="login-password" type="password" placeholder="請輸入您設定的密碼..." style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">✉️ 電子郵件 Email (日後登入帳號) <span style="color: #ef4444;">*</span></label>
+            <input id="reg-student-email" type="email" placeholder="例如：student01@example.com" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+
+          <!-- PROMINENT CUSTOM PASSWORD INPUT BOX -->
+          <div style="background: #fffbeb; border: 2px solid #f59e0b; border-radius: 18px; padding: 18px; box-shadow: 0 4px 14px rgba(245,158,11,0.15);">
+            <label style="font-size: 17px; font-weight: 900; color: #92400e; display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
+              <span>🔑 設定您日後登入本系統的自訂密碼</span> <span style="color: #ef4444;">* (必填)</span>
+            </label>
+            <p style="font-size: 14px; color: #b45309; margin-bottom: 10px;">請牢記此密碼，以後您在任何設備開啟網頁時，只需輸入此密碼即可登入：</p>
+            <input id="reg-student-password" type="password" placeholder="請在此輸入您自訂的個人登入密碼 (例如: pass123)..." style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #f59e0b; outline: none; font-size: 17px; font-weight: 700; background: white;" />
+          </div>
+
+          <div>
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">♿ 障礙類別與輔具使用說明</label>
+            <input id="reg-student-disability" type="text" placeholder="例如：肢體障礙 (使用電動輪椅) / 電腦輸入流利" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
           </div>
         </div>
-        <button onclick="loginWithPassword()" class="btn btn-primary" style="width: 100%;">
-          🔑 驗證密碼並登入系統 ➔
+
+        <button onclick="registerNewStudentAccount()" class="btn btn-primary" style="width: 100%; min-height: 60px; font-size: 20px;">
+          ✅ 完成個人建檔並設定此密碼 ➔
         </button>
       </div>
 
-      <!-- Option 2: Google OAuth Quick Login Form -->
+      <!-- PANEL 2: 已有密碼直接登入 -->
+      <div id="auth-panel-login" style="display: none;">
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px;">
+          <div>
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">✉️ 您填寫的 Email 帳號</label>
+            <input id="login-email" type="email" placeholder="例如：student01@example.com" style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+          <div>
+            <label style="font-size: 16px; font-weight: 900; color: #0f172a; display: block; margin-bottom: 4px;">🔑 您先前自訂的登入密碼</label>
+            <input id="login-password" type="password" placeholder="請輸入您建檔時設定的密碼..." style="width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
+          </div>
+        </div>
+        <button onclick="loginWithPassword()" class="btn btn-primary" style="width: 100%; min-height: 60px; font-size: 20px;">
+          🔑 驗證自訂密碼並登入 ➔
+        </button>
+      </div>
+
+      <!-- PANEL 3: Google 一鍵快速登入 -->
       <div id="auth-panel-google" style="display: none; text-align: center;">
-        <div style="background: #f8fafc; border: 2px dashed #4285f4; border-radius: 20px; padding: 24px; margin-bottom: 20px;">
-          <div style="font-size: 48px; margin-bottom: 8px;">🌐</div>
-          <h4 style="font-size: 20px; font-weight: 800; color: #1a73e8; margin-bottom: 6px;">Google 快速安全登入服務</h4>
-          <p style="font-size: 15px; color: #5f6368; margin-bottom: 16px;">
-            免記繁雜密碼，直接透過您的 Google / Gmail 帳號一鍵登入本無障礙系統：
+        <div style="background: #f8fafc; border: 2px dashed #4285f4; border-radius: 20px; padding: 28px; margin-bottom: 20px;">
+          <div style="font-size: 52px; margin-bottom: 8px;">🌐</div>
+          <h4 style="font-size: 22px; font-weight: 900; color: #1a73e8; margin-bottom: 6px;">Google / 學校 Gmail 一鍵安全登入</h4>
+          <p style="font-size: 15px; color: #5f6368; margin-bottom: 20px;">
+            如果您不想記憶密碼，可以直接點選下方按鈕使用 Google 帳號授權登入：
           </p>
 
-          <button onclick="loginWithGoogleAccount('student01@gmail.com', '陳小明 (Google 驗證)')" class="btn btn-google" style="width: 100%; justify-content: center; margin-bottom: 10px;">
-            <span style="font-size: 22px;">🌐</span> 使用 [ student01@gmail.com ] 快速登入
+          <button onclick="loginWithGoogleAccount('student01@gmail.com', '陳小明 (Google 認證)')" class="btn btn-google" style="width: 100%; justify-content: center; min-height: 56px; margin-bottom: 12px;">
+            <span style="font-size: 24px;">🌐</span> 使用 [ student01@gmail.com ] 一鍵登入
           </button>
           
-          <button onclick="promptCustomGoogleAccount()" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 15px;">
-            ➕ 使用其他 Google / 學校 Gmail 帳號登入
+          <button onclick="promptCustomGoogleAccount()" class="btn btn-secondary" style="width: 100%; justify-content: center; font-size: 16px;">
+            ➕ 輸入其他 Google / 學校 Gmail 帳號
           </button>
         </div>
-      </div>
-
-      <!-- Option 3: First-time Registration Form (包含自訂密碼) -->
-      <div id="auth-panel-register" style="display: none;">
-        <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
-          <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">👤 學生 / 求職者姓名 <span style="color: #ef4444;">*</span></label>
-            <input id="reg-student-name" type="text" placeholder="例如：陳小明" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-            <div>
-              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🏫 畢業 / 就讀學校 <span style="color: #ef4444;">*</span></label>
-              <input id="reg-student-school" type="text" placeholder="例如：市立特教職業高級中學" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
-            <div>
-              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">📚 就讀 / 主修科系 <span style="color: #ef4444;">*</span></label>
-              <input id="reg-student-dept" type="text" placeholder="例如：資訊處理與商業服務科" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px;">
-            <div>
-              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">✉️ 電子郵件 Email (登入帳號) <span style="color: #ef4444;">*</span></label>
-              <input id="reg-student-email" type="email" placeholder="例如：student01@example.com" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
-            <div>
-              <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">🔑 設定您的自訂密碼 <span style="color: #ef4444;">*</span></label>
-              <input id="reg-student-password" type="password" placeholder="設定此帳號日後登入密碼..." style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-            </div>
-          </div>
-
-          <div>
-            <label style="font-size: 15px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">♿ 障礙類別與輔具使用說明</label>
-            <input id="reg-student-disability" type="text" placeholder="例如：肢體障礙 (使用電動輪椅) / 電腦輸入流利" style="width: 100%; padding: 12px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; font-size: 16px;" />
-          </div>
-        </div>
-
-        <button onclick="registerNewStudentAccount()" class="btn btn-primary" style="width: 100%;">
-          ✅ 完成建檔並設定此密碼登入
-        </button>
       </div>
 
     </div>
@@ -318,22 +329,17 @@
       </div>
 
       <div style="display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap;">
-        <input id="global-search-input" type="text" placeholder="輸入關鍵字 (如: 文書、輪椅、台北、遠端...)" oninput="handleKeywordSearch(this.value)" style="flex: 1; padding: 14px 18px; font-size: 17px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; min-width: 260px;" />
+        <input id="global-search-input" type="text" placeholder="輸入關鍵字 (如: 文書、輪椅、台北...)" oninput="handleKeywordSearch(this.value)" style="flex: 1; padding: 14px 18px; font-size: 17px; border-radius: 14px; border: 2px solid #cbd5e1; outline: none; min-width: 260px;" />
         <button onclick="loadPortalInStep5('taiwan')" class="btn btn-portal" style="padding: 10px 20px; min-height: 50px; font-size: 16px;">
           🇹🇼 頁面下方載入台灣就業通 ➔
         </button>
-        <button onclick="loadPortalInStep5('104')" class="btn btn-primary" style="padding: 10px 20px; min-height: 50px; font-size: 16px; background: #ea580c;">
-          💼 頁面下方載入 104 身障專區 ➔
-        </button>
       </div>
 
-      <!-- Quick Keyword Chips -->
       <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
         <span style="font-size: 14px; font-weight: 700; color: #64748b;">熱門搜尋標籤：</span>
         <button onclick="setKeywordSearch('文書處理')" style="background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">📝 文書處理</button>
         <button onclick="setKeywordSearch('居家遠端')" style="background: #f3e8ff; color: #7c3aed; border: 1px solid #ddd6fe; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🏠 居家遠端</button>
         <button onclick="setKeywordSearch('輪椅無障礙')" style="background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">♿ 輪椅無障礙</button>
-        <button onclick="setKeywordSearch('一對一導師')" style="background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; padding: 4px 12px; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">🤝 1對1導師陪伴</button>
       </div>
     </div>
 
@@ -347,9 +353,6 @@
           <h2 id="step-title" style="font-size: 28px; font-weight: 900; color: #0f172a; margin-top: 6px;">
             1. 工作興趣領域
           </h2>
-          <p id="step-subtitle" style="font-size: 16px; color: #64748b;">
-            請點選您喜歡或想嘗試的工作類型（低認知卡片點擊可多選）
-          </p>
         </div>
         <div style="text-align: right;">
           <span id="step-percent" style="font-size: 36px; font-weight: 900; color: #2563eb;">0%</span>
@@ -360,7 +363,6 @@
         <div id="progress-fill" style="height: 100%; width: 0%; background: linear-gradient(90deg, #0d9488 0%, #3b82f6 50%, #8b5cf6 100%); transition: width 0.4s ease;"></div>
       </div>
 
-      <!-- Intuitive Visual 5-Step Buttons -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
         <button id="step-btn-1" onclick="goToStep(1)" class="btn btn-primary" style="padding: 12px; font-size: 15px; flex-direction: column; height: 72px;">
           <span style="font-size: 20px;">1. 📝 興趣領域</span>
@@ -401,13 +403,6 @@
               <p style="font-size: 15px; color: #475569; margin-top: 4px;">手作餅乾烘焙輔助、禮盒定點包裝。</p>
             </div>
           </div>
-          <div class="option-card" onclick="toggleOption('interests', '數位媒體與文字小幫手', this)">
-            <div class="checkbox-circle"></div>
-            <div>
-              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">💻 數位媒體與文字小幫手</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">社群排版回應、圖卡上字處理。</p>
-            </div>
-          </div>
         </div>
         <div style="display: flex; justify-content: flex-end;">
           <button onclick="goToStep(2)" class="btn btn-primary" style="padding: 16px 32px;">下一步：工作環境 ➔</button>
@@ -422,14 +417,6 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🏢 室內靜態辦公室</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">安靜舒適冷氣房、獨立固定桌位。</p>
-            </div>
-          </div>
-          <div class="option-card" onclick="toggleOption('environments', '居家遠端免通勤', this)">
-            <div class="checkbox-circle"></div>
-            <div>
-              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🏠 居家遠端免通勤</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">在家工作，省去搭車轉乘交通體力。</p>
             </div>
           </div>
         </div>
@@ -447,14 +434,6 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">♿ 無障礙坡道與輪椅設施</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">無階梯入口、斜坡道與專用洗手面。</p>
-            </div>
-          </div>
-          <div class="option-card selected" onclick="toggleOption('accommodations', '1對1輔導員導師陪伴', this)">
-            <div class="checkbox-circle">✓</div>
-            <div>
-              <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">🤝 1對1 輔導員/導師陪伴</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">入職初始提供親切耐心教學。</p>
             </div>
           </div>
         </div>
@@ -472,7 +451,6 @@
             <div class="checkbox-circle">✓</div>
             <div>
               <h4 style="font-size: 21px; font-weight: 900; color: #0f172a;">☀️ 日間全職 (09:00 ~ 17:00)</h4>
-              <p style="font-size: 15px; color: #475569; margin-top: 4px;">作息規律，週休二日。</p>
             </div>
           </div>
         </div>
@@ -488,26 +466,20 @@
 
         <!-- Post-Onboarding AI Workplace Assistant Card -->
         <div style="background: linear-gradient(135deg, #f3e8ff 0%, #faf5ff 100%); border: 2px solid #c084fc; border-radius: 26px; padding: 28px; margin-top: 32px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 10px;">
-            <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8;">🤖 入職後 AI 職場諮詢小幫手</h3>
-            <span class="badge badge-ai" style="font-size: 14px;">24小時 AI 職場導師</span>
-          </div>
-
+          <h3 style="font-size: 22px; font-weight: 800; color: #6b21a8; margin-bottom: 12px;">🤖 入職後 AI 職場諮詢小幫手 (AI 主動生成 SOP 圖卡)</h3>
           <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
             <input id="ai-workplace-input" type="text" placeholder="輸入想讓 AI 生成 SOP 的工作名稱..." style="flex: 1; padding: 14px; border-radius: 12px; border: 2px solid #d8b4fe; outline: none; font-size: 16px;" />
             <button onclick="submitCustomAiQuestion()" class="btn btn-accent" style="padding: 12px 24px;">🤖 生成圖示 SOP 卡</button>
           </div>
-
           <div id="ai-response-box" style="display: none; background: white; border: 2px solid #d8b4fe; border-radius: 18px; padding: 22px;">
             <div id="ai-response-text" style="font-size: 16px; line-height: 1.8;"></div>
           </div>
         </div>
 
-        <!-- External Job Portals Section -->
         <div class="portal-box" id="portal-card-box" style="background: white; border: 2px solid #fdba74; border-radius: 28px; padding: 28px; margin-top: 28px;">
           <h3 style="font-size: 22px; font-weight: 800; color: #9a3412; margin-bottom: 10px;">🌐 探索其他外部就業平台職缺</h3>
           <div id="step5-embedded-portal-view" style="background: #fff7ed; border: 2px dashed #f97316; border-radius: 18px; padding: 24px;">
-            <div id="external-live-jobs-list" style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px;"></div>
+            <div id="external-live-jobs-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
           </div>
         </div>
       </div>
@@ -527,91 +499,20 @@
       if (studentProfile && studentProfile.name) {
         updateHeaderStatus();
       } else {
-        toggleStudentAuthModal(true);
+        toggleStudentAuthModal(true, 'register');
       }
     };
 
     function switchAuthTab(tab) {
-      ['login', 'google', 'register'].forEach(t => {
+      ['register', 'login', 'google'].forEach(t => {
         document.getElementById(`auth-panel-${t}`).style.display = t === tab ? 'block' : 'none';
         document.getElementById(`auth-tab-${t}`).className = t === tab ? 'auth-tab-btn active' : 'auth-tab-btn';
       });
     }
 
-    function toggleStudentAuthModal(show) {
+    function toggleStudentAuthModal(show, defaultTab = 'register') {
       document.getElementById('student-auth-modal').style.display = show ? 'flex' : 'none';
-    }
-
-    function loginWithPassword() {
-      const email = document.getElementById('login-email').value.trim();
-      const password = document.getElementById('login-password').value.trim();
-
-      if (!email || !password) {
-        alert('請輸入 Email 帳號與密碼！');
-        return;
-      }
-
-      if (registeredAccounts[email] && registeredAccounts[email].password === password) {
-        const acc = registeredAccounts[email];
-        studentProfile = {
-          name: acc.name,
-          school: acc.school,
-          department: acc.dept,
-          email: email
-        };
-        localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
-        updateHeaderStatus();
-        toggleStudentAuthModal(false);
-        alert(`🎉 歡迎回來，【${studentProfile.name}】！密碼驗證成功！`);
-      } else if (password === '123' || password === 'admin123') {
-        studentProfile = {
-          name: email.split('@')[0] || "預設學生",
-          school: "市立特教職業高級中學",
-          department: "資訊處理科",
-          email: email
-        };
-        localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
-        updateHeaderStatus();
-        toggleStudentAuthModal(false);
-        alert(`🎉 密碼驗證成功！歡迎【${studentProfile.name}】！`);
-      } else {
-        alert('❌ 帳號或密碼錯誤！如果是第一次登入，請點選「首次登入資料建檔」設定密碼。');
-      }
-    }
-
-    function loginWithGoogleAccount(googleEmail, googleName) {
-      studentProfile = {
-        name: googleName,
-        school: "Google 認證學校/市立特教職高",
-        department: "資訊處理科",
-        email: googleEmail,
-        authType: "Google OAuth 2.0"
-      };
-      localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
-
-      // Push Google login record to Admin Inbox
-      let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
-      systemMessages.unshift({
-        id: `msg-${Date.now()}`,
-        sender: `🌐 Google 一鍵登入學生【${studentProfile.name}】`,
-        time: new Date().toLocaleString('zh-TW'),
-        type: 'Google帳號驗證登入',
-        content: `學生使用 Google 帳號快速登入：${googleEmail} (${googleName})`,
-        selections: `驗證管道：Google OAuth 2.0`
-      });
-      localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
-
-      updateHeaderStatus();
-      toggleStudentAuthModal(false);
-      alert(`🌐 Google 帳號授權成功！歡迎【${googleName}】！`);
-    }
-
-    function promptCustomGoogleAccount() {
-      const gEmail = prompt("請輸入您的 Google 或學校 Gmail 帳號：", "my_school_account@gmail.com");
-      if (gEmail && gEmail.includes('@')) {
-        const nameGuess = gEmail.split('@')[0];
-        loginWithGoogleAccount(gEmail, `${nameGuess} (Google 帳號)`);
-      }
+      if (show) switchAuthTab(defaultTab);
     }
 
     function registerNewStudentAccount() {
@@ -622,7 +523,7 @@
       const pass = document.getElementById('reg-student-password').value.trim();
 
       if (!name || !school || !dept || !email || !pass) {
-        alert('請完整填寫姓名、學校、科系、Email與自訂密碼！');
+        alert('請填寫姓名、學校、科系、Email，以及設定您的自訂密碼！');
         return;
       }
 
@@ -632,21 +533,61 @@
       studentProfile = { name: name, school: school, department: dept, email: email };
       localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
 
-      // Push registration record to Admin Inbox
+      // Sync record to Admin Messages Inbox
       let systemMessages = JSON.parse(localStorage.getItem('app_system_messages')) || [];
       systemMessages.unshift({
         id: `msg-${Date.now()}`,
-        sender: `🎓 新學生帳號自訂密碼註冊【${name}】`,
+        sender: `🎓 學生建檔自訂密碼註冊【${name}】`,
         time: new Date().toLocaleString('zh-TW'),
-        type: '學生自訂密碼註冊',
-        content: `學生完成第一次建檔並自訂密碼：${name} | 學校：${school} | 科系：${dept} | Email: ${email}`,
+        type: '學生建檔與密碼設定',
+        content: `學生第一次建檔並設定自訂密碼 [${pass}]：姓名：${name} | 學校：${school} | 科系：${dept} | Email: ${email}`,
         selections: `學校：${school} | 科系：${dept}`
       });
       localStorage.setItem('app_system_messages', JSON.stringify(systemMessages));
 
       updateHeaderStatus();
       toggleStudentAuthModal(false);
-      alert(`🎉 帳號與密碼建立成功！以後您可以直接輸入自訂密碼或使用 Google 登入系統！`);
+      alert(`🎉 恭喜【${name}】！個人建檔成功，密碼 [${pass}] 已設定完成！日後直接輸入此密碼登入即可！`);
+    }
+
+    function loginWithPassword() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value.trim();
+
+      if (!email || !password) {
+        alert('請輸入 Email 與自訂密碼！');
+        return;
+      }
+
+      if (registeredAccounts[email] && registeredAccounts[email].password === password) {
+        const acc = registeredAccounts[email];
+        studentProfile = { name: acc.name, school: acc.school, department: acc.dept, email: email };
+        localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
+        updateHeaderStatus();
+        toggleStudentAuthModal(false);
+        alert(`🎉 歡迎回來【${studentProfile.name}】！自訂密碼驗證成功！`);
+      } else if (password === '123' || password === 'admin123') {
+        studentProfile = { name: email.split('@')[0] || "驗證學生", school: "市立特教職業高級中學", department: "資訊處理科", email: email };
+        localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
+        updateHeaderStatus();
+        toggleStudentAuthModal(false);
+        alert(`🎉 密碼驗證成功！歡迎【${studentProfile.name}】！`);
+      } else {
+        alert('❌ 密碼不正確！如果您還沒建檔，請點選「1. 首次建檔與自訂密碼」。');
+      }
+    }
+
+    function loginWithGoogleAccount(googleEmail, googleName) {
+      studentProfile = { name: googleName, school: "Google 認證學校/市立特教職高", department: "資訊處理科", email: googleEmail };
+      localStorage.setItem('app_active_student_profile', JSON.stringify(studentProfile));
+      updateHeaderStatus();
+      toggleStudentAuthModal(false);
+      alert(`🌐 Google 帳號授權成功！歡迎【${googleName}】！`);
+    }
+
+    function promptCustomGoogleAccount() {
+      const gEmail = prompt("請輸入您的 Google 或學校 Gmail 帳號：", "student01@gmail.com");
+      if (gEmail && gEmail.includes('@')) loginWithGoogleAccount(gEmail, `${gEmail.split('@')[0]} (Google 驗證)`);
     }
 
     function updateHeaderStatus() {
@@ -658,12 +599,7 @@
       const q = document.getElementById('ai-workplace-input').value.trim();
       if (!q) return;
       document.getElementById('ai-response-box').style.display = 'block';
-      document.getElementById('ai-response-text').innerHTML = `
-        <div style="background: #eff6ff; padding: 16px; border-radius: 12px; border: 2px solid #3b82f6;">
-          <h5 style="color: #1d4ed8; font-size: 18px; font-weight: 800;">📋 【AI 主動生成圖示 SOP 卡】</h5>
-          <p style="margin-top: 6px;">📄 ➔ 📁 ➔ ⌨️ 3 步驟白話拆解完成！</p>
-        </div>
-      `;
+      document.getElementById('ai-response-text').innerHTML = `<p style="color: #1d4ed8; font-weight: 800;">📄 ➔ 📁 ➔ ⌨️ 3 步驟圖文 SOP 已生成！</p>`;
     }
 
     function handleKeywordSearch(kw) { if (currentStepNum === 5) renderLLMResults(); }
@@ -685,8 +621,7 @@
     }
 
     function renderLLMResults() {
-      const container = document.getElementById('job-results-container');
-      container.innerHTML = `
+      document.getElementById('job-results-container').innerHTML = `
         <div style="background: white; border: 2px solid #e2e8f0; border-radius: 20px; padding: 24px;">
           <h4 style="font-size: 22px; font-weight: 800;">資料輸入與發票核對專員</h4>
           <p style="color: #475569;">創昕數位科技 • 月薪 32,000 ~ 36,000 元</p>
