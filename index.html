@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>無障礙智慧職缺適配與輔導系統 (RAG 檢索增強 + 密碼防護管理員)</title>
-  <meta name="description" content="專為身心障礙求職者、職業輔導員與系統管理員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、管理員密碼鑑權與 LLM 智慧匹配系統。" />
+  <title>無障礙智慧職缺適配與輔導系統 (RAG + 自訂密碼管理員)</title>
+  <meta name="description" content="專為身心障礙求職者、職業輔導員與系統管理員設計的低認知負擔職缺步驟式引導、RAG 知識庫檢索增強、管理員密碼自訂鑑權與 LLM 智慧匹配系統。" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
@@ -197,8 +197,8 @@
           ♿
         </div>
         <div>
-          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ccfbf1; color: #0f766e; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">RAG + 管理員鑑權鎖</span></h1>
-          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 檢索增強 ✕ 管理員密碼驗證 ✕ 輔導員權限管理</p>
+          <h1 style="font-size: 22px; font-weight: 800; color: #0f172a;">易捷職缺適配系統 <span style="font-size: 14px; background: #ccfbf1; color: #0f766e; padding: 2px 10px; border-radius: 12px; vertical-align: middle;">RAG + 自訂管理密碼</span></h1>
+          <p style="font-size: 14px; color: #64748b; font-weight: 500;">低認知步驟引導 ✕ RAG 檢索增強 ✕ 管理員自訂密碼 ✕ 輔導員權限管理</p>
         </div>
       </div>
 
@@ -231,7 +231,7 @@
       🛡️ 【輔導員唯讀模式已啟用】全頁控制項已暫時凍結，提供安全評估檢視與 RAG 知識庫檢索導出。
     </div>
     <div id="admin-banner" class="admin-banner">
-      👑 【管理員驗證授權通過】您已取得最高權限：可管理職缺資料庫、RAG 知識條文與 LLM 安全審計配置。
+      👑 【管理員驗證授權通過】您已取得最高權限：可管理職缺資料庫、RAG 知識條文與更改管理員密碼。
     </div>
   </header>
 
@@ -481,6 +481,18 @@
         <button onclick="adminLogout()" class="btn btn-secondary" style="padding: 6px 14px; min-height: 40px; font-size: 14px; color: #ef4444; border-color: #fca5a5;">登出管理員身分</button>
       </div>
 
+      <!-- Change Admin Password Form (NEW) -->
+      <div style="background: #eef2ff; border: 2px solid #c7d2fe; border-radius: 18px; padding: 20px; margin-bottom: 28px;">
+        <h3 style="font-size: 19px; font-weight: 800; color: #3730a3; margin-bottom: 10px; display: flex; align-items: center; gap: 8px;">
+          🔑 變更管理員通行密碼 (Change Admin Passcode)
+        </h3>
+        <p style="font-size: 14px; color: #4338ca; margin-bottom: 12px;">您可以隨時在此修改全站管理員通行密碼，新密碼將即刻生效：</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <input id="admin-change-pass-input" type="password" placeholder="請輸入您自訂的新密碼..." style="flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #a5b4fc; min-width: 240px;" />
+          <button onclick="adminChangePasscode()" class="btn btn-admin" style="padding: 10px 20px; min-height: 46px; font-size: 15px;">儲存新密碼</button>
+        </div>
+      </div>
+
       <!-- Quick Admin Stats -->
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 28px;">
         <div style="background: #eef2ff; padding: 18px; border-radius: 16px; border: 1px solid #c7d2fe;">
@@ -538,7 +550,7 @@
       <h3 style="font-size: 22px; font-weight: 800; color: #3730a3; margin-bottom: 8px;">管理員權限密碼驗證</h3>
       <p style="font-size: 15px; color: #64748b; margin-bottom: 20px;">請輸入系統管理者通行密碼，以解鎖全站控制面板。</p>
       
-      <input id="admin-passcode-input" type="password" placeholder="請輸入管理員通行密碼 (預設: admin123)" style="width: 100%; padding: 14px; font-size: 17px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; margin-bottom: 18px; text-align: center;" />
+      <input id="admin-passcode-input" type="password" placeholder="請輸入管理員密碼..." style="width: 100%; padding: 14px; font-size: 17px; border-radius: 12px; border: 2px solid #cbd5e1; outline: none; margin-bottom: 18px; text-align: center;" />
       
       <div style="display: flex; gap: 10px;">
         <button onclick="toggleAdminAuthModal(false)" class="btn btn-secondary" style="flex: 1;">取消</button>
@@ -575,7 +587,9 @@
     let currentRole = 'seeker';
     let currentStepNum = 1;
     let isAdminAuthenticated = false;
-    const ADMIN_PASSCODE = 'admin123'; // 可在此自訂全站管理者金鑰密碼
+
+    // 動態密碼：優先讀取 LocalStorage 自訂密碼，預設為 admin123
+    let ADMIN_PASSCODE = localStorage.getItem('app_admin_passcode') || 'admin123';
 
     let modifiers = { reducePhysical: true, emphasizeMentor: true };
 
@@ -662,6 +676,19 @@
       } else {
         alert('❌ 密碼錯誤！您無權存取系統管理員面板。');
       }
+    }
+
+    function adminChangePasscode() {
+      if (!isAdminAuthenticated) return;
+      const newPass = document.getElementById('admin-change-pass-input').value;
+      if (!newPass || newPass.trim().length < 4) {
+        alert('請輸入至少 4 個字元的新密碼！');
+        return;
+      }
+      ADMIN_PASSCODE = newPass.trim();
+      localStorage.setItem('app_admin_passcode', ADMIN_PASSCODE);
+      alert(`🔑 管理員密碼已成功變更為【${ADMIN_PASSCODE}】！新密碼已即刻生效並儲存。`);
+      document.getElementById('admin-change-pass-input').value = '';
     }
 
     function adminLogout() {
@@ -877,7 +904,7 @@
     function speakCurrentPage() {
       if (!('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
-      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。已為您啟動管理員鑑權防護與 RAG 檢索增強。");
+      const msg = new SpeechSynthesisUtterance("歡迎使用易捷職缺適配系統。您可在管理員面板中動態變更密碼。");
       msg.lang = 'zh-TW';
       window.speechSynthesis.speak(msg);
     }
